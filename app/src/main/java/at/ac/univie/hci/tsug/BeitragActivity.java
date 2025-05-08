@@ -13,25 +13,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import at.ac.univie.hci.tsug.databinding.ActivityMainBinding;
-
-public class MainActivity extends AppCompatActivity {
+public class BeitragActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
-    String activityName = "TSUG";
-
+    String activityName = "Beitrag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         EdgeToEdge.enable(this);
-
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_beitrag);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -41,26 +35,28 @@ public class MainActivity extends AppCompatActivity {
 
         //Martin's Code für Bottom Navigation START
 
-        //BOTTOM NAVIGATION:
         bottomNav = findViewById(R.id.bottom_navigation);
-
-        //bottomNav.setOnApplyWindowInsetsListener(null);
-        //bottomNav.setSelectedItemId(R.id.nav_home);
 
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent intent;
                 switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        //Homescreen
+                        intent = new Intent(BeitragActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        return true;
+
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
-                        intent = new Intent(MainActivity.this, ErstellenActivity.class);
+                        intent = new Intent(BeitragActivity.this, ErstellenActivity.class);
                         startActivity(intent);
                         return true;
 
                     case R.id.nav_account:
                         //Account settings Seite
-                        intent = new Intent(MainActivity.this, KontoActivity.class);
+                        intent = new Intent(BeitragActivity.this, KontoActivity.class);
                         startActivity(intent);
                         return true;
                 }
@@ -74,22 +70,15 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, EinstellungActivity.class);
+            Intent intent = new Intent(BeitragActivity.this, EinstellungActivity.class);
             startActivity(intent);
         });
-
-        /*
-        *
-        back_button = findViewById(R.id.back_button);
-        back_button.setOnClickListener(v -> finish());
-
-        * */
 
         //TESTING TEXT TODO DELETE LATER
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
 
         //Martin's Code für Bottom Navigation END
+
     }
 }
-
