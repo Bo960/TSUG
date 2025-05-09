@@ -13,11 +13,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-
-import at.ac.univie.hci.tsug.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
-                        intent = new Intent(MainActivity.this, ErstellenActivity.class);
+                        intent = new Intent(MainActivity.this, CreateActivity.class);
                         startActivity(intent);
                         return true;
 
                     case R.id.nav_account:
                         //Account settings Seite
-                        intent = new Intent(MainActivity.this, KontoActivity.class);
+                        intent = new Intent(MainActivity.this, AccountActivity.class);
                         startActivity(intent);
                         return true;
                 }
@@ -74,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, EinstellungActivity.class);
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         });
 

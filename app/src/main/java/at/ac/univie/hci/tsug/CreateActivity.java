@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class ErstellenActivity extends AppCompatActivity {
+public class CreateActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     String activityName = "Erstellen";
@@ -25,7 +25,7 @@ public class ErstellenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_erstellen);
+        setContentView(R.layout.activity_create);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -48,13 +48,13 @@ public class ErstellenActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         //Homescreen
-                        intent = new Intent(ErstellenActivity.this, MainActivity.class);
+                        intent = new Intent(CreateActivity.this, MainActivity.class);
                         startActivity(intent);
                         return true;
 
                     case R.id.nav_account:
                         //Account settings Seite
-                        intent = new Intent(ErstellenActivity.this, KontoActivity.class);
+                        intent = new Intent(CreateActivity.this, AccountActivity.class);
                         startActivity(intent);
                         return true;
                 }
@@ -68,7 +68,7 @@ public class ErstellenActivity extends AppCompatActivity {
 
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
-            Intent intent = new Intent(ErstellenActivity.this, EinstellungActivity.class);
+            Intent intent = new Intent(CreateActivity.this, SettingsActivity.class);
             startActivity(intent);
         });
 

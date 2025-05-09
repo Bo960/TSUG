@@ -16,22 +16,21 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class EinstellungActivity extends AppCompatActivity {
+public class AccountActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
-    String activityName = "Einstellungen";
+    String activityName = "Konto";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_einstellung);
+        setContentView(R.layout.activity_account);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
 
 
 
@@ -49,19 +48,13 @@ public class EinstellungActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         //Homescreen
-                        intent = new Intent(EinstellungActivity.this, MainActivity.class);
+                        intent = new Intent(AccountActivity.this, MainActivity.class);
                         startActivity(intent);
                         return true;
 
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
-                        intent = new Intent(EinstellungActivity.this, ErstellenActivity.class);
-                        startActivity(intent);
-                        return true;
-
-                    case R.id.nav_account:
-                        //Account settings Seite
-                        intent = new Intent(EinstellungActivity.this, KontoActivity.class);
+                        intent = new Intent(AccountActivity.this, CreateActivity.class);
                         startActivity(intent);
                         return true;
                 }
@@ -75,7 +68,7 @@ public class EinstellungActivity extends AppCompatActivity {
 
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
-            Intent intent = new Intent(EinstellungActivity.this, EinstellungActivity.class);
+            Intent intent = new Intent(AccountActivity.this, SettingsActivity.class);
             startActivity(intent);
         });
 
