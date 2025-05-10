@@ -38,9 +38,6 @@ public class CreateActivity extends AppCompatActivity {
 
         bottomNav = findViewById(R.id.bottom_navigation);
 
-        //bottomNav.setOnApplyWindowInsetsListener(null);
-        //bottomNav.setSelectedItemId(R.id.nav_home);
-
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -50,12 +47,16 @@ public class CreateActivity extends AppCompatActivity {
                         //Homescreen
                         intent = new Intent(CreateActivity.this, MainActivity.class);
                         startActivity(intent);
+                        //Von Position-Rechts nach Position-Links
+                        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                         return true;
 
                     case R.id.nav_account:
                         //Account settings Seite
                         intent = new Intent(CreateActivity.this, AccountActivity.class);
                         startActivity(intent);
+                        //Von Position-Links nach Position-Rechts
+                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                         return true;
                 }
                 return false;
@@ -70,6 +71,7 @@ public class CreateActivity extends AppCompatActivity {
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(CreateActivity.this, SettingsActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
         //TESTING TEXT TODO DELETE LATER

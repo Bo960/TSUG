@@ -47,17 +47,35 @@
                 app:iconifiedByDefault="false"
                 app:queryHint="Search Here..."/>
 
+            <Button
+                android:id="@+id/searchStart"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+
+                android:text="Suche starten"
+                android:backgroundTint="@color/babyBlue"
+                android:textColor="@color/darkBlue"
+                android:textSize="20dp"
+                android:gravity="center"/>
+
         </LinearLayout>
     </ScrollView>
 
     <!-- Nur fürs Testen -->
     <TextView
+        android:id="@+id/label_babael"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+
         android:text="HOMESCREEN"
         android:textSize="30dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

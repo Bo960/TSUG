@@ -39,9 +39,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         bottomNav = findViewById(R.id.bottom_navigation);
 
-        //bottomNav.setOnApplyWindowInsetsListener(null);
-        //bottomNav.setSelectedItemId(R.id.nav_home);
-
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -51,18 +48,21 @@ public class SettingsActivity extends AppCompatActivity {
                         //Homescreen
                         intent = new Intent(SettingsActivity.this, MainActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
 
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
                         intent = new Intent(SettingsActivity.this, CreateActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
 
                     case R.id.nav_account:
                         //Account settings Seite
                         intent = new Intent(SettingsActivity.this, AccountActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
                 }
                 return false;
@@ -77,6 +77,7 @@ public class SettingsActivity extends AppCompatActivity {
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
         //TESTING TEXT TODO DELETE LATER

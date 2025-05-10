@@ -1,14 +1,18 @@
 package at.ac.univie.hci.tsug;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -19,7 +23,10 @@ import com.google.android.material.navigation.NavigationBarView;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
+    SearchView searchView;
+    String simpleSearchTerm;
     String activityName = "TSUG";
+
 
 
     @Override
@@ -41,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
         //BOTTOM NAVIGATION:
         bottomNav = findViewById(R.id.bottom_navigation);
 
-        //bottomNav.setOnApplyWindowInsetsListener(null);
-        //bottomNav.setSelectedItemId(R.id.nav_home);
-
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -53,15 +57,45 @@ public class MainActivity extends AppCompatActivity {
                         //Beitrag erstellen Seite
                         intent = new Intent(MainActivity.this, CreateActivity.class);
                         startActivity(intent);
+                        //Von Position-Links nach Position-Rechts
+                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                         return true;
 
                     case R.id.nav_account:
                         //Account settings Seite
                         intent = new Intent(MainActivity.this, AccountActivity.class);
                         startActivity(intent);
+                        //Von Position-Links nach Position-Rechts
+                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                         return true;
                 }
                 return false;
+            }
+        });
+
+        //SIMPLE SEARCH BAR:
+        searchView = findViewById(R.id.searchView);
+        searchView.clearFocus();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                simpleSearchTerm = newText;
+                return true;
+            }
+        });
+
+        Button searchButton = findViewById(R.id.searchStart);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView textView = findViewById(R.id.label_babael);
+                textView.setText(simpleSearchTerm);
             }
         });
 
@@ -73,14 +107,8 @@ public class MainActivity extends AppCompatActivity {
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
-
-        /*
-        *
-        back_button = findViewById(R.id.back_button);
-        back_button.setOnClickListener(v -> finish());
-
-        * */
 
         //TESTING TEXT TODO DELETE LATER
         TextView testText = findViewById(R.id.nav_text_testing);

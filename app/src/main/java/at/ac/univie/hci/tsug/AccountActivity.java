@@ -3,12 +3,14 @@ package at.ac.univie.hci.tsug;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -38,9 +40,6 @@ public class AccountActivity extends AppCompatActivity {
 
         bottomNav = findViewById(R.id.bottom_navigation);
 
-        //bottomNav.setOnApplyWindowInsetsListener(null);
-        //bottomNav.setSelectedItemId(R.id.nav_home);
-
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -50,12 +49,16 @@ public class AccountActivity extends AppCompatActivity {
                         //Homescreen
                         intent = new Intent(AccountActivity.this, MainActivity.class);
                         startActivity(intent);
+                        //Von Position-Rechts nach Position-Links
+                        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                         return true;
 
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
                         intent = new Intent(AccountActivity.this, CreateActivity.class);
                         startActivity(intent);
+                        //Von Position-Rechts nach Position-Links
+                        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                         return true;
                 }
                 return false;
@@ -70,11 +73,12 @@ public class AccountActivity extends AppCompatActivity {
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(AccountActivity.this, SettingsActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
         //TESTING TEXT TODO DELETE LATER
         TextView testText = findViewById(R.id.nav_text_testing);
-        testText.setText(activityName);
+        //testText.setText(activityName);
 
         //Martin's Code für Bottom Navigation END
     }
