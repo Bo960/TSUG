@@ -11,6 +11,10 @@
         <item name="colorOnErrorContainer">@color/onErrorContainerColor</item>
         <item name="colorSurface">@color/surfaceColor</item>
         <item name="colorOnSurface">@color/onSurfaceColor</item>
+
+        <!-- Von Martin um Animationen zu erstellen -->
+
+
     </style>
 
     <style name="Theme.TSUG" parent="Base.Theme.TSUG" />
