@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Michael Zeug -->
+<resources>
+    <string-array name="aktualitaet_options">
+        <item>Heute</item>
+        <item>Diese Woche</item>
+        <item>Diesen Monat</item>
+    </string-array>
+
+    <!-- Optionen für die Tags -->
+    <string-array name="tag_options">
+        <item>Guenstig</item>
+        <item>Preiswert</item>
+        <item>Nachtzug</item>
+        <item>Sparangebot</item>
+        <item>Flexibel</item>
+        <item>Gruppentarif</item>
+        <item>Direkt</item>
+        <item>kurze Fahrt</item>
+        <item>lange Fahrt</item>
+    </string-array>
+
+</resources>
