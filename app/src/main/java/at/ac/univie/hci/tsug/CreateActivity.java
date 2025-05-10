@@ -89,6 +89,7 @@ public class CreateActivity extends AppCompatActivity {
         publishButton.setOnClickListener(v -> {
             Intent intent = new Intent(CreateActivity.this, PostActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
 
