@@ -61,23 +61,30 @@ public class PostActivity extends AppCompatActivity {
                         // Homescreen
                         intent = new Intent(PostActivity.this, MainActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.nav_neuer_beitrag:
                         // Beitrag erstellen Seite
                         intent = new Intent(PostActivity.this, CreateActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.nav_account:
                         //Account settings Seite
                         intent = new Intent(PostActivity.this, AccountActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;
             }
         });
+
+        //TESTING TEXT
+        TextView testText = findViewById(R.id.nav_text_testing);
+        testText.setText(activityName);
 
         // TOP NAVIGATION:
         ImageButton backNav = findViewById(R.id.nav_back);
@@ -87,6 +94,7 @@ public class PostActivity extends AppCompatActivity {
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(PostActivity.this, SettingsActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
         // Title
