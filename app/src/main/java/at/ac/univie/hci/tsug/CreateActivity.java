@@ -3,6 +3,7 @@ package at.ac.univie.hci.tsug;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -76,6 +77,18 @@ public class CreateActivity extends AppCompatActivity {
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
 
-        //Martin's Code für Bottom Navigation END
+        // Title
+        TextView titleView = findViewById(R.id.titleView);
+        String title = "TITLE"; // TODO
+        titleView.setText(title);
+
+        // publish & go to post
+        Button publishButton = findViewById(R.id.button);
+        publishButton.setOnClickListener(v -> {
+            Intent intent = new Intent(CreateActivity.this, PostActivity.class);
+            startActivity(intent);
+        });
+
+
     }
 }

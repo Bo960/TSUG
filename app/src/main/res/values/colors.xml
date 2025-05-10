@@ -4,6 +4,7 @@
     <color name="onPrimaryColor">#FFFFFF</color>
     <color name="primaryContainerColor">#EADDFF</color>
     <color name="onPrimaryContainerColor">#21005D</color>
+    <color name="secondaryColor">#464646</color>
     <color name="errorColor">#B3261E</color>
     <color name="onErrorColor">#FFFFFF</color>
     <color name="errorContainerColor">#F9DEDC</color>
