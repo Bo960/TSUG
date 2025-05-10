@@ -13,6 +13,20 @@
         android:theme="@style/Theme.TSUG"
         tools:targetApi="31">
         <activity
+            android:name=".AccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateActivity"
+            android:exported="false"
+            android:label="@string/title_activity_erstellen"
+            android:theme="@style/Theme.TSUG" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

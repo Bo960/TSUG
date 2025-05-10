@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TSUG</string>
+    <string name="title_activity_erstellen">ErstellenActivity</string>
 </resources>

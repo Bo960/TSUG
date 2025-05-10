@@ -1,11 +1,9 @@
 package at.ac.univie.hci.tsug;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -20,22 +18,16 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class MainActivity extends AppCompatActivity {
+public class AccountActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
-    SearchView searchView;
-    String simpleSearchTerm;
-    String activityName = "TSUG";
-
-
+    String activityName = "Konto";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         EdgeToEdge.enable(this);
-
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_account);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -43,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
         //Martin's Code für Bottom Navigation START
 
-        //BOTTOM NAVIGATION:
         bottomNav = findViewById(R.id.bottom_navigation);
 
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -53,49 +45,23 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent intent;
                 switch (item.getItemId()) {
-                    case R.id.nav_neuer_beitrag:
-                        //Beitrag erstellen Seite
-                        intent = new Intent(MainActivity.this, CreateActivity.class);
+                    case R.id.nav_home:
+                        //Homescreen
+                        intent = new Intent(AccountActivity.this, MainActivity.class);
                         startActivity(intent);
-                        //Von Position-Links nach Position-Rechts
-                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                        //Von Position-Rechts nach Position-Links
+                        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                         return true;
 
-                    case R.id.nav_account:
-                        //Account settings Seite
-                        intent = new Intent(MainActivity.this, AccountActivity.class);
+                    case R.id.nav_neuer_beitrag:
+                        //Beitrag erstellen Seite
+                        intent = new Intent(AccountActivity.this, CreateActivity.class);
                         startActivity(intent);
-                        //Von Position-Links nach Position-Rechts
-                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                        //Von Position-Rechts nach Position-Links
+                        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                         return true;
                 }
                 return false;
-            }
-        });
-
-        //SIMPLE SEARCH BAR:
-        searchView = findViewById(R.id.searchView);
-        searchView.clearFocus();
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                simpleSearchTerm = newText;
-                return true;
-            }
-        });
-
-        Button searchButton = findViewById(R.id.searchStart);
-
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView textView = findViewById(R.id.label_babael);
-                textView.setText(simpleSearchTerm);
             }
         });
 
@@ -105,16 +71,15 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(AccountActivity.this, SettingsActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
         //TESTING TEXT TODO DELETE LATER
         TextView testText = findViewById(R.id.nav_text_testing);
-        testText.setText(activityName);
+        //testText.setText(activityName);
 
         //Martin's Code für Bottom Navigation END
     }
 }
-
