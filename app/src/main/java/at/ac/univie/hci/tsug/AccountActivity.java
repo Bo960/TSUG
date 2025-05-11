@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -22,6 +23,15 @@ public class AccountActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     String activityName = "Konto";
+    // für Testen
+    String userId = "123456";
+    String userName = "Max Mustermann";
+    String email = "max@gmail.com";
+    int questionsCount = 10;
+    int answersCount = 12;
+    int likesCount = 8;
+    int points= questionsCount*2+answersCount*3+likesCount;
+    int ranking = (int) Math.floor(points/50.0)+1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +44,7 @@ public class AccountActivity extends AppCompatActivity {
             return insets;
         });
 
-
-
-        //Martin's Code für Bottom Navigation START
-
         bottomNav = findViewById(R.id.bottom_navigation);
-
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -76,10 +81,44 @@ public class AccountActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
-        //TESTING TEXT TODO DELETE LATER
-        TextView testText = findViewById(R.id.nav_text_testing);
-        //testText.setText(activityName);
+        TextView usernameText = findViewById(R.id.username);
+        usernameText.setText(userName);
 
-        //Martin's Code für Bottom Navigation END
+        TextView userIdText = findViewById(R.id.user_id);
+        userIdText.setText(String.format("@%s", userId));
+
+        TextView emailText = findViewById(R.id.email);
+        emailText.setText(email);
+
+        TextView rankingText = findViewById(R.id.ranking);
+        rankingText.setText(String.valueOf("#"+ ranking));
+
+        TextView questionsCountText = findViewById(R.id.questions_count);
+        questionsCountText.setText(String.valueOf(questionsCount));
+
+        TextView answersCountText = findViewById(R.id.answers_count);
+        answersCountText.setText(String.valueOf(answersCount));
+
+        TextView likesCountText = findViewById(R.id.likes_count);
+        likesCountText.setText(String.valueOf(likesCount));
+
+        ((ImageView) findViewById(R.id.profile_image)).setImageResource(R.drawable.account);
+
+        TextView likes = findViewById(R.id.likes);
+        likes.setOnClickListener(v ->{
+            Intent i= new Intent(this, LikedPostsActivity.class);
+            startActivity(i);
+        });
+        TextView seen = findViewById(R.id.seen);
+        seen.setOnClickListener(v ->{
+            Intent i= new Intent(this, SeenPostsActivity.class);
+            startActivity(i);
+        });
+        TextView created=findViewById(R.id.created);
+        created.setOnClickListener(v ->{
+            Intent i= new Intent(this, CreatedPostsActivity.class);
+            startActivity(i);
+        });
+
     }
 }
