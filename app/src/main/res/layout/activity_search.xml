@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.SearchActivity">
+
+    <!-- Top Naviagtion -->
+    <include
+        android:id="@+id/top_navigation"
+
+        layout="@layout/top_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
+
+    <!-- Damit alles Scrollbar bleibt -->
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        android:id="@+id/scroll_view"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_navigation"
+        android:layout_above="@id/bottom_navigation">
+
+        <!-- et...Edit Text -->
+        <!-- btn...Button -->
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Freitext-Suche -->
+            <EditText
+                android:id="@+id/et_search_query"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Suchbegriff eingeben"
+                android:inputType="text" />
+
+            <!-- Kategorie-Auswahl -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kategorie"
+                android:layout_marginTop="16dp" />
+
+            <RadioGroup
+                android:id="@+id/rg_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_frage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frage" />
+
+                <RadioButton
+                    android:id="@+id/rb_tipp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipp" />
+
+                <RadioButton
+                    android:id="@+id/rb_alles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alles" />
+
+            </RadioGroup>
+
+            <!-- Preis-Slider -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Preis (€)"
+                android:layout_marginTop="16dp" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/slider_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="0"
+                android:valueTo="500"
+                android:stepSize="5" />
+
+            <!-- Reisedatum als Start- und Enddatum -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reisedatum"
+                android:layout_marginTop="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/et_date_from"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Von"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:inputType="date" />
+
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/et_date_to"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Bis"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:inputType="date" />
+
+            </LinearLayout>
+
+            <!-- Aktualität mit Spinner -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aktualität"
+                android:layout_marginTop="16dp" />
+
+            <Spinner
+                android:id="@+id/spinner_recency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/aktualitaet_options" />
+
+            <!-- Such-Button -->
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Suchen"
+                android:layout_marginTop="24dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Balken  -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav"
+        app:itemIconSize="45dp"
+        app:labelVisibilityMode="labeled"/>
+</RelativeLayout>

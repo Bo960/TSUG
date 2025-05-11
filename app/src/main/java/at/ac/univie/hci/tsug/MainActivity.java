@@ -1,6 +1,5 @@
 package at.ac.univie.hci.tsug;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,6 +18,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import at.ac.univie.hci.tsug.activities.AccountActivity;
+import at.ac.univie.hci.tsug.activities.CreateActivity;
+import at.ac.univie.hci.tsug.activities.SearchActivity;
+import at.ac.univie.hci.tsug.activities.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-
-        //Martin's Code für Bottom Navigation START
 
         //BOTTOM NAVIGATION:
         bottomNav = findViewById(R.id.bottom_navigation);
@@ -94,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView textView = findViewById(R.id.label_babael);
-                textView.setText(simpleSearchTerm);
+                //TODO SHOW RESULTS
             }
         });
 
@@ -110,11 +110,20 @@ public class MainActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
-        //TESTING TEXT TODO DELETE LATER
+        //SUCHFILTER:
+        Button searchFilter = findViewById(R.id.searchFilter);
+        searchFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
+            }
+        });
+
+        //TEXT
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
-
-        //Martin's Code für Bottom Navigation END
     }
 }
 
