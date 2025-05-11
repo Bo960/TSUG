@@ -21,6 +21,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import at.ac.univie.hci.tsug.activities.AccountActivity;
 import at.ac.univie.hci.tsug.activities.CreateActivity;
+import at.ac.univie.hci.tsug.activities.SearchActivity;
 import at.ac.univie.hci.tsug.activities.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -109,7 +110,18 @@ public class MainActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
-        //TESTING TEXT TODO DELETE LATER
+        //SUCHFILTER:
+        Button searchFilter = findViewById(R.id.searchFilter);
+        searchFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
+            }
+        });
+
+        //TEXT
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
     }
