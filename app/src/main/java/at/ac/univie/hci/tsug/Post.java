@@ -11,6 +11,7 @@ public class Post {
     private String titel;
     private int likes;
     private ArrayList<String> tags;
+    //TODO USER
     private boolean isRegion = true;
     private String region;
     private boolean isRoute = false;
