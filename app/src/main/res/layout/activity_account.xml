@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".KontoActivity">
+    tools:context=".AccountActivity">
 
     <!-- Top Naviagtion -->
     <include
@@ -16,14 +16,18 @@
         android:layout_alignParentTop="true"/>
 
     <!-- Rest vom Layout bestimmt -->
-    <FrameLayout
-        android:id="@+id/main_Layout"
+    <ScrollView
+        android:id="@+id/main_scroll_view"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation">
+        android:layout_above="@id/bottom_navigation"
+        android:layout_below="@id/top_navigation"
+
+        android:fillViewport="true">
 
 
-    </FrameLayout>
+    </ScrollView>
 
     <!-- Nur fürs Testen -->
     <TextView

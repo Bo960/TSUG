@@ -13,16 +13,16 @@
         android:theme="@style/Theme.TSUG"
         tools:targetApi="31">
         <activity
-            android:name=".KontoActivity"
+            android:name=".AccountActivity"
             android:exported="false" />
         <activity
-            android:name=".EinstellungActivity"
+            android:name=".SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".BeitragActivity"
+            android:name=".PostActivity"
             android:exported="false" />
         <activity
-            android:name=".ErstellenActivity"
+            android:name=".CreateActivity"
             android:exported="false"
             android:label="@string/title_activity_erstellen"
             android:theme="@style/Theme.TSUG" />

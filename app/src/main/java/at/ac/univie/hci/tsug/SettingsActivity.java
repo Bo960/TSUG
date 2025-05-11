@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class EinstellungActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     String activityName = "Einstellungen";
@@ -25,7 +25,7 @@ public class EinstellungActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_einstellung);
+        setContentView(R.layout.activity_settings);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -39,9 +39,6 @@ public class EinstellungActivity extends AppCompatActivity {
 
         bottomNav = findViewById(R.id.bottom_navigation);
 
-        //bottomNav.setOnApplyWindowInsetsListener(null);
-        //bottomNav.setSelectedItemId(R.id.nav_home);
-
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -49,20 +46,23 @@ public class EinstellungActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         //Homescreen
-                        intent = new Intent(EinstellungActivity.this, MainActivity.class);
+                        intent = new Intent(SettingsActivity.this, MainActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
 
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
-                        intent = new Intent(EinstellungActivity.this, ErstellenActivity.class);
+                        intent = new Intent(SettingsActivity.this, CreateActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
 
                     case R.id.nav_account:
                         //Account settings Seite
-                        intent = new Intent(EinstellungActivity.this, KontoActivity.class);
+                        intent = new Intent(SettingsActivity.this, AccountActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
                 }
                 return false;
@@ -75,8 +75,9 @@ public class EinstellungActivity extends AppCompatActivity {
 
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
-            Intent intent = new Intent(EinstellungActivity.this, EinstellungActivity.class);
+            Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
         //TESTING TEXT TODO DELETE LATER

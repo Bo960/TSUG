@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class BeitragActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     String activityName = "Beitrag";
@@ -25,7 +25,7 @@ public class BeitragActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_beitrag);
+        setContentView(R.layout.activity_post);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -44,19 +44,19 @@ public class BeitragActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         //Homescreen
-                        intent = new Intent(BeitragActivity.this, MainActivity.class);
+                        intent = new Intent(PostActivity.this, MainActivity.class);
                         startActivity(intent);
                         return true;
 
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
-                        intent = new Intent(BeitragActivity.this, ErstellenActivity.class);
+                        intent = new Intent(PostActivity.this, CreateActivity.class);
                         startActivity(intent);
                         return true;
 
                     case R.id.nav_account:
                         //Account settings Seite
-                        intent = new Intent(BeitragActivity.this, KontoActivity.class);
+                        intent = new Intent(PostActivity.this, AccountActivity.class);
                         startActivity(intent);
                         return true;
                 }
@@ -70,7 +70,7 @@ public class BeitragActivity extends AppCompatActivity {
 
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
-            Intent intent = new Intent(BeitragActivity.this, EinstellungActivity.class);
+            Intent intent = new Intent(PostActivity.this, SettingsActivity.class);
             startActivity(intent);
         });
 
