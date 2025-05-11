@@ -2,7 +2,7 @@
 <resources>
     <color name="primaryColor">#a2cffe</color>
     <color name="onPrimaryColor">#FFFFFF</color>
-    <color name="primaryContainerColor">#EADDFF</color>
+    <color name="primaryContainerColor"></color>
     <color name="secondaryColor">#464646</color>
     <color name="onPrimaryContainerColor">#a2cffe</color>
     <color name="errorColor">#B3261E</color>
@@ -17,5 +17,6 @@
      BITTE ÄNDERN WENN DIESE NICHT PASSEN! -->
     <color name="babyBlue"> #a2cffe </color>
     <color name="darkBlue"> #013469 </color>
+    <color name="lightBlue"> #F5FBFF </color>
 
 </resources>

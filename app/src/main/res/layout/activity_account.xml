@@ -6,9 +6,11 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccountActivity">
+    tools:context=".activities.AccountActivity">
     <!-- Top Naviagtion -->
     <include
+        android:id="@+id/top_navigation"
+
         layout="@layout/top_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

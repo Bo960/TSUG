@@ -45,7 +45,7 @@
                 android:layout_marginRight="20dp"
 
                 app:iconifiedByDefault="false"
-                app:queryHint="Search Here..."/>
+                app:queryHint="Search Here..." />
 
             <Button
                 android:id="@+id/searchStart"
@@ -58,30 +58,13 @@
                 android:text="Suche starten"
                 android:backgroundTint="@color/babyBlue"
                 android:textColor="@color/darkBlue"
-                android:textSize="20dp"
+                android:textSize="25dp"
                 android:gravity="center"/>
 
         </LinearLayout>
     </ScrollView>
 
-    <!-- Nur fürs Testen -->
-    <TextView
-        android:id="@+id/label_babael"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-
-        android:text="HOMESCREEN"
-        android:textSize="30dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Bottom Navigation  -->
+    <!-- Bottom Balken  -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"

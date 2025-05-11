@@ -1,4 +1,4 @@
-package at.ac.univie.hci.tsug;
+package at.ac.univie.hci.tsug.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import at.ac.univie.hci.tsug.MainActivity;
+import at.ac.univie.hci.tsug.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

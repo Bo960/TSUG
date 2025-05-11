@@ -1,4 +1,4 @@
-package at.ac.univie.hci.tsug.comments;
+package at.ac.univie.hci.tsug.elements;
 import at.ac.univie.hci.tsug.R;
 import android.content.Context;
 import android.graphics.Typeface;
