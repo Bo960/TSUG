@@ -1,9 +1,8 @@
-package at.ac.univie.hci.tsug;
+package at.ac.univie.hci.tsug.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,13 +10,15 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import at.ac.univie.hci.tsug.MainActivity;
+import at.ac.univie.hci.tsug.R;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -108,16 +109,22 @@ public class AccountActivity extends AppCompatActivity {
         likes.setOnClickListener(v ->{
             Intent i= new Intent(this, LikedPostsActivity.class);
             startActivity(i);
+            //Von Position-Links nach Position-Rechts
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
         });
         TextView seen = findViewById(R.id.seen);
         seen.setOnClickListener(v ->{
             Intent i= new Intent(this, SeenPostsActivity.class);
             startActivity(i);
+            //Von Position-Links nach Position-Rechts
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
         });
         TextView created=findViewById(R.id.created);
         created.setOnClickListener(v ->{
             Intent i= new Intent(this, CreatedPostsActivity.class);
             startActivity(i);
+            //Von Position-Links nach Position-Rechts
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
         });
 
     }

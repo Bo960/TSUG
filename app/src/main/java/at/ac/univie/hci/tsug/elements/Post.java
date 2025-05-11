@@ -1,8 +1,12 @@
-package at.ac.univie.hci.tsug;
+package at.ac.univie.hci.tsug.elements;
 
 import android.util.Pair;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Post {
     //Instancevariable:
@@ -11,15 +15,17 @@ public class Post {
     private String titel;
     private int likes;
     private ArrayList<String> tags;
-    //TODO USER
+    private User user;
     private boolean isRegion = true;
     private String region;
     private boolean isRoute = false;
     private Pair<String, String> route;
     private String des;
+    private LocalDate date;
+    private LocalTime time;
 
     //Constructor:
-    public Post(String titel, int likes, ArrayList<String> tags, String region, String des) {
+    public Post(String titel, int likes, ArrayList<String> tags, User user, String region, String des) {
         //Error Handeling:
         if(titel.isEmpty())
             throw new IllegalArgumentException("Titel cannot be empty!\n");
@@ -36,6 +42,7 @@ public class Post {
         this.titel = titel;
         this.likes = likes;
         this.tags = tags;
+        this.user = user;
 
         this.isRegion = true;
         this.region = region;
@@ -44,6 +51,9 @@ public class Post {
         this.route = null;
 
         this.des = des;
+
+        this.date = LocalDate.now();
+        this.time = LocalTime.now();
     }
     public Post(String titel, int likes, ArrayList<String> tags, Pair<String, String> route, String des) {
         //Error Handeling:
@@ -64,6 +74,7 @@ public class Post {
         this.titel = titel;
         this.likes = likes;
         this.tags = tags;
+        this.user = user;
 
         this.isRegion = false;
         this.region = null;
@@ -72,7 +83,11 @@ public class Post {
         this.route = route;
 
         this.des = des;
+
+        this.date = LocalDate.now();
+        this.time = LocalTime.now();
     }
+
 
     //Getter Methode:
     public int getID() {
@@ -87,6 +102,10 @@ public class Post {
     public ArrayList<String> getTags() {
         return tags;
     }
+    public User getUser() {
+        return user;
+    }
+
     public String getRegion() {
         if(isRoute)
             throw new IllegalArgumentException("There is no Region!\n");
@@ -99,6 +118,12 @@ public class Post {
     }
     public String getDes() {
         return des;
+    }
+    public LocalDate getDate() {
+        return date;
+    }
+    public LocalTime getTime() {
+        return time;
     }
 
     //Setter Methode:

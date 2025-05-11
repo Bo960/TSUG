@@ -1,4 +1,4 @@
-package at.ac.univie.hci.tsug;
+package at.ac.univie.hci.tsug.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
