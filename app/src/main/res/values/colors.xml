@@ -3,6 +3,7 @@
     <color name="primaryColor">#4A8CC2</color>
     <color name="onPrimaryColor">#FFFFFF</color>
     <color name="secondaryColor">#464646</color>
+    <color name="primaryContainerColor">#B7D7FF</color>
     <color name="onPrimaryContainerColor">#7FC8FF</color>
     <color name="errorColor">#B3261E</color>
     <color name="onErrorColor">#FFFFFF</color>
