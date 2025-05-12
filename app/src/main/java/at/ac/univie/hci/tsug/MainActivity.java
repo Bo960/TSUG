@@ -125,5 +125,8 @@ public class MainActivity extends AppCompatActivity {
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
     }
+    public String getSimpleSearchTerm() {
+        return simpleSearchTerm;
+    }
 }
 
