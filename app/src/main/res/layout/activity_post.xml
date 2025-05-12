@@ -141,14 +141,110 @@
             android:textSize="18sp" />
     </LinearLayout>
 
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/routeContainer"
+        android:layout_margin="8dp"
+        app:singleLine="false">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/frage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Frage"
+            app:chipBackgroundColor="@color/primaryColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tipp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipp"
+            app:chipBackgroundColor="@color/primaryColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/guenstig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Günstig"
+            app:chipBackgroundColor="@color/tertiaryColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preiswert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Preiswert"
+            app:chipBackgroundColor="@color/tertiaryColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/nachtzug"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nachtzug"
+            app:chipBackgroundColor="@color/tertiaryColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/sparangebot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sparangebot"
+            app:chipBackgroundColor="@color/tertiaryColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/flexibel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flexibel"
+            app:chipBackgroundColor="@color/tertiaryColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/gruppentarif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gruppentarif"
+            app:chipBackgroundColor="@color/tertiaryColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/direkt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Direkt"
+            app:chipBackgroundColor="@color/tertiaryColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/kurzeFahrt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kurze Fahrt"
+            app:chipBackgroundColor="@color/tertiaryColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/langeFahrt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lange Fahrt"
+            app:chipBackgroundColor="@color/tertiaryColor"
+            android:textColor="@android:color/white" />
+    </com.google.android.material.chip.ChipGroup>
+
     <!-- Description -->
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/routeContainer"
+        android:layout_below="@+id/chipGroup"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
         android:text="Description"
         android:textColor="@color/secondaryColor"
         android:textSize="18sp" />
@@ -181,6 +277,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/commentHeader"
+        android:layout_above="@id/commentInputSection"
         android:padding="10dp" />
 
     <!-- New Comment -->
@@ -189,7 +286,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_navigation"
-        android:layout_margin="10dp"
         android:orientation="horizontal"
         android:padding="8dp"
         android:background="@android:color/white">
