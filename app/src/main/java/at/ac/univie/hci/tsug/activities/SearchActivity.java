@@ -17,12 +17,16 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
-import at.ac.univie.hci.tsug.MainActivity;
-import at.ac.univie.hci.tsug.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
+
+import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.MainActivity;
+import at.ac.univie.hci.tsug.container.PostContainer;
+import at.ac.univie.hci.tsug.elements.Post;
 
 public class SearchActivity extends AppCompatActivity {
     private EditText etSearchQuery, etDateFrom, etDateTo;
@@ -37,7 +41,6 @@ public class SearchActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_search);
 
-        // Edge-to-edge Padding
         ViewCompat.setOnApplyWindowInsetsListener(
                 findViewById(R.id.main), (v, insets) -> {
                     Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -46,7 +49,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
         );
 
-        // UI-Komponenten initialisieren
+        //activity Komponenten initialisieren
         etSearchQuery = findViewById(R.id.et_search_query);
         rgCategory     = findViewById(R.id.rg_category);
         etDateFrom     = findViewById(R.id.et_date_from);
@@ -55,20 +58,20 @@ public class SearchActivity extends AppCompatActivity {
         chipGroupTags  = findViewById(R.id.chip_group_tags);
         btnSearch      = findViewById(R.id.btn_search);
 
-        // Default-Kategorie: "Alles"
+        //Per Default ist Alles als Kategorie gewählt
         rgCategory.check(R.id.rb_alles);
 
-        // Suchbegriff von MainActivity holen und vorfüllen
+        //Suchbegriff von MainActivity holen und vorfüllen - Ist manchmal als Fehler markiert und manchmal nicht WTF
         String initialQuery = MainActivity.getSimpleSearchTerm();
         if (initialQuery != null) {
             etSearchQuery.setText(initialQuery);
         }
 
-        // DatePicker-Dialoge für Reisedatum
+        //DatePicker-Dialoge für Reisedatum - wenn es läuft -> mehr testen
         etDateFrom.setOnClickListener(v -> showDatePicker(etDateFrom));
         etDateTo.setOnClickListener(v   -> showDatePicker(etDateTo));
 
-        // Tags aus arrays.xml als Chips erzeugen
+        //Tags aus arrays.xml als Chips erzeugen (Keine zum Essen, aber zum Draufdrücken)
         String[] tags = getResources().getStringArray(R.array.tag_options);
         for (String tag : tags) {
             Chip chip = new Chip(this);
@@ -77,48 +80,75 @@ public class SearchActivity extends AppCompatActivity {
             chipGroupTags.addView(chip);
         }
 
-        // Such-Button Listener
-        btnSearch.setOnClickListener(v -> {
-            // a) Freitext (optional)
-            String query = etSearchQuery.getText().toString().trim();
-
-            // b) Kategorie (immer gesetzt)
-            int catId = rgCategory.getCheckedRadioButtonId();
-            String category = catId == R.id.rb_frage ? "Frage"
-                    : catId == R.id.rb_tipp  ? "Tipp"
-                    :                           "Alles";
-
-            // c) Reisedatum (leer lassen, wenn nicht gesetzt)
-            String dateFrom = etDateFrom.getText().toString().trim();
-            String dateTo   = etDateTo.getText().toString().trim();
-
-            // d) Aktualität (immer eine Auswahl via Spinner)
-            String recency = spinnerRecency.getSelectedItem().toString();
-
-            // e) Tags (kann leer sein)
-            ArrayList<String> selectedTags = new ArrayList<>();
-            for (int i = 0; i < chipGroupTags.getChildCount(); i++) {
-                Chip c = (Chip) chipGroupTags.getChildAt(i);
-                if (c.isChecked()) {
-                    selectedTags.add(c.getText().toString());
-                }
-            }
-
-            // Neue Activity starten und Filterkriterien übergeben
-            Intent intent = new Intent(this, SearchResultsActivity.class);
-            intent.putExtra("query", query);
-            intent.putExtra("category", category);
-            intent.putExtra("dateFrom", dateFrom);
-            intent.putExtra("dateTo", dateTo);
-            intent.putExtra("recency", recency);
-            intent.putStringArrayListExtra("tags", selectedTags);
-            startActivity(intent);
-        });
+        //Such-Button Listener (richtig mit Ohren)
+        btnSearch.setOnClickListener(v -> applyFilters());
     }
 
-    /**
-     * Zeigt einen DatePickerDialog und trägt das Ergebnis ins Ziel-EditText ein.
-     */
+    //Filtert alle Posts anhand der Nutzerkriterien und startet die Ergebnis-Activity.
+    private void applyFilters() {
+        //Freitext
+        String query = etSearchQuery.getText().toString().trim().toLowerCase(Locale.getDefault());
+        //Kategorie
+        int catId = rgCategory.getCheckedRadioButtonId();
+        String category = catId == R.id.rb_frage ? "Frage"
+                : catId == R.id.rb_tipp  ? "Tipp"
+                :                           "Alles";
+        //Reisedatum
+        String dateFrom = etDateFrom.getText().toString().trim();
+        String dateTo   = etDateTo.getText().toString().trim();
+        //Aktualität
+        String recency = spinnerRecency.getSelectedItem().toString();
+        //Tags
+        List<String> selectedTags = new ArrayList<>();
+        for (int i = 0; i < chipGroupTags.getChildCount(); i++) {
+            Chip c = (Chip) chipGroupTags.getChildAt(i);
+            if (c.isChecked()) selectedTags.add(c.getText().toString());
+        }
+
+        //Alle Posts laden und filtern
+        List<Post> allPosts = new ArrayList<>(PostContainer.getAllPosts()); //getAllPosts ist rot, aber es wird in activity_main.xml verwender?! - MAAAAAAAAARRRRRRTTTTTTTTIIIIIIIINNNNNNNNNNNN
+        List<Post> filtered = allPosts.stream()
+                .filter(p -> {
+                    //Textsuche in Titel oder Beschreibung
+                    boolean matchesText = query.isEmpty()
+                            || p.getTitel().toLowerCase().contains(query)
+                            || p.getDes().toLowerCase().contains(query);
+                    if (!matchesText) return false;
+                    //Kategorie
+                    if (!category.equals("Alles") && !p.getTags().contains(category)) return false;
+                    //Datumsbereich (Als dd.mm.yyyy -> gehe davon aus)
+                    if (!dateFrom.isEmpty() || !dateTo.isEmpty()) {
+                        try {
+                            java.time.LocalDate from = dateFrom.isEmpty()
+                                    ? java.time.LocalDate.MIN
+                                    : java.time.LocalDate.parse(dateFrom, java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+                            java.time.LocalDate to = dateTo.isEmpty()
+                                    ? java.time.LocalDate.MAX
+                                    : java.time.LocalDate.parse(dateTo, java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+                            if (p.getDate().isBefore(from) || p.getDate().isAfter(to)) return false;
+                        } catch (Exception x) {
+                            //ignorieren bei Parse-Fehlern
+                        }
+                    }
+                    //Aktualität (Spinner) -> Kommt vielleicht noch (buggy wie sau und zach)
+
+
+
+                    //Tags
+                    if (!selectedTags.isEmpty()) {
+                        if (p.getTags().stream().noneMatch(selectedTags::contains)) return false;
+                    }
+                    return true;
+                })
+                .collect(Collectors.toList());
+
+        //Ergebnisse weiterreichen
+        Intent intent = new Intent(this, SearchResultsActivity.class);
+        intent.putParcelableArrayListExtra("results", new ArrayList<>(filtered)); //Hier manchmal rot markiert das new ArrayList...
+        startActivity(intent);
+    }
+
+    //Zeigt einen DatePickerDialog und trägt das Ergebnis ins Ziel-EditText ein.
     private void showDatePicker(final EditText target) {
         Calendar c = Calendar.getInstance();
         new DatePickerDialog(

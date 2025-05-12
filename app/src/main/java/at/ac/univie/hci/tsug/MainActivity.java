@@ -154,5 +154,6 @@ public class MainActivity extends AppCompatActivity {
     public String getSimpleSearchTerm() {
         return simpleSearchTerm;
     }
+
 }
 
