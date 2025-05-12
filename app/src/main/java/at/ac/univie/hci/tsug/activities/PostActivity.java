@@ -174,7 +174,7 @@ public class PostActivity extends AppCompatActivity {
         sendCommentBtn.setOnClickListener(v -> {
             String text = commentInput.getText().toString().trim();
             if (!text.isEmpty()) {
-                Comment newComment = new Comment(new User("John", "john@gmail.com"), text); // TODO hardcoded author
+                Comment newComment = new Comment(new User("John", "john@gmail.com", "123456789"), text); // TODO hardcoded author
                 commentArrayList.add(0, newComment);
                 commentAdapter.notifyDataSetChanged();
                 commentInput.setText("");

@@ -19,16 +19,23 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.Set;
+
 import at.ac.univie.hci.tsug.activities.AccountActivity;
 import at.ac.univie.hci.tsug.activities.CreateActivity;
 import at.ac.univie.hci.tsug.activities.SearchActivity;
 import at.ac.univie.hci.tsug.activities.SettingsActivity;
+import at.ac.univie.hci.tsug.container.Container;
+import at.ac.univie.hci.tsug.container.PostContainer;
+import at.ac.univie.hci.tsug.container.UserContainer;
+import at.ac.univie.hci.tsug.elements.Post;
+import at.ac.univie.hci.tsug.elements.User;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     SearchView searchView;
-    String simpleSearchTerm;
+    public String simpleSearchTerm;
     String activityName = "TSUG";
 
 
@@ -124,6 +131,25 @@ public class MainActivity extends AppCompatActivity {
         //TEXT
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
+
+        //TODO TESTING CONTAINER to delete later:
+        TextView username = findViewById(R.id.test_name);
+        TextView user_id = findViewById(R.id.test_user_ID);
+        TextView titel = findViewById(R.id.test_titel);
+        TextView post_id = findViewById(R.id.test_post_ID);
+        TextView post_des = findViewById(R.id.test_des);
+
+        Set<Post> allPosts = Container.getAllPosts();
+        Post post = allPosts.iterator().next();
+
+        username.setText(post.getUser().getName());
+        user_id.setText(String.valueOf(post.getUser().getID()));
+
+        titel.setText(post.getTitel());
+        post_id.setText(String.valueOf(post.getID()));
+        post_des.setText(post.getDes());
+
+
     }
     public String getSimpleSearchTerm() {
         return simpleSearchTerm;
