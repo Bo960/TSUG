@@ -1,4 +1,4 @@
-package at.ac.univie.hci.tsug;
+package at.ac.univie.hci.tsug.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -24,12 +24,14 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.ac.univie.hci.tsug.comments.Comment;
-import at.ac.univie.hci.tsug.comments.CommentAdapter;
+import at.ac.univie.hci.tsug.MainActivity;
+import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.elements.Comment;
+import at.ac.univie.hci.tsug.elements.CommentAdapter;
+import at.ac.univie.hci.tsug.elements.User;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -61,23 +63,30 @@ public class PostActivity extends AppCompatActivity {
                         // Homescreen
                         intent = new Intent(PostActivity.this, MainActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.nav_neuer_beitrag:
                         // Beitrag erstellen Seite
                         intent = new Intent(PostActivity.this, CreateActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.nav_account:
                         //Account settings Seite
                         intent = new Intent(PostActivity.this, AccountActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;
             }
         });
+
+        //TESTING TEXT
+        TextView testText = findViewById(R.id.nav_text_testing);
+        testText.setText(activityName);
 
         // TOP NAVIGATION:
         ImageButton backNav = findViewById(R.id.nav_back);
@@ -87,6 +96,7 @@ public class PostActivity extends AppCompatActivity {
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(PostActivity.this, SettingsActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
         // Title
@@ -164,7 +174,7 @@ public class PostActivity extends AppCompatActivity {
         sendCommentBtn.setOnClickListener(v -> {
             String text = commentInput.getText().toString().trim();
             if (!text.isEmpty()) {
-                Comment newComment = new Comment("John", text); // TODO hardcoded author
+                Comment newComment = new Comment(new User("John", "john@gmail.com"), text); // TODO hardcoded author
                 commentArrayList.add(0, newComment);
                 commentAdapter.notifyDataSetChanged();
                 commentInput.setText("");

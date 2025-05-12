@@ -9,12 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -25,6 +23,9 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import at.ac.univie.hci.tsug.MainActivity;
+import at.ac.univie.hci.tsug.R;
 
 public class CreateActivity extends AppCompatActivity {
 
@@ -48,6 +49,7 @@ public class CreateActivity extends AppCompatActivity {
         });
 
 
+
         //Martin's Code für Bottom Navigation START
 
         bottomNav = findViewById(R.id.bottom_navigation);
@@ -64,12 +66,16 @@ public class CreateActivity extends AppCompatActivity {
                         //Homescreen
                         intent = new Intent(CreateActivity.this, MainActivity.class);
                         startActivity(intent);
+                        //Von Position-Rechts nach Position-Links
+                        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                         return true;
 
                     case R.id.nav_account:
                         //Account settings Seite
                         intent = new Intent(CreateActivity.this, AccountActivity.class);
                         startActivity(intent);
+                        //Von Position-Links nach Position-Rechts
+                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                         return true;
                 }
                 return false;
@@ -84,6 +90,7 @@ public class CreateActivity extends AppCompatActivity {
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(CreateActivity.this, SettingsActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
         EditText start = findViewById(R.id.inputStart);
@@ -155,6 +162,6 @@ public class CreateActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
+        //Martin's Code für Bottom Navigation END
     }
 }
