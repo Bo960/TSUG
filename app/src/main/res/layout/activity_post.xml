@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostActivity">
+    tools:context=".activities.PostActivity">
 
     <!-- Top Naviagtion -->
     <include
@@ -23,13 +23,25 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="false"
-        android:layout_marginTop="80dp"
-        android:text="display title"
+        android:layout_marginTop="90dp"
+        android:text="no title"
         android:textColor="@color/primaryColor"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editPostBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/likesView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:paddingTop="50dp"
+        android:contentDescription="Bearbeiten"
+        app:srcCompat="@drawable/outline_edit_24"
+        android:visibility="gone"
+        app:tint="@android:color/white"
+        app:backgroundTint="@color/primaryColor" />
 
     <!-- Likes Icon -->
     <ImageView
@@ -65,6 +77,7 @@
         android:layout_alignBottom="@id/likeIcon"
         android:layout_marginEnd="8dp"
         android:layout_toStartOf="@id/authorView"
+        android:visibility="visible"
         android:contentDescription="author icon"
         app:srcCompat="@drawable/baseline_person_outline_24"
         app:tint="@color/primaryColor" />
@@ -78,6 +91,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:text="AUTHOR"
+        android:visibility="visible"
         android:textColor="@color/secondaryColor"
         android:textSize="16sp" />
 
@@ -170,7 +184,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Günstig"
-            app:chipBackgroundColor="@color/tertiaryColor"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
             android:textColor="@android:color/white" />
 
         <com.google.android.material.chip.Chip
@@ -178,7 +192,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Preiswert"
-            app:chipBackgroundColor="@color/tertiaryColor"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
             android:textColor="@android:color/white" />
 
         <com.google.android.material.chip.Chip
@@ -186,7 +200,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nachtzug"
-            app:chipBackgroundColor="@color/tertiaryColor"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
             android:textColor="@android:color/white" />
 
         <com.google.android.material.chip.Chip
@@ -194,7 +208,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sparangebot"
-            app:chipBackgroundColor="@color/tertiaryColor"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
             android:textColor="@android:color/white" />
 
         <com.google.android.material.chip.Chip
@@ -202,7 +216,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Flexibel"
-            app:chipBackgroundColor="@color/tertiaryColor"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
             android:textColor="@android:color/white" />
 
         <com.google.android.material.chip.Chip
@@ -210,7 +224,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gruppentarif"
-            app:chipBackgroundColor="@color/tertiaryColor"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
             android:textColor="@android:color/white" />
 
         <com.google.android.material.chip.Chip
@@ -218,7 +232,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Direkt"
-            app:chipBackgroundColor="@color/tertiaryColor"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
             android:textColor="@android:color/white" />
 
         <com.google.android.material.chip.Chip
@@ -226,7 +240,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Kurze Fahrt"
-            app:chipBackgroundColor="@color/tertiaryColor"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
             android:textColor="@android:color/white" />
 
         <com.google.android.material.chip.Chip
@@ -234,7 +248,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Lange Fahrt"
-            app:chipBackgroundColor="@color/tertiaryColor"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
             android:textColor="@android:color/white" />
     </com.google.android.material.chip.ChipGroup>
 
@@ -245,7 +259,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/chipGroup"
         android:layout_marginStart="15dp"
-        android:text="Description"
+        android:text=""
         android:textColor="@color/secondaryColor"
         android:textSize="18sp" />
 

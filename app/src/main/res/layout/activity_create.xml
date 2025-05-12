@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateActivity">
+    tools:context=".activities.CreateActivity">
 
     <!-- Top Naviagtion -->
     <include
@@ -14,9 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"/>
-
-    <!-- Rest vom Layout bestimmt -->
-
 
     <!-- Scrollbarer Bereich für Inhalte -->
     <ScrollView
@@ -126,7 +123,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:padding="12dp"
+                    android:padding="15dp"
                     android:importantForAccessibility="yes" />
 
                 <Button
@@ -135,9 +132,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:layout_marginStart="8dp"
-                    android:backgroundTint="@color/primaryContainerColor"
-                    android:textColor="@color/primaryColor"
-                    android:textStyle="bold"
+                    android:backgroundTint="@color/surfaceVariantColor"
+                    android:textColor="@android:color/black"
                     android:text="Kategorien"
                     android:padding="12dp" />
             </LinearLayout>

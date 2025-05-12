@@ -1,4 +1,4 @@
-package at.ac.univie.hci.tsug;
+package at.ac.univie.hci.tsug.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -35,7 +37,7 @@ public class CreateActivity extends AppCompatActivity {
     String[] tags = {"Günstig", "Preiswert", "Nachtzug", "Sparangebot", "Flexibel", "Gruppentarif", "Direkt", "Kurze Fahrt", "Lange Fahrt"};
     boolean[] selectedTags = new boolean[tags.length];
     List<String> selectedTagList = new ArrayList<>();
-    private String selectedFrageTipp;
+    String selectedFrageTipp = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,6 @@ public class CreateActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
 
 
         //Martin's Code für Bottom Navigation START
@@ -93,25 +94,13 @@ public class CreateActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
-        EditText start = findViewById(R.id.inputStart);
-        EditText end = findViewById(R.id.inputEnd);
-        EditText region = findViewById(R.id.inputRegion);
-        String startText = start.getText().toString().trim();
-        String endText = end.getText().toString().trim();
-        String regionText = region.getText().toString().trim();
-
-        if (((startText.isEmpty() || endText.isEmpty()) && regionText.isEmpty()) || ((!startText.isEmpty() || !endText.isEmpty()) && !regionText.isEmpty())) {
-            start.setError("Enweder Start und Ziel ODER Region erforderlich"); // TODO
-            end.setError("Enweder Start und Ziel ODER Region erforderlich");
-            region.setError("Enweder Start und Ziel ODER Region erforderlich");
-        }
 
         // tag frage / tipp
         Spinner tagSpinner = findViewById(R.id.tagFrageOderTipp);
         TextView spinnerErrorText = findViewById(R.id.spinnerErrorText);
         String[] tagsArray = {"Frage", "Tipp"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tagsArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // Dropdown
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tagSpinner.setAdapter(adapter);
         tagSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -123,7 +112,7 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 selectedFrageTipp = null;
-                spinnerErrorText.setText("Bitte eine Kategorie auswählen.");
+                spinnerErrorText.setText("Bitte eine Kategorie auswählen."); // TODO neccessary?
                 spinnerErrorText.setVisibility(View.VISIBLE);
             }
         });
@@ -133,35 +122,68 @@ public class CreateActivity extends AppCompatActivity {
         buttonSelectTags.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(CreateActivity.this);
             builder.setTitle("Tags auswählen");
-            builder.setMultiChoiceItems(tags, selectedTags, (dialog, which, isChecked) -> {
-                selectedTags[which] = isChecked;
-            });
+            builder.setMultiChoiceItems(tags, selectedTags, (dialog, which, isChecked) -> selectedTags[which] = isChecked);
             builder.setPositiveButton("OK", (dialog, which) -> {
                 selectedTagList.clear();
                 for (int i = 0; i < tags.length; i++) {
-                    if (selectedTags[i]) {
-                        selectedTagList.add(tags[i]);
-                    }
+                    if (selectedTags[i]) selectedTagList.add(tags[i]);
                 }
             });
             builder.show();
         });
 
-        EditText input_title = findViewById(R.id.inputTitle);
-        String title = input_title.getText().toString();
-        EditText input_description = findViewById(R.id.inputDescription);
-        String description = input_description.getText().toString();
-
-
-        // publish & go to post
+        // publish & go to post if correct
         Button publishButton = findViewById(R.id.publishBtn);
         publishButton.setOnClickListener(v -> {
-            Intent intent = new Intent(CreateActivity.this, PostActivity.class);
-            // intent.putExtra("beitrag_id", 42); // TODO id
-            // in Post: int beitragID = getIntent().getIntExtra("titel_id", -1);
-            startActivity(intent);
-        });
+            EditText input_start = findViewById(R.id.inputStart);
+            EditText input_end = findViewById(R.id.inputEnd);
+            EditText input_region = findViewById(R.id.inputRegion);
+            EditText input_title = findViewById(R.id.inputTitle);
 
-        //Martin's Code für Bottom Navigation END
+            String title = input_title.getText().toString();
+            String startText = input_start.getText().toString();
+            String endText = input_end.getText().toString();
+            String regionText = input_region.getText().toString();
+
+            boolean valid = true;
+
+            input_start.setError(null);
+            input_end.setError(null);
+            input_region.setError(null);
+            input_title.setError(null);
+
+            // Validation
+            if ((startText.isEmpty() || endText.isEmpty()) && regionText.isEmpty()) {
+                valid = false;
+                if (startText.isEmpty())
+                    input_start.setError("Bitte entweder Start & Ziel angeben oder Region");
+                if (endText.isEmpty())
+                    input_end.setError("Bitte entweder Start & Ziel angeben oder Region");
+                input_region.setError("Bitte entweder Start & Ziel angeben oder Region");
+            }
+
+            if ((!startText.isEmpty() || !endText.isEmpty()) && !regionText.isEmpty()) {
+                valid = false;
+                if (!startText.isEmpty())
+                    input_start.setError("Bitte entweder Start & Ziel angeben oder Region");
+                if (!endText.isEmpty())
+                    input_end.setError("Bitte entweder Start & Ziel angeben oder Region");
+                input_region.setError("Bitte enweder Start & Ziel angeben oder Region");
+            }
+
+            if (title.isEmpty()) {
+                valid = false;
+                input_title.setError("Bitte Titel angeben");
+            }
+
+            if (valid) {
+                // TODO Speichern
+
+                Intent intent = new Intent(CreateActivity.this, PostActivity.class);
+                // intent.putExtra("beitrag_id", 42); // TODO id
+                // in Post: int beitragID = getIntent().getIntExtra("titel_id", -1);
+                startActivity(intent);
+            }
+        });
     }
 }

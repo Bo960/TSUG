@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -27,6 +28,9 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import at.ac.univie.hci.tsug.activities.CreateActivity;
 import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.elements.Comment;
@@ -123,6 +127,34 @@ public class PostActivity extends AppCompatActivity {
         likeIcon.setOnClickListener(likeClickListener);
         likesView.setOnClickListener(likeClickListener); // click on number
 
+        // show author or edit
+        TextView authorView = findViewById(R.id.authorView);
+        ImageView authorIcon = findViewById(R.id.authorIcon);
+
+        FloatingActionButton editPostBtn = findViewById(R.id.editPostBtn);
+
+        if (authorView.toString().isEmpty()) { // TODO hardcoded
+            editPostBtn.setVisibility(View.VISIBLE);
+            authorView.setVisibility(View.GONE);
+            authorIcon.setVisibility(View.GONE);
+        } else {
+            editPostBtn.setVisibility(View.GONE);
+            authorView.setVisibility(View.VISIBLE);
+            authorIcon.setVisibility(View.VISIBLE);
+        }
+
+        // edit post
+        editPostBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(PostActivity.this, "Bearbeiten geklickt", Toast.LENGTH_SHORT).show();
+
+                // Beispiel: Starte eine Bearbeiten-Aktivität
+                // Intent intent = new Intent(PostActivity.this, EditPostActivity.class);
+                // startActivity(intent);
+            }
+        });
+
         TextView startPlace = findViewById(R.id.startPlace);
         TextView endPlace = findViewById(R.id.endPlace);
         TextView region = findViewById(R.id.region);
@@ -159,14 +191,14 @@ public class PostActivity extends AppCompatActivity {
             endPlace.setText(end);
         }
 
-        // TODO tags
+        // TODO visible tags
 
         // Comments
         ListView commentListView = findViewById(R.id.commentListView);
         List<Comment> commentArrayList = new ArrayList<>();
         CommentAdapter commentAdapter = new CommentAdapter(this, commentArrayList);
         commentListView.setAdapter(commentAdapter);
-        // TODO kommentare speichern?
+        // TODO kommentare speichern
 
         // input: new comment
         EditText commentInput = findViewById(R.id.commentInput);
@@ -175,8 +207,8 @@ public class PostActivity extends AppCompatActivity {
             String text = commentInput.getText().toString().trim();
             if (!text.isEmpty()) {
                 Comment newComment = new Comment(new User("John", "john@gmail.com"), text); // TODO hardcoded author
-                commentArrayList.add(0, newComment);
-                commentAdapter.notifyDataSetChanged();
+                commentArrayList.add(0, newComment); // add comment
+                commentAdapter.notifyDataSetChanged(); // update dataset
                 commentInput.setText("");
                 // hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
