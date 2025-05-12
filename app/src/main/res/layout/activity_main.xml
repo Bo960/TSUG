@@ -53,11 +53,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
 
                 android:text="Suche starten"
-                android:backgroundTint="@color/babyBlue"
-                android:textColor="@color/darkBlue"
+                android:backgroundTint="@color/onPrimaryContainerColor"
+                android:textColor="@color/primaryColor"
                 android:textSize="25dp"
                 android:gravity="center"/>
 
@@ -67,7 +66,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
 
                 android:text="Filter"
                 android:backgroundTint="@color/secondaryColor"
