@@ -1,0 +1,814 @@
+Index: app/src/main/java/at/ac/univie/hci/tsug/activities/PostActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package at.ac.univie.hci.tsug.activities;\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.view.inputmethod.InputMethodManager;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ImageView;\r\nimport android.widget.ListView;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\n\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\nimport com.google.android.material.navigation.NavigationBarView;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\nimport at.ac.univie.hci.tsug.MainActivity;\r\nimport at.ac.univie.hci.tsug.R;\r\nimport at.ac.univie.hci.tsug.elements.Comment;\r\nimport at.ac.univie.hci.tsug.elements.CommentAdapter;\r\nimport at.ac.univie.hci.tsug.elements.User;\r\n\r\npublic class PostActivity extends AppCompatActivity {\r\n\r\n    BottomNavigationView bottomNav;\r\n    String activityName = \"Beitrag\";\r\n    public boolean postLiked = false;\r\n    private int likes = 55; // TODO hardcoded\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.activity_post);\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {\r\n            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);\r\n            return insets;\r\n        });\r\n\r\n        // Bottom Navigation\r\n        bottomNav = findViewById(R.id.bottom_navigation);\r\n        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {\r\n            @SuppressLint(\"NonConstantResourceId\")\r\n            @Override\r\n            public boolean onNavigationItemSelected(@NonNull MenuItem item) {\r\n                Intent intent;\r\n                switch (item.getItemId()) {\r\n                    case R.id.nav_home:\r\n                        // Homescreen\r\n                        intent = new Intent(PostActivity.this, MainActivity.class);\r\n                        startActivity(intent);\r\n                        overridePendingTransition(0, 0);\r\n                        return true;\r\n\r\n                    case R.id.nav_neuer_beitrag:\r\n                        // Beitrag erstellen Seite\r\n                        intent = new Intent(PostActivity.this, CreateActivity.class);\r\n                        startActivity(intent);\r\n                        overridePendingTransition(0, 0);\r\n                        return true;\r\n\r\n                    case R.id.nav_account:\r\n                        //Account settings Seite\r\n                        intent = new Intent(PostActivity.this, AccountActivity.class);\r\n                        startActivity(intent);\r\n                        overridePendingTransition(0, 0);\r\n                        return true;\r\n                }\r\n                return false;\r\n            }\r\n        });\r\n\r\n        //TEXT\r\n        TextView testText = findViewById(R.id.nav_text_testing);\r\n        testText.setText(activityName);\r\n\r\n        // TOP NAVIGATION:\r\n        ImageButton backNav = findViewById(R.id.nav_back);\r\n        backNav.setOnClickListener(v -> finish());\r\n\r\n        ImageButton setNav = findViewById(R.id.nav_einstellungen);\r\n        setNav.setOnClickListener(v -> {\r\n            Intent intent = new Intent(PostActivity.this, SettingsActivity.class);\r\n            startActivity(intent);\r\n            overridePendingTransition(0, 0);\r\n        });\r\n\r\n        // Title\r\n        TextView titleView = findViewById(R.id.titleView);\r\n        String title = \"TITLE\"; // TODO hardcoded\r\n        titleView.setText(title);\r\n\r\n        // Likes\r\n        TextView likesView = findViewById(R.id.likesView);\r\n        likesView.setText(likes + \"\");\r\n        ImageView likeIcon = findViewById(R.id.likeIcon);\r\n\r\n        View.OnClickListener likeClickListener = v -> {\r\n            postLiked = !postLiked;\r\n            if (postLiked) {\r\n                likes++;\r\n                likeIcon.setImageResource(R.drawable.baseline_favorite_24); // Gefülltes Herz\r\n            } else {\r\n                likes--;\r\n                likeIcon.setImageResource(R.drawable.baseline_favorite_border_24); // Leeres Herz\r\n            }\r\n            likesView.setText(String.valueOf(likes));\r\n        };\r\n        likeIcon.setOnClickListener(likeClickListener);\r\n        likesView.setOnClickListener(likeClickListener); // click on number\r\n\r\n        TextView startPlace = findViewById(R.id.startPlace);\r\n        TextView endPlace = findViewById(R.id.endPlace);\r\n        TextView region = findViewById(R.id.region);\r\n        ImageView routeIcon = findViewById(R.id.routeIcon);\r\n        ImageView regionIcon = findViewById(R.id.regionIcon);\r\n\r\n        // TODO hardcoded\r\n        String start = \"START\";\r\n        String end = \"END\";\r\n        String regionTxt = \"\";\r\n\r\n        // check if exact route is given or region\r\n        if (regionTxt == \"\") {\r\n            // show start & icon & end\r\n            startPlace.setVisibility(View.VISIBLE);\r\n            routeIcon.setVisibility(View.VISIBLE);\r\n            endPlace.setVisibility(View.VISIBLE);\r\n            // don't show region & icon\r\n            regionIcon.setVisibility(View.GONE);\r\n            region.setVisibility(View.GONE);\r\n        } else {\r\n            regionIcon.setVisibility(View.VISIBLE);\r\n            region.setVisibility(View.VISIBLE);\r\n\r\n            startPlace.setVisibility(View.GONE);\r\n            routeIcon.setVisibility(View.GONE);\r\n            endPlace.setVisibility(View.GONE);\r\n        }\r\n\r\n        if (regionTxt != \"\") {\r\n            region.setText(regionTxt);\r\n        } else {\r\n            startPlace.setText(start);\r\n            endPlace.setText(end);\r\n        }\r\n\r\n        // TODO tags\r\n\r\n        // Comments\r\n        ListView commentListView = findViewById(R.id.commentListView);\r\n        List<Comment> commentArrayList = new ArrayList<>();\r\n        CommentAdapter commentAdapter = new CommentAdapter(this, commentArrayList);\r\n        commentListView.setAdapter(commentAdapter);\r\n        // TODO kommentare speichern?\r\n\r\n        // input: new comment\r\n        EditText commentInput = findViewById(R.id.commentInput);\r\n        Button sendCommentBtn = findViewById(R.id.sendCommentBtn);\r\n        sendCommentBtn.setOnClickListener(v -> {\r\n            String text = commentInput.getText().toString().trim();\r\n            if (!text.isEmpty()) {\r\n                Comment newComment = new Comment(new User(\"John\", \"john@gmail.com\", \"123456789\"), text); // TODO hardcoded author\r\n                commentArrayList.add(0, newComment);\r\n                commentAdapter.notifyDataSetChanged();\r\n                commentInput.setText(\"\");\r\n                // hide keyboard\r\n                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);\r\n                if (imm != null) {\r\n                    imm.hideSoftInputFromWindow(commentInput.getWindowToken(), 0);\r\n                }\r\n            }\r\n        });\r\n\r\n        commentAdapter.updateComments(commentArrayList);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/at/ac/univie/hci/tsug/activities/PostActivity.java b/app/src/main/java/at/ac/univie/hci/tsug/activities/PostActivity.java
+--- a/app/src/main/java/at/ac/univie/hci/tsug/activities/PostActivity.java	(revision 6b7df6d7a6432de1d12d4fe7954a9d4cde012a84)
++++ b/app/src/main/java/at/ac/univie/hci/tsug/activities/PostActivity.java	(date 1747154636337)
+@@ -13,6 +13,7 @@
+ import android.widget.ImageView;
+ import android.widget.ListView;
+ import android.widget.TextView;
++import android.widget.Toast;
+ 
+ import androidx.activity.EdgeToEdge;
+ import androidx.annotation.NonNull;
+@@ -22,15 +23,20 @@
+ import androidx.core.view.WindowInsetsCompat;
+ 
+ import com.google.android.material.bottomnavigation.BottomNavigationView;
++import com.google.android.material.chip.Chip;
+ import com.google.android.material.navigation.NavigationBarView;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
+ 
++import com.google.android.material.floatingactionbutton.FloatingActionButton;
++
+ import at.ac.univie.hci.tsug.MainActivity;
+ import at.ac.univie.hci.tsug.R;
++import at.ac.univie.hci.tsug.container.Container;
+ import at.ac.univie.hci.tsug.elements.Comment;
+ import at.ac.univie.hci.tsug.elements.CommentAdapter;
++import at.ac.univie.hci.tsug.elements.Post;
+ import at.ac.univie.hci.tsug.elements.User;
+ 
+ public class PostActivity extends AppCompatActivity {
+@@ -38,7 +44,6 @@
+     BottomNavigationView bottomNav;
+     String activityName = "Beitrag";
+     public boolean postLiked = false;
+-    private int likes = 55; // TODO hardcoded
+ 
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+@@ -99,43 +104,91 @@
+             overridePendingTransition(0, 0);
+         });
+ 
++        int beitragID = getIntent().getIntExtra("beitrag_id", 0);
++        Post createdPost = Container.getPost(beitragID);
++
+         // Title
+         TextView titleView = findViewById(R.id.titleView);
+-        String title = "TITLE"; // TODO hardcoded
++        String title = createdPost.getTitle();
+         titleView.setText(title);
+ 
+         // Likes
+         TextView likesView = findViewById(R.id.likesView);
+-        likesView.setText(likes + "");
+         ImageView likeIcon = findViewById(R.id.likeIcon);
++        likesView.setText(createdPost.getLikes() + "");
+ 
+         View.OnClickListener likeClickListener = v -> {
++            // TODO prohibit save your own post
+             postLiked = !postLiked;
+             if (postLiked) {
+-                likes++;
+-                likeIcon.setImageResource(R.drawable.baseline_favorite_24); // Gefülltes Herz
++                createdPost.like();
++                likeIcon.setImageResource(R.drawable.baseline_favorite_24);
+             } else {
+-                likes--;
+-                likeIcon.setImageResource(R.drawable.baseline_favorite_border_24); // Leeres Herz
++                createdPost.unlike();
++                likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
+             }
+-            likesView.setText(String.valueOf(likes));
++            likesView.setText(String.valueOf(createdPost.getLikes()));
+         };
+         likeIcon.setOnClickListener(likeClickListener);
+-        likesView.setOnClickListener(likeClickListener); // click on number
++        likesView.setOnClickListener(likeClickListener);
++
++        // show author or edit
++        TextView authorView = findViewById(R.id.authorView);
++        ImageView authorIcon = findViewById(R.id.authorIcon);
++        String author = createdPost.getUser().getName();
++        authorView.setText(author);
++
++        FloatingActionButton editPostBtn = findViewById(R.id.editPostBtn);
++        FloatingActionButton deletePostBtn = findViewById(R.id.deletePostBtn);
++
++        if (author.isEmpty()) { // TODO hardcoded
++            editPostBtn.setVisibility(View.VISIBLE);
++            deletePostBtn.setVisibility(View.VISIBLE);
++            authorView.setVisibility(View.GONE);
++            authorIcon.setVisibility(View.GONE);
++        } else {
++            editPostBtn.setVisibility(View.GONE);
++            deletePostBtn.setVisibility(View.GONE);
++            authorView.setVisibility(View.VISIBLE);
++            authorIcon.setVisibility(View.VISIBLE);
++        }
++
++        // edit post
++        editPostBtn.setOnClickListener(v -> {
++            Toast.makeText(PostActivity.this, "Bearbeiten", Toast.LENGTH_SHORT).show();
++
++            // TODO
++            // Intent intent = new Intent(PostActivity.this, EditPostActivity.class);
++            // startActivity(intent);
++        });
++
++        // delete post
++        deletePostBtn.setOnClickListener(v -> {
++            Toast.makeText(PostActivity.this, "Beitrag gelöscht", Toast.LENGTH_SHORT).show();
++            Container.removePost(beitragID);
++
++            Intent intent = new Intent(PostActivity.this, MainActivity.class);
++            startActivity(intent);
++        });
+ 
+         TextView startPlace = findViewById(R.id.startPlace);
+         TextView endPlace = findViewById(R.id.endPlace);
+         TextView region = findViewById(R.id.region);
++        TextView descriptionView = findViewById(R.id.description);
+         ImageView routeIcon = findViewById(R.id.routeIcon);
+         ImageView regionIcon = findViewById(R.id.regionIcon);
+ 
+-        // TODO hardcoded
+-        String start = "START";
+-        String end = "END";
+-        String regionTxt = "";
++
++        String regionTxt = createdPost.getRegion();
++        String description = createdPost.getDes();
++
+ 
+         // check if exact route is given or region
+         if (regionTxt == "") {
++            String start = createdPost.getRoute().first;
++            String end = createdPost.getRoute().second;
++            startPlace.setText(start);
++            endPlace.setText(end);
+             // show start & icon & end
+             startPlace.setVisibility(View.VISIBLE);
+             routeIcon.setVisibility(View.VISIBLE);
+@@ -144,6 +197,7 @@
+             regionIcon.setVisibility(View.GONE);
+             region.setVisibility(View.GONE);
+         } else {
++            region.setText(regionTxt);
+             regionIcon.setVisibility(View.VISIBLE);
+             region.setVisibility(View.VISIBLE);
+ 
+@@ -152,14 +206,74 @@
+             endPlace.setVisibility(View.GONE);
+         }
+ 
+-        if (regionTxt != "") {
+-            region.setText(regionTxt);
++        Chip frage = findViewById(R.id.frage);
++        Chip tipp = findViewById(R.id.tipp);
++        Chip guenstig = findViewById(R.id.guenstig);
++        Chip preiswert = findViewById(R.id.preiswert);
++        Chip nachtzug = findViewById(R.id.nachtzug);
++        Chip sparangebot = findViewById(R.id.sparangebot);
++        Chip flexibel = findViewById(R.id.flexibel);
++        Chip gruppe = findViewById(R.id.gruppentarif);
++        Chip direkt = findViewById(R.id.direkt);
++        Chip kurzeFahrt = findViewById(R.id.kurzeFahrt);
++        Chip langeFahrt = findViewById(R.id.langeFahrt);
++
++        if (createdPost.getFrage() == "Frage") {
++            frage.setVisibility(View.VISIBLE);
++            tipp.setVisibility(View.GONE);
++        } else {
++            frage.setVisibility(View.GONE);
++            tipp.setVisibility(View.VISIBLE);
++        }
++        // {"Günstig", "Preiswert", "Nachtzug", "Sparangebot", "Flexibel", "Gruppentarif", "Direkt", "Kurze Fahrt", "Lange Fahrt"}
++        ArrayList<String> tags = createdPost.getTags();
++        guenstig.setVisibility(View.GONE);
++        preiswert.setVisibility(View.GONE);
++        nachtzug.setVisibility(View.GONE);
++        sparangebot.setVisibility(View.GONE);
++        flexibel.setVisibility(View.GONE);
++        gruppe.setVisibility(View.GONE);
++        direkt.setVisibility(View.GONE);
++        kurzeFahrt.setVisibility(View.GONE);
++        langeFahrt.setVisibility(View.GONE);
++        for (String tag : tags) {
++            switch (tag) {
++                case "Günstig":
++                    guenstig.setVisibility(View.VISIBLE);
++                    continue;
++                case "Preiswert":
++                    preiswert.setVisibility(View.VISIBLE);
++                    continue;
++                case "Nachtzug":
++                    nachtzug.setVisibility(View.VISIBLE);
++                    continue;
++                case "Sparangebot":
++                    sparangebot.setVisibility(View.VISIBLE);
++                    continue;
++                case "Flexibel":
++                    flexibel.setVisibility(View.VISIBLE);
++                    continue;
++                case "Gruppentarif":
++                    gruppe.setVisibility(View.VISIBLE);
++                    continue;
++                case "Direkt":
++                    direkt.setVisibility(View.VISIBLE);
++                    continue;
++                case "Kurze Fahrt":
++                    kurzeFahrt.setVisibility(View.VISIBLE);
++                    continue;
++                case "Lange Fahrt":
++                    langeFahrt.setVisibility(View.VISIBLE);
++            }
++        }
++
++        // description visibility
++        if (description.isEmpty()) {
++            // show start & icon & end
++            descriptionView.setVisibility(View.GONE);
+         } else {
+-            startPlace.setText(start);
+-            endPlace.setText(end);
++            descriptionView.setText(description);
+         }
+-
+-        // TODO tags
+ 
+         // Comments
+         ListView commentListView = findViewById(R.id.commentListView);
+@@ -177,7 +291,7 @@
+                 Comment newComment = new Comment(new User("John", "john@gmail.com", "123456789"), text); // TODO hardcoded author
+                 commentArrayList.add(0, newComment);
+                 commentAdapter.notifyDataSetChanged();
+-                commentInput.setText("");
++
+                 // hide keyboard
+                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                 if (imm != null) {
+Index: app/src/main/res/layout/activity_post.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".activities.PostActivity\"\r\n    android:fitsSystemWindows=\"true\">\r\n\r\n    <!-- Top Naviagtion -->\r\n    <include\r\n        layout=\"@layout/top_nav\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentTop=\"true\" />\r\n\r\n    <!-- Rest vom Layout bestimmt -->\r\n\r\n    <!-- Title -->\r\n    <TextView\r\n        android:id=\"@+id/titleView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_centerInParent=\"true\"\r\n        android:layout_centerHorizontal=\"true\"\r\n        android:layout_centerVertical=\"false\"\r\n        android:layout_marginTop=\"80dp\"\r\n        android:text=\"display title\"\r\n        android:textColor=\"@color/primaryColor\"\r\n        android:textSize=\"@dimen/klein\"\r\n        android:textStyle=\"bold\" />\r\n\r\n    <!-- Likes Icon -->\r\n    <ImageView\r\n        android:id=\"@+id/likeIcon\"\r\n        android:layout_width=\"22dp\"\r\n        android:layout_height=\"22dp\"\r\n        android:layout_below=\"@id/titleView\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_marginStart=\"20dp\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:contentDescription=\"like icon\"\r\n        app:srcCompat=\"@drawable/baseline_favorite_border_24\"\r\n        app:tint=\"@color/primaryColor\" />\r\n\r\n    <!-- Likes Number -->\r\n    <TextView\r\n        android:id=\"@+id/likesView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignBottom=\"@id/likeIcon\"\r\n        android:layout_marginStart=\"8dp\"\r\n        android:layout_marginTop=\"16dp\"\r\n        android:layout_toEndOf=\"@id/likeIcon\"\r\n        android:text=\"0\"\r\n        android:textColor=\"@color/secondaryColor\"\r\n        android:textSize=\"18sp\" />\r\n\r\n    <!-- Author Icon -->\r\n    <ImageView\r\n        android:id=\"@+id/authorIcon\"\r\n        android:layout_width=\"22dp\"\r\n        android:layout_height=\"22dp\"\r\n        android:layout_alignBottom=\"@id/likeIcon\"\r\n        android:layout_marginEnd=\"8dp\"\r\n        android:layout_toStartOf=\"@id/authorView\"\r\n        android:contentDescription=\"author icon\"\r\n        app:srcCompat=\"@drawable/baseline_person_outline_24\"\r\n        app:tint=\"@color/primaryColor\" />\r\n\r\n    <!-- Author Name -->\r\n    <TextView\r\n        android:id=\"@+id/authorView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignBottom=\"@id/likeIcon\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:layout_marginEnd=\"20dp\"\r\n        android:text=\"AUTHOR\"\r\n        android:textColor=\"@color/secondaryColor\"\r\n        android:textSize=\"16sp\" />\r\n\r\n    <!-- Horizontal Container for Start, Route Icon, End -->\r\n    <LinearLayout\r\n        android:id=\"@+id/routeContainer\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@id/likeIcon\"\r\n        android:layout_centerHorizontal=\"true\"\r\n        android:layout_marginTop=\"15dp\"\r\n        android:gravity=\"center_vertical\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <!-- Start -->\r\n        <TextView\r\n            android:id=\"@+id/startPlace\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginEnd=\"8dp\"\r\n            android:text=\"START\"\r\n            android:textColor=\"@color/secondaryColor\"\r\n            android:textSize=\"@dimen/sehrklein\" />\r\n\r\n        <!-- Route Icon -->\r\n        <ImageView\r\n            android:id=\"@+id/routeIcon\"\r\n            android:layout_width=\"30dp\"\r\n            android:layout_height=\"30dp\"\r\n            android:contentDescription=\"route_icon\"\r\n            app:srcCompat=\"@drawable/baseline_arrow_right_alt_24\"\r\n            app:tint=\"@color/secondaryColor\" />\r\n\r\n        <!-- End -->\r\n        <TextView\r\n            android:id=\"@+id/endPlace\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginStart=\"8dp\"\r\n            android:text=\"END\"\r\n            android:textColor=\"@color/secondaryColor\"\r\n            android:textSize=\"@dimen/sehrklein\" />\r\n\r\n        <!-- Region Icon -->\r\n        <ImageView\r\n            android:id=\"@+id/regionIcon\"\r\n            android:layout_width=\"30dp\"\r\n            android:layout_height=\"30dp\"\r\n            android:contentDescription=\"region_icon\"\r\n            app:srcCompat=\"@drawable/baseline_near_me_24\"\r\n            app:tint=\"@color/secondaryColor\" />\r\n\r\n        <!-- Region -->\r\n        <TextView\r\n            android:id=\"@+id/region\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginStart=\"8dp\"\r\n            android:text=\"REGION\"\r\n            android:textColor=\"@color/secondaryColor\"\r\n            android:textSize=\"@dimen/sehrklein\" />\r\n    </LinearLayout>\r\n\r\n    <!-- Description -->\r\n    <TextView\r\n        android:id=\"@+id/description\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@+id/routeContainer\"\r\n        android:layout_marginStart=\"15dp\"\r\n        android:layout_marginTop=\"15dp\"\r\n        android:text=\"Description\"\r\n        android:textColor=\"@color/secondaryColor\"\r\n        android:textSize=\"@dimen/sehrklein\" />\r\n\r\n    <!-- Divider -->\r\n    <View\r\n        android:id=\"@+id/divider\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"1dp\"\r\n        android:layout_below=\"@+id/description\"\r\n        android:layout_marginTop=\"15dp\"\r\n        android:background=\"?android:attr/listDivider\" />\r\n\r\n    <!-- Comments Header -->\r\n    <TextView\r\n        android:id=\"@+id/commentHeader\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@+id/divider\"\r\n        android:layout_marginStart=\"15dp\"\r\n        android:layout_marginTop=\"15dp\"\r\n        android:text=\"Kommentare:\"\r\n        android:textColor=\"@color/secondaryColor\"\r\n        android:textSize=\"@dimen/sehrklein\"\r\n        android:textStyle=\"bold\" />\r\n\r\n    <!-- Comments List -->\r\n    <ListView\r\n        android:id=\"@+id/commentListView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@+id/commentHeader\"\r\n        android:padding=\"10dp\" />\r\n\r\n    <!-- New Comment -->\r\n    <LinearLayout\r\n        android:id=\"@+id/commentInputSection\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_above=\"@id/bottom_navigation\"\r\n        android:layout_margin=\"10dp\"\r\n        android:orientation=\"horizontal\"\r\n        android:padding=\"8dp\"\r\n        android:background=\"@android:color/white\">\r\n\r\n        <EditText\r\n            android:id=\"@+id/commentInput\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_weight=\"1\"\r\n            android:hint=\"Kommentar schreiben...\"\r\n            android:background=\"@android:drawable/edit_text\"\r\n            android:padding=\"10dp\"\r\n            android:textColor=\"@android:color/black\"\r\n            android:textSize=\"@dimen/sehrklein\"\r\n            android:maxLines=\"3\"\r\n            android:inputType=\"textMultiLine\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/sendCommentBtn\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Senden\"\r\n            android:textSize=\"@dimen/sehrklein\"\r\n            android:textColor=\"@android:color/white\"\r\n            android:backgroundTint=\"@color/primaryColor\"\r\n            android:layout_marginStart=\"8dp\" />\r\n    </LinearLayout>\r\n\r\n    <!-- Bottom Balken  -->\r\n    <com.google.android.material.bottomnavigation.BottomNavigationView\r\n        android:id=\"@+id/bottom_navigation\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        app:menu=\"@menu/bottom_nav\"\r\n        app:itemIconSize=\"@dimen/sehrgross\"\r\n        app:labelVisibilityMode=\"labeled\"/>\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_post.xml b/app/src/main/res/layout/activity_post.xml
+--- a/app/src/main/res/layout/activity_post.xml	(revision 6b7df6d7a6432de1d12d4fe7954a9d4cde012a84)
++++ b/app/src/main/res/layout/activity_post.xml	(date 1747154636341)
+@@ -24,14 +24,40 @@
+         android:layout_height="wrap_content"
+         android:layout_alignParentTop="true"
+         android:layout_centerInParent="true"
+-        android:layout_centerHorizontal="true"
+-        android:layout_centerVertical="false"
+-        android:layout_marginTop="80dp"
+-        android:text="display title"
++        android:gravity="center"
++        android:layout_marginTop="90dp"
++        android:text="no title hlfWIHGLiwghuröuhöUWRGHÖIwhg"
+         android:textColor="@color/primaryColor"
+         android:textSize="@dimen/klein"
+         android:textStyle="bold" />
+ 
++    <com.google.android.material.floatingactionbutton.FloatingActionButton
++        android:id="@+id/editPostBtn"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_alignBottom="@id/likesView"
++        android:layout_alignParentEnd="true"
++        android:layout_marginEnd="70dp"
++        android:paddingTop="50dp"
++        android:contentDescription="Bearbeiten"
++        app:srcCompat="@drawable/outline_edit_24"
++        android:visibility="gone"
++        app:tint="@android:color/white"
++        app:backgroundTint="@color/primaryColor" />
++
++    <com.google.android.material.floatingactionbutton.FloatingActionButton
++        android:id="@+id/deletePostBtn"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_alignBottom="@id/editPostBtn"
++        android:layout_alignParentEnd="true"
++        android:layout_marginEnd="10dp"
++        android:contentDescription="Löschen"
++        app:srcCompat="@drawable/baseline_delete_outline_24"
++        android:visibility="gone"
++        app:tint="@android:color/white"
++        app:backgroundTint="@android:color/holo_red_dark" />
++
+     <!-- Likes Icon -->
+     <ImageView
+         android:id="@+id/likeIcon"
+@@ -40,7 +66,7 @@
+         android:layout_below="@id/titleView"
+         android:layout_alignParentStart="true"
+         android:layout_marginStart="20dp"
+-        android:layout_marginTop="20dp"
++        android:layout_marginTop="35dp"
+         android:contentDescription="like icon"
+         app:srcCompat="@drawable/baseline_favorite_border_24"
+         app:tint="@color/primaryColor" />
+@@ -66,6 +92,7 @@
+         android:layout_alignBottom="@id/likeIcon"
+         android:layout_marginEnd="8dp"
+         android:layout_toStartOf="@id/authorView"
++        android:visibility="visible"
+         android:contentDescription="author icon"
+         app:srcCompat="@drawable/baseline_person_outline_24"
+         app:tint="@color/primaryColor" />
+@@ -79,6 +106,7 @@
+         android:layout_alignParentEnd="true"
+         android:layout_marginEnd="20dp"
+         android:text="AUTHOR"
++        android:visibility="visible"
+         android:textColor="@color/secondaryColor"
+         android:textSize="16sp" />
+ 
+@@ -142,6 +170,105 @@
+             android:textSize="@dimen/sehrklein" />
+     </LinearLayout>
+ 
++    <com.google.android.material.chip.ChipGroup
++        android:id="@+id/chipGroup"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_below="@+id/routeContainer"
++        android:layout_margin="8dp"
++        app:singleLine="false">
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/frage"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Frage"
++            android:visibility="visible"
++            app:chipBackgroundColor="@color/primaryColor"
++            android:textColor="@android:color/white" />
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/tipp"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Tipp"
++            android:visibility="visible"
++            app:chipBackgroundColor="@color/primaryColor"
++            android:textColor="@android:color/white" />
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/guenstig"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Günstig"
++            app:chipBackgroundColor="@color/onPrimaryContainerColor"
++            android:textColor="@android:color/white" />
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/preiswert"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Preiswert"
++            app:chipBackgroundColor="@color/onPrimaryContainerColor"
++            android:textColor="@android:color/white" />
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/nachtzug"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Nachtzug"
++            app:chipBackgroundColor="@color/onPrimaryContainerColor"
++            android:textColor="@android:color/white" />
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/sparangebot"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Sparangebot"
++            app:chipBackgroundColor="@color/onPrimaryContainerColor"
++            android:textColor="@android:color/white" />
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/flexibel"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Flexibel"
++            app:chipBackgroundColor="@color/onPrimaryContainerColor"
++            android:textColor="@android:color/white" />
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/gruppentarif"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Gruppentarif"
++            app:chipBackgroundColor="@color/onPrimaryContainerColor"
++            android:textColor="@android:color/white" />
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/direkt"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Direkt"
++            app:chipBackgroundColor="@color/onPrimaryContainerColor"
++            android:textColor="@android:color/white" />
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/kurzeFahrt"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Kurze Fahrt"
++            app:chipBackgroundColor="@color/onPrimaryContainerColor"
++            android:textColor="@android:color/white" />
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/langeFahrt"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Lange Fahrt"
++            app:chipBackgroundColor="@color/onPrimaryContainerColor"
++            android:textColor="@android:color/white" />
++    </com.google.android.material.chip.ChipGroup>
++
+     <!-- Description -->
+     <TextView
+         android:id="@+id/description"
+@@ -149,8 +276,8 @@
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/routeContainer"
+         android:layout_marginStart="15dp"
+-        android:layout_marginTop="15dp"
+-        android:text="Description"
++        android:text=""
++        android:visibility="visible"
+         android:textColor="@color/secondaryColor"
+         android:textSize="@dimen/sehrklein" />
+ 
+@@ -173,7 +300,7 @@
+         android:layout_marginTop="15dp"
+         android:text="Kommentare:"
+         android:textColor="@color/secondaryColor"
+-        android:textSize="@dimen/sehrklein"
++        android:textSize="18sp"
+         android:textStyle="bold" />
+ 
+     <!-- Comments List -->
+@@ -182,6 +309,7 @@
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/commentHeader"
++        android:layout_above="@id/commentInputSection"
+         android:padding="10dp" />
+ 
+     <!-- New Comment -->
+@@ -190,7 +318,6 @@
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_above="@id/bottom_navigation"
+-        android:layout_margin="10dp"
+         android:orientation="horizontal"
+         android:padding="8dp"
+         android:background="@android:color/white">
+@@ -219,7 +346,7 @@
+             android:layout_marginStart="8dp" />
+     </LinearLayout>
+ 
+-    <!-- Bottom Balken  -->
++    <!-- Bottom Bar  -->
+     <com.google.android.material.bottomnavigation.BottomNavigationView
+         android:id="@+id/bottom_navigation"
+         android:layout_width="match_parent"
+Index: app/src/main/java/at/ac/univie/hci/tsug/elements/Post.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package at.ac.univie.hci.tsug.elements;\r\n\r\nimport android.os.Parcel;\r\nimport android.os.Parcelable;\r\nimport android.util.Pair;\r\n\r\nimport androidx.annotation.NonNull;\r\n\r\nimport java.sql.Time;\r\nimport java.time.LocalDate;\r\nimport java.time.LocalTime;\r\nimport java.util.ArrayList;\r\nimport java.util.Date;\r\n\r\npublic class Post implements Parcelable {\r\n    //Instancevariable:\r\n    private final int ID;\r\n    private static int next_ID = 1;\r\n    private String title;\r\n    private int likes;\r\n    private boolean  type;\r\n    //TRUE: Wenn es eine Frage ist!\r\n    //FALSE: Wenn es ein Tipp ist!\r\n    private ArrayList<String> tags;\r\n    private User user;\r\n    private boolean isRegion = true;\r\n    private String region;\r\n    private boolean isRoute = false;\r\n    private Pair<String, String> route;\r\n    private String des;\r\n    private LocalDate date;\r\n    private LocalTime time;\r\n\r\n    //Constructor:\r\n    public Post(String title, int likes, User user, boolean type, ArrayList<String> tags, String region, String des) {\r\n        //Error Handeling:\r\n        if(title.isEmpty())\r\n            throw new IllegalArgumentException(\"Titel cannot be empty!\\n\");\r\n        if(likes < 0)\r\n            throw new IllegalArgumentException(\"Likes cannot be neagtive!\\n\");\r\n        if(region.isEmpty())\r\n            throw new IllegalArgumentException(\"Region cannot be empty!\\n\");\r\n\r\n        //Assign Values:\r\n        this.ID = next_ID++;\r\n\r\n        this.title = title;\r\n        this.likes = likes;\r\n        this.type = type;\r\n        this.tags = tags;\r\n        this.user = user;\r\n\r\n        this.isRegion = true;\r\n        this.region = region;\r\n\r\n        this.isRoute = false;\r\n        this.route = null;\r\n\r\n        this.des = des;\r\n\r\n        this.date = LocalDate.now();\r\n        this.time = LocalTime.now();\r\n    }\r\n    public Post(String title, int likes, User user, boolean type, ArrayList<String> tags, Pair<String, String> route, String des) {\r\n        //Error Handeling:\r\n        if(title.isEmpty())\r\n            throw new IllegalArgumentException(\"Titel cannot be empty!\\n\");\r\n        if(likes < 0)\r\n            throw new IllegalArgumentException(\"Likes cannot be neagtive!\\n\");\r\n        if(route.first.isEmpty())\r\n            throw new IllegalArgumentException(\"Start of the Route cannot be empty!\\n\");\r\n        if(route.second.isEmpty())\r\n            throw new IllegalArgumentException(\"End of the Route cannot be empty!\\n\");\r\n\r\n        //Assign Values:\r\n        this.ID = next_ID++;\r\n\r\n        this.title = title;\r\n        this.likes = likes;\r\n        this.type = type;\r\n        this.tags = tags;\r\n        this.user = user;\r\n\r\n        this.isRegion = false;\r\n        this.region = null;\r\n\r\n        this.isRoute = true;\r\n        this.route = route;\r\n\r\n        this.des = des;\r\n\r\n        this.date = LocalDate.now();\r\n        this.time = LocalTime.now();\r\n    }\r\n\r\n\r\n    protected Post(Parcel in) {\r\n        ID = in.readInt();\r\n        title = in.readString();\r\n        likes = in.readInt();\r\n        type = in.readByte() != 0;\r\n        tags = in.createStringArrayList();\r\n        isRegion = in.readByte() != 0;\r\n        region = in.readString();\r\n        isRoute = in.readByte() != 0;\r\n        des = in.readString();\r\n    }\r\n\r\n    public static final Creator<Post> CREATOR = new Creator<Post>() {\r\n        @Override\r\n        public Post createFromParcel(Parcel in) {\r\n            return new Post(in);\r\n        }\r\n\r\n        @Override\r\n        public Post[] newArray(int size) {\r\n            return new Post[size];\r\n        }\r\n    };\r\n\r\n    //Getter Methode:\r\n    public int getID() {\r\n        return ID;\r\n    }\r\n    public String getTitle() {\r\n        return title;\r\n    }\r\n    public int getLikes() {\r\n        return likes;\r\n    }\r\n    public User getUser() {\r\n        return user;\r\n    }\r\n    public String getType() {\r\n        if(type)\r\n            return \"Frage\";\r\n        else\r\n            return \"Tipp\";\r\n    }\r\n    public ArrayList<String> getTags() {\r\n        return tags;\r\n    }\r\n    public String getRegion() {\r\n        if(isRoute)\r\n            throw new IllegalArgumentException(\"There is no Region!\\n\");\r\n        return region;\r\n    }\r\n    public Pair<String, String> getRoute() {\r\n        if(isRegion)\r\n            throw new IllegalArgumentException(\"There is no Route!\\n\");\r\n        return route;\r\n    }\r\n    public String getDes() {\r\n        return des;\r\n    }\r\n    public LocalDate getDate() {\r\n        return date;\r\n    }\r\n    public LocalTime getTime() {\r\n        return time;\r\n    }\r\n\r\n    //Setter Methode:\r\n    public void setTitel(String title) {\r\n        this.title = title;\r\n    }\r\n    public void setLikes(int likes) {\r\n        this.likes = likes;\r\n    }\r\n    public void setTags(ArrayList<String> tags) {\r\n        this.tags = tags;\r\n    }\r\n    public void setRegion(String region) {\r\n        if(isRoute) {\r\n            this.isRegion = true;\r\n\r\n            this.isRoute = false;\r\n            this.route = null;\r\n        }\r\n        this.region = region;\r\n    }\r\n    public void setRoute(Pair<String, String> route) {\r\n        if(isRegion) {\r\n            this.isRoute = true;\r\n\r\n            this.isRegion = false;\r\n            this.region = null;\r\n        }\r\n        this.route = route;\r\n    }\r\n    public void setDes(String des) {\r\n        this.des = des;\r\n    }\r\n\r\n    //Memberfunctions:\r\n    public int like() {\r\n        this.user.newLike();\r\n        return ++likes;\r\n    }\r\n    public int unlike() {\r\n        if(likes > 0) {\r\n            this.user.lostLike();\r\n            return --likes;\r\n        }\r\n        else\r\n            return 0;\r\n    }\r\n\r\n    @Override\r\n    public int describeContents() {\r\n        return 0;\r\n    }\r\n\r\n    @Override\r\n    public void writeToParcel(@NonNull Parcel parcel, int i) {\r\n        parcel.writeInt(ID);\r\n        parcel.writeString(title);\r\n        parcel.writeInt(likes);\r\n        parcel.writeByte((byte) (type ? 1 : 0));\r\n        parcel.writeStringList(tags);\r\n        parcel.writeByte((byte) (isRegion ? 1 : 0));\r\n        parcel.writeString(region);\r\n        parcel.writeByte((byte) (isRoute ? 1 : 0));\r\n        parcel.writeString(des);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/at/ac/univie/hci/tsug/elements/Post.java b/app/src/main/java/at/ac/univie/hci/tsug/elements/Post.java
+--- a/app/src/main/java/at/ac/univie/hci/tsug/elements/Post.java	(revision 6b7df6d7a6432de1d12d4fe7954a9d4cde012a84)
++++ b/app/src/main/java/at/ac/univie/hci/tsug/elements/Post.java	(date 1747154636338)
+@@ -10,7 +10,6 @@
+ import java.time.LocalDate;
+ import java.time.LocalTime;
+ import java.util.ArrayList;
+-import java.util.Date;
+ 
+ public class Post implements Parcelable {
+     //Instancevariable:
+@@ -18,7 +17,7 @@
+     private static int next_ID = 1;
+     private String title;
+     private int likes;
+-    private boolean  type;
++    private boolean isFrage;
+     //TRUE: Wenn es eine Frage ist!
+     //FALSE: Wenn es ein Tipp ist!
+     private ArrayList<String> tags;
+@@ -32,7 +31,7 @@
+     private LocalTime time;
+ 
+     //Constructor:
+-    public Post(String title, int likes, User user, boolean type, ArrayList<String> tags, String region, String des) {
++    public Post(String title, int likes, User user, boolean isFrage, ArrayList<String> tags, String region, String des) {
+         //Error Handeling:
+         if(title.isEmpty())
+             throw new IllegalArgumentException("Titel cannot be empty!\n");
+@@ -46,7 +45,7 @@
+ 
+         this.title = title;
+         this.likes = likes;
+-        this.type = type;
++        this.isFrage = isFrage;
+         this.tags = tags;
+         this.user = user;
+ 
+@@ -61,7 +60,7 @@
+         this.date = LocalDate.now();
+         this.time = LocalTime.now();
+     }
+-    public Post(String title, int likes, User user, boolean type, ArrayList<String> tags, Pair<String, String> route, String des) {
++    public Post(String title, int likes, User user, boolean isFrage, ArrayList<String> tags, Pair<String, String> route, String des) {
+         //Error Handeling:
+         if(title.isEmpty())
+             throw new IllegalArgumentException("Titel cannot be empty!\n");
+@@ -77,12 +76,12 @@
+ 
+         this.title = title;
+         this.likes = likes;
+-        this.type = type;
++        this.isFrage = isFrage;
+         this.tags = tags;
+         this.user = user;
+ 
+         this.isRegion = false;
+-        this.region = null;
++        this.region = "";
+ 
+         this.isRoute = true;
+         this.route = route;
+@@ -98,7 +97,7 @@
+         ID = in.readInt();
+         title = in.readString();
+         likes = in.readInt();
+-        type = in.readByte() != 0;
++        isFrage = in.readByte() != 0;
+         tags = in.createStringArrayList();
+         isRegion = in.readByte() != 0;
+         region = in.readString();
+@@ -131,8 +130,8 @@
+     public User getUser() {
+         return user;
+     }
+-    public String getType() {
+-        if(type)
++    public String getFrage() {
++        if(isFrage)
+             return "Frage";
+         else
+             return "Tipp";
+@@ -141,13 +140,9 @@
+         return tags;
+     }
+     public String getRegion() {
+-        if(isRoute)
+-            throw new IllegalArgumentException("There is no Region!\n");
+         return region;
+     }
+     public Pair<String, String> getRoute() {
+-        if(isRegion)
+-            throw new IllegalArgumentException("There is no Route!\n");
+         return route;
+     }
+     public String getDes() {
+@@ -216,7 +211,7 @@
+         parcel.writeInt(ID);
+         parcel.writeString(title);
+         parcel.writeInt(likes);
+-        parcel.writeByte((byte) (type ? 1 : 0));
++        parcel.writeByte((byte) (isFrage ? 1 : 0));
+         parcel.writeStringList(tags);
+         parcel.writeByte((byte) (isRegion ? 1 : 0));
+         parcel.writeString(region);
+Index: app/src/main/java/at/ac/univie/hci/tsug/activities/CreateActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package at.ac.univie.hci.tsug.activities;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.MenuItem;\r\nimport android.widget.Button;\r\nimport android.widget.ImageButton;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\n\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\nimport com.google.android.material.navigation.NavigationBarView;\r\n\r\nimport at.ac.univie.hci.tsug.MainActivity;\r\nimport at.ac.univie.hci.tsug.R;\r\n\r\npublic class CreateActivity extends AppCompatActivity {\r\n\r\n    BottomNavigationView bottomNav;\r\n    String activityName = \"Erstellen\";\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.activity_create);\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {\r\n            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);\r\n            return insets;\r\n        });\r\n\r\n\r\n\r\n        //Martin's Code für Bottom Navigation START\r\n\r\n        bottomNav = findViewById(R.id.bottom_navigation);\r\n\r\n        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {\r\n            @Override\r\n            public boolean onNavigationItemSelected(@NonNull MenuItem item) {\r\n                Intent intent;\r\n                switch (item.getItemId()) {\r\n                    case R.id.nav_home:\r\n                        //Homescreen\r\n                        intent = new Intent(CreateActivity.this, MainActivity.class);\r\n                        startActivity(intent);\r\n                        //Von Position-Rechts nach Position-Links\r\n                        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);\r\n                        return true;\r\n\r\n                    case R.id.nav_account:\r\n                        //Account settings Seite\r\n                        intent = new Intent(CreateActivity.this, AccountActivity.class);\r\n                        startActivity(intent);\r\n                        //Von Position-Links nach Position-Rechts\r\n                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);\r\n                        return true;\r\n                }\r\n                return false;\r\n            }\r\n        });\r\n\r\n        //TOP NAVIGATION:\r\n        ImageButton backNav = findViewById(R.id.nav_back);\r\n        backNav.setOnClickListener(v -> finish());\r\n\r\n        ImageButton setNav = findViewById(R.id.nav_einstellungen);\r\n        setNav.setOnClickListener(v -> {\r\n            Intent intent = new Intent(CreateActivity.this, SettingsActivity.class);\r\n            startActivity(intent);\r\n            overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);\r\n        });\r\n\r\n        //TESTING TEXT TODO DELETE LATER\r\n        TextView testText = findViewById(R.id.nav_text_testing);\r\n        testText.setText(activityName);\r\n\r\n        // Title\r\n        TextView titleView = findViewById(R.id.titleView);\r\n        String title = \"TITLE\"; // TODO\r\n        titleView.setText(title);\r\n\r\n        // publish & go to post\r\n        Button publishButton = findViewById(R.id.button);\r\n        publishButton.setOnClickListener(v -> {\r\n            Intent intent = new Intent(CreateActivity.this, PostActivity.class);\r\n            startActivity(intent);\r\n            overridePendingTransition(0, 0);\r\n        });\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/at/ac/univie/hci/tsug/activities/CreateActivity.java b/app/src/main/java/at/ac/univie/hci/tsug/activities/CreateActivity.java
+--- a/app/src/main/java/at/ac/univie/hci/tsug/activities/CreateActivity.java	(revision 6b7df6d7a6432de1d12d4fe7954a9d4cde012a84)
++++ b/app/src/main/java/at/ac/univie/hci/tsug/activities/CreateActivity.java	(date 1747154636335)
+@@ -1,14 +1,23 @@
+ package at.ac.univie.hci.tsug.activities;
+ 
++import static at.ac.univie.hci.tsug.container.Container.getUser;
++
+ import android.content.Intent;
+ import android.os.Bundle;
++import android.util.Pair;
+ import android.view.MenuItem;
++import android.view.View;
++import android.widget.AdapterView;
++import android.widget.ArrayAdapter;
+ import android.widget.Button;
++import android.widget.EditText;
+ import android.widget.ImageButton;
++import android.widget.Spinner;
+ import android.widget.TextView;
+ 
+ import androidx.activity.EdgeToEdge;
+ import androidx.annotation.NonNull;
++import androidx.appcompat.app.AlertDialog;
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.core.graphics.Insets;
+ import androidx.core.view.ViewCompat;
+@@ -17,13 +26,23 @@
+ import com.google.android.material.bottomnavigation.BottomNavigationView;
+ import com.google.android.material.navigation.NavigationBarView;
+ 
++import java.util.ArrayList;
++import java.util.List;
++
+ import at.ac.univie.hci.tsug.MainActivity;
+ import at.ac.univie.hci.tsug.R;
++import at.ac.univie.hci.tsug.elements.Post;
++import at.ac.univie.hci.tsug.container.Container;
+ 
+ public class CreateActivity extends AppCompatActivity {
+ 
+     BottomNavigationView bottomNav;
+     String activityName = "Erstellen";
++    Button buttonSelectTags;
++    String[] tags = {"Günstig", "Preiswert", "Nachtzug", "Sparangebot", "Flexibel", "Gruppentarif", "Direkt", "Kurze Fahrt", "Lange Fahrt"};
++    boolean[] selectedTags = new boolean[tags.length];
++    List<String> selectedTagList = new ArrayList<>();
++    String selectedFrageTipp = "";
+ 
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+@@ -37,11 +56,13 @@
+         });
+ 
+ 
+-
+         //Martin's Code für Bottom Navigation START
+ 
+         bottomNav = findViewById(R.id.bottom_navigation);
+ 
++        //bottomNav.setOnApplyWindowInsetsListener(null);
++        //bottomNav.setSelectedItemId(R.id.nav_home);
++
+         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+             @Override
+             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+@@ -78,21 +99,120 @@
+             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
+         });
+ 
+-        //TESTING TEXT TODO DELETE LATER
+-        TextView testText = findViewById(R.id.nav_text_testing);
+-        testText.setText(activityName);
++
++        // tag frage / tipp
++        Spinner tagSpinner = findViewById(R.id.tagFrageOderTipp);
++        TextView spinnerErrorText = findViewById(R.id.spinnerErrorText);
++        String[] tagsArray = {"Frage", "Tipp"};
++        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tagsArray);
++        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
++        tagSpinner.setAdapter(adapter);
++        tagSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
++            @Override
++            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
++                selectedFrageTipp = parentView.getItemAtPosition(position).toString();
++                spinnerErrorText.setVisibility(View.GONE);
++            }
+ 
+-        // Title
+-        TextView titleView = findViewById(R.id.titleView);
+-        String title = "TITLE"; // TODO
+-        titleView.setText(title);
++            @Override
++            public void onNothingSelected(AdapterView<?> parentView) {
++                selectedFrageTipp = null;
++                spinnerErrorText.setText("Bitte eine Kategorie auswählen."); // TODO neccessary?
++                spinnerErrorText.setVisibility(View.VISIBLE);
++            }
++        });
+ 
+-        // publish & go to post
+-        Button publishButton = findViewById(R.id.button);
++        // button categories
++        buttonSelectTags = findViewById(R.id.buttonSelectTags);
++        buttonSelectTags.setOnClickListener(view -> {
++            AlertDialog.Builder builder = new AlertDialog.Builder(CreateActivity.this);
++            builder.setTitle("Tags auswählen");
++            builder.setMultiChoiceItems(tags, selectedTags, (dialog, which, isChecked) -> selectedTags[which] = isChecked);
++            builder.setPositiveButton("OK", (dialog, which) -> {
++                selectedTagList.clear();
++                for (int i = 0; i < tags.length; i++) {
++                    if (selectedTags[i]) selectedTagList.add(tags[i]);
++                }
++            });
++            builder.show();
++        });
++
++        // publish & go to post if correct
++        Button publishButton = findViewById(R.id.publishBtn);
+         publishButton.setOnClickListener(v -> {
+-            Intent intent = new Intent(CreateActivity.this, PostActivity.class);
+-            startActivity(intent);
+-            overridePendingTransition(0, 0);
++            EditText input_start = findViewById(R.id.inputStart);
++            EditText input_end = findViewById(R.id.inputEnd);
++            EditText input_region = findViewById(R.id.inputRegion);
++            EditText input_title = findViewById(R.id.inputTitle);
++            EditText input_description = findViewById(R.id.inputDescription);
++
++            String title = input_title.getText().toString();
++            String startText = input_start.getText().toString();
++            String endText = input_end.getText().toString();
++            String regionText = input_region.getText().toString();
++            String description = input_description.getText().toString();
++
++            Boolean isFrage = true;
++            if (selectedFrageTipp == "Tipp")
++                isFrage = false;
++
++
++            boolean valid = true;
++
++            input_start.setError(null);
++            input_end.setError(null);
++            input_region.setError(null);
++            input_title.setError(null);
++
++            // Validation
++            if ((startText.isEmpty() || endText.isEmpty()) && regionText.isEmpty()) {
++                valid = false;
++                if (startText.isEmpty())
++                    input_start.setError("Bitte entweder Start & Ziel angeben oder Region");
++                if (endText.isEmpty())
++                    input_end.setError("Bitte entweder Start & Ziel angeben oder Region");
++                input_region.setError("Bitte entweder Start & Ziel angeben oder Region");
++            }
++
++            if ((!startText.isEmpty() || !endText.isEmpty()) && !regionText.isEmpty()) {
++                valid = false;
++                if (!startText.isEmpty())
++                    input_start.setError("Bitte entweder Start & Ziel angeben oder Region");
++                if (!endText.isEmpty())
++                    input_end.setError("Bitte entweder Start & Ziel angeben oder Region");
++                input_region.setError("Bitte enweder Start & Ziel angeben oder Region");
++            }
++
++            if (title.isEmpty()) {
++                valid = false;
++                input_title.setError("Bitte Titel angeben");
++            }
++
++            if (valid) {
++                Post createdPost;
++                if (regionText.isEmpty()) {
++                    createdPost = new Post(title,
++                            0,
++                            getUser(1), // TODO user?
++                            isFrage,
++                            (ArrayList<String>) selectedTagList,
++                            new Pair<>(startText, endText),
++                            description);
++                } else {
++                    createdPost = new Post(title,
++                            0,
++                            getUser(1), // TODO user?
++                            isFrage,
++                            (ArrayList<String>) selectedTagList,
++                            regionText,
++                            description);
++                }
++                Container.addPost(createdPost);
++
++                Intent intent = new Intent(CreateActivity.this, PostActivity.class);
++                intent.putExtra("beitrag_id", createdPost.getID());
++                startActivity(intent);
++            }
+         });
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/drawable/baseline_delete_outline_24.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/baseline_delete_outline_24.xml b/app/src/main/res/drawable/baseline_delete_outline_24.xml
+new file mode 100644
+--- /dev/null	(date 1747154636339)
++++ b/app/src/main/res/drawable/baseline_delete_outline_24.xml	(date 1747154636339)
+@@ -0,0 +1,5 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="24dp" android:tint="#000000" android:viewportHeight="24" android:viewportWidth="24" android:width="24dp">
++      
++    <path android:fillColor="@android:color/white" android:pathData="M6,19c0,1.1 0.9,2 2,2h8c1.1,0 2,-0.9 2,-2L18,7L6,7v12zM8,9h8v10L8,19L8,9zM15.5,4l-1,-1h-5l-1,1L5,4v2h14L19,4z"/>
++    
++</vector>

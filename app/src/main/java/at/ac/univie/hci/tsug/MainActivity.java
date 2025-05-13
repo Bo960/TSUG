@@ -128,22 +128,6 @@ public class MainActivity extends AppCompatActivity {
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
 
-        //TODO TESTING CONTAINER to delete later:
-        TextView username = findViewById(R.id.test_name);
-        TextView user_id = findViewById(R.id.test_user_ID);
-        TextView titel = findViewById(R.id.test_titel);
-        TextView post_id = findViewById(R.id.test_post_ID);
-        TextView post_des = findViewById(R.id.test_des);
-
-        Set<Post> allPosts = Container.getAllPosts();
-        Post post = allPosts.iterator().next();
-
-        username.setText(post.getUser().getName());
-        user_id.setText(String.valueOf(post.getUser().getID()));
-
-        titel.setText(post.getTitle());
-        post_id.setText(String.valueOf(post.getID()));
-        post_des.setText(post.getDes());
     }
     public static String getSimpleSearchTerm() {
         return simpleSearchTerm;

@@ -45,6 +45,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
 
+                android:background="@drawable/searchviewborder"
                 app:iconifiedByDefault="false"
                 app:queryHint="Search Here..." />
 
@@ -59,7 +60,7 @@
                 android:text="Suche starten"
                 android:backgroundTint="@color/onPrimaryContainerColor"
                 android:textColor="@color/darkBlue"
-                android:textSize="@dimen/klein"
+                android:textSize="@dimen/mittel"
                 android:gravity="center"/>
 
             <Button
@@ -71,47 +72,10 @@
                 android:layout_centerHorizontal="true"
 
                 android:text="Filter"
-                android:backgroundTint="@color/secondaryColor"
-                android:textColor="@color/onPrimaryColor"
+                android:backgroundTint="@color/lightGray"
+                android:textColor="@color/secondaryColor"
                 android:textSize="@dimen/klein"
                 android:gravity="center"/>
-
-            <!-- TESTING DUMMIES -->
-            <TextView
-                android:id="@+id/test_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Username"
-                android:textSize="@dimen/gross"
-                android:padding="10dp"/>
-            <TextView
-                android:id="@+id/test_user_ID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="User-ID"
-                android:textSize="@dimen/sehrklein"
-                android:padding="10dp"/>
-            <TextView
-                android:id="@+id/test_titel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Titel"
-                android:textSize="@dimen/gross"
-                android:padding="10dp"/>
-            <TextView
-                android:id="@+id/test_post_ID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Post-ID"
-                android:textSize="@dimen/sehrklein"
-                android:padding="10dp"/>
-            <TextView
-                android:id="@+id/test_des"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Description"
-                android:textSize="@dimen/mittel"
-                android:padding="10dp"/>
 
 
         </LinearLayout>
