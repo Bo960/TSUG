@@ -36,8 +36,6 @@ public class Post {
             throw new IllegalArgumentException("Likes cannot be neagtive!\n");
         if(region.isEmpty())
             throw new IllegalArgumentException("Region cannot be empty!\n");
-        if(des.isEmpty())
-            throw new IllegalArgumentException("Description cannot be empty!\n");
 
         //Assign Values:
         this.ID = next_ID++;
@@ -69,8 +67,6 @@ public class Post {
             throw new IllegalArgumentException("Start of the Route cannot be empty!\n");
         if(route.second.isEmpty())
             throw new IllegalArgumentException("End of the Route cannot be empty!\n");
-        if(des.isEmpty())
-            throw new IllegalArgumentException("Description cannot be empty!\n");
 
         //Assign Values:
         this.ID = next_ID++;

@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     public String simpleSearchTerm;
     String activityName = "TSUG";
 
+    public static String getSimpleSearchTerm() {
+        return getSimpleSearchTerm();
+    }
 
 
     @Override
