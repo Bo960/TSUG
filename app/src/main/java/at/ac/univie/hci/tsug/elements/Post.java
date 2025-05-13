@@ -12,8 +12,11 @@ public class Post {
     //Instancevariable:
     private final int ID;
     private static int next_ID = 1;
-    private String titel;
+    private String title;
     private int likes;
+    private boolean  type;
+    //TRUE: Wenn es eine Frage ist!
+    //FALSE: Wenn es ein Tipp ist!
     private ArrayList<String> tags;
     private User user;
     private boolean isRegion = true;
@@ -25,9 +28,9 @@ public class Post {
     private LocalTime time;
 
     //Constructor:
-    public Post(String titel, int likes, ArrayList<String> tags, User user, String region, String des) {
+    public Post(String title, int likes, User user, boolean type, ArrayList<String> tags, String region, String des) {
         //Error Handeling:
-        if(titel.isEmpty())
+        if(title.isEmpty())
             throw new IllegalArgumentException("Titel cannot be empty!\n");
         if(likes < 0)
             throw new IllegalArgumentException("Likes cannot be neagtive!\n");
@@ -39,8 +42,9 @@ public class Post {
         //Assign Values:
         this.ID = next_ID++;
 
-        this.titel = titel;
+        this.title = title;
         this.likes = likes;
+        this.type = type;
         this.tags = tags;
         this.user = user;
 
@@ -55,9 +59,9 @@ public class Post {
         this.date = LocalDate.now();
         this.time = LocalTime.now();
     }
-    public Post(String titel, int likes, ArrayList<String> tags, Pair<String, String> route, String des) {
+    public Post(String title, int likes, User user, boolean type, ArrayList<String> tags, Pair<String, String> route, String des) {
         //Error Handeling:
-        if(titel.isEmpty())
+        if(title.isEmpty())
             throw new IllegalArgumentException("Titel cannot be empty!\n");
         if(likes < 0)
             throw new IllegalArgumentException("Likes cannot be neagtive!\n");
@@ -71,8 +75,9 @@ public class Post {
         //Assign Values:
         this.ID = next_ID++;
 
-        this.titel = titel;
+        this.title = title;
         this.likes = likes;
+        this.type = type;
         this.tags = tags;
         this.user = user;
 
@@ -93,19 +98,24 @@ public class Post {
     public int getID() {
         return ID;
     }
-    public String getTitel() {
-        return titel;
+    public String getTitle() {
+        return title;
     }
     public int getLikes() {
         return likes;
     }
-    public ArrayList<String> getTags() {
-        return tags;
-    }
     public User getUser() {
         return user;
     }
-
+    public String getType() {
+        if(type)
+            return "Frage";
+        else
+            return "Tipp";
+    }
+    public ArrayList<String> getTags() {
+        return tags;
+    }
     public String getRegion() {
         if(isRoute)
             throw new IllegalArgumentException("There is no Region!\n");
@@ -127,8 +137,8 @@ public class Post {
     }
 
     //Setter Methode:
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public void setTitel(String title) {
+        this.title = title;
     }
     public void setLikes(int likes) {
         this.likes = likes;
@@ -160,11 +170,14 @@ public class Post {
 
     //Memberfunctions:
     public int like() {
+        this.user.newLike();
         return ++likes;
     }
     public int unlike() {
-        if(likes > 0)
+        if(likes > 0) {
+            this.user.lostLike();
             return --likes;
+        }
         else
             return 0;
     }

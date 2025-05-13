@@ -14,6 +14,7 @@ public class User {
     private static int next_ID = 1;
     private String name;
     private String email;
+    private String password;
     private Rank rank = Rank.Bronze;
     private int likes = 0;
     private int questions = 0;
@@ -25,17 +26,20 @@ public class User {
     private ArrayList<Integer> createdPosts;
 
     //Constructor:
-    public User(String name, String email) {
+    public User(String name, String email, String password) {
         //Error Handeling:
         if(name.isEmpty())
             throw new IllegalArgumentException("Name cannot be empty!\n");
         if(email.isEmpty())
             throw new IllegalArgumentException("Email cannot be empty!\n");
+        if(password.isEmpty())
+            throw new IllegalArgumentException("Password cannot be empty!\n");
 
         //Assign Values:
         this.ID = next_ID++;
         this.name = name;
         this.email = email;
+        this.password = password;
     }
 
     //Getter-Methode:
@@ -109,6 +113,19 @@ public class User {
     }
     public int newLike() {
         ++likes;
+        if(likes == 100)
+            rank = Rank.Bronze;
+        else if(likes == 250)
+            rank = Rank.Silber;
+        else if(likes == 500)
+            rank = Rank.Gold;
+        else if(likes == 1000)
+            rank = Rank.Diamant;
+
+        return likes;
+    }
+    public int lostLike() {
+        --likes;
         if(likes == 100)
             rank = Rank.Bronze;
         else if(likes == 250)
