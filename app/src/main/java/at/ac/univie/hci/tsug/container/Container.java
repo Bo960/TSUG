@@ -54,6 +54,7 @@ public class Container extends Application {
                 "Sunrise at Dachstein",
                 128,
                 getUser(1),
+                true,
                 new ArrayList<String>(){},
                 new Pair<>("Schladming", "Dachstein Glacier"),
                 "Started before dawn to catch this magical moment at 2700m altitude!"
@@ -62,6 +63,7 @@ public class Container extends Application {
                 "Almabtrieb in Tyrol",
                 342,
                 getUser(12),
+                true,
                 new ArrayList<String>(){},
                 new Pair<>("Innsbruck", "Stubai Valley"),
                 "The annual cattle drive from mountain pastures is a spectacle of bells and flowers"
@@ -70,6 +72,7 @@ public class Container extends Application {
                 "Hidden Courtyards of Vienna",
                 87,
                 getUser(5),
+                true,
                 new ArrayList<String>(){},
                 new Pair<>("Stephansplatz", "Judenplatz"),
                 "Discovering secret passages and Renaissance courtyards in the 1st district"
@@ -78,6 +81,7 @@ public class Container extends Application {
                 "Sachertorte Taste Test",
                 215,
                 getUser(2),
+                true,
                 new ArrayList<String>(){},
                 new Pair<>("Hotel Sacher", "Demel"),
                 "The ultimate Vienna chocolate cake showdown - which is better?"
@@ -86,6 +90,7 @@ public class Container extends Application {
                 "Via Ferrata in Gesäuse",
                 176,
                 getUser(1),
+                true,
                 new ArrayList<String>(){},
                 new Pair<>("Johnsbachtal", "Haindlkar"),
                 "Iron cables and breathtaking views in Austria's most dramatic national park"
@@ -94,6 +99,7 @@ public class Container extends Application {
                 "Night Skiing in Sölden",
                 298,
                 getUser(9),
+                true,
                 new ArrayList<String>(){},
                 new Pair<>("Sölden Base", "Giggijoch"),
                 "Floodlit slopes until 10pm with the best après-ski in the Alps!"
@@ -102,6 +108,7 @@ public class Container extends Application {
                 "The Tiny House Village",
                 153,
                 getUser(3),
+                true,
                 new ArrayList<String>(){},
                 new Pair<>("Graz", "Lichtblickhof"),
                 "A community living in homes smaller than 20m² - surprisingly cozy!"
@@ -123,7 +130,7 @@ public class Container extends Application {
     }
     public static synchronized Post getPost(String title) {
         for (Post post : posts) {
-            if (Objects.equals(post.getTitel(), title))
+            if (Objects.equals(post.getTitle(), title))
                 return post;
         }
         return null;
