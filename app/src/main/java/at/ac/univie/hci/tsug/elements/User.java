@@ -124,6 +124,19 @@ public class User {
 
         return likes;
     }
+    public int lostLike() {
+        --likes;
+        if(likes == 100)
+            rank = Rank.Bronze;
+        else if(likes == 250)
+            rank = Rank.Silber;
+        else if(likes == 500)
+            rank = Rank.Gold;
+        else if(likes == 1000)
+            rank = Rank.Diamant;
+
+        return likes;
+    }
     public void addLikedPost(Post newPost) {
         likedPosts.add(newPost.getID());
     }
