@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,10 +12,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.ArrayList;
+
+import at.ac.univie.hci.tsug.HistoryPost;
+import at.ac.univie.hci.tsug.HistoryPostAdapter;
 import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
 
 public class LikedPostsActivity extends AppCompatActivity {
+    private ListView likedPostsListView;
+    private ArrayList<HistoryPost> likedPostsList;
+    private HistoryPostAdapter postAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -64,5 +73,20 @@ public class LikedPostsActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
+        likedPostsListView= findViewById(R.id.liked_questions_list);
+        likedPostsList= new ArrayList<>();
+
+
+        //TODO currentUser auch in container
+        /*User currentUser = Container.getCurrentUser();
+
+        for (int postId : currentUser.getLikedPosts()) {
+            Post post = Container.get(postId);
+            if (post != null) {
+                likedPostsList.add(new HistoryPost(post.getTitel(), post.getDes(), post.getUser()));
+            }
+        }*/
+        postAdapter= new HistoryPostAdapter(this, likedPostsList);
+        likedPostsListView.setAdapter(postAdapter);
     }
 }

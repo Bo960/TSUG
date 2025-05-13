@@ -1,12 +1,18 @@
 package at.ac.univie.hci.tsug;
 
-public class HistoryPostActivity {
+
+import at.ac.univie.hci.tsug.elements.User;
+
+public class HistoryPost {
     private String title;
     private String content;
+    private User user;
 
-    public HistoryPostActivity(String title, String content) {
+
+    public HistoryPost(String title, String content, User user) {
         this.title = title;
         this.content = content;
+        this.user=user;
     }
 
     public String getTitle() {
@@ -15,5 +21,8 @@ public class HistoryPostActivity {
 
     public String getContent() {
         return content;
+    }
+    public User getUser() {
+        return user;
     }
 }
