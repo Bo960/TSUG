@@ -22,11 +22,14 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.container.PostContainer;
 import at.ac.univie.hci.tsug.elements.Post;
+import android.widget.ArrayAdapter;
 
 public class SearchActivity extends AppCompatActivity {
     private EditText etSearchQuery, etDateFrom, etDateTo;
@@ -57,6 +60,16 @@ public class SearchActivity extends AppCompatActivity {
         spinnerRecency = findViewById(R.id.spinner_recency);
         chipGroupTags  = findViewById(R.id.chip_group_tags);
         btnSearch      = findViewById(R.id.btn_search);
+        spinnerRecency = findViewById(R.id.spinner_recency);
+
+        //Adapter für Aktualität-Spinner setzen
+        ArrayAdapter<CharSequence> recencyAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.aktualitaet_options,
+                android.R.layout.simple_spinner_item
+        );
+        recencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRecency.setAdapter(recencyAdapter);
 
         //Per Default ist Alles als Kategorie gewählt
         rgCategory.check(R.id.rb_alles);
@@ -84,20 +97,25 @@ public class SearchActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(v -> applyFilters());
     }
 
-    //Filtert alle Posts anhand der Nutzerkriterien und startet die Ergebnis-Activity.
+    //Filtert alle Posts anhand der Nutzerkriterien und startet die Ergebnis-Activity (-> activity_search_results.xml)
     private void applyFilters() {
+        //LADEN VON DEN FILTERN
         //Freitext
         String query = etSearchQuery.getText().toString().trim().toLowerCase(Locale.getDefault());
+
         //Kategorie
         int catId = rgCategory.getCheckedRadioButtonId();
         String category = catId == R.id.rb_frage ? "Frage"
                 : catId == R.id.rb_tipp  ? "Tipp"
                 :                           "Alles";
+
         //Reisedatum
         String dateFrom = etDateFrom.getText().toString().trim();
         String dateTo   = etDateTo.getText().toString().trim();
+
         //Aktualität
         String recency = spinnerRecency.getSelectedItem().toString();
+
         //Tags
         List<String> selectedTags = new ArrayList<>();
         for (int i = 0; i < chipGroupTags.getChildCount(); i++) {
@@ -105,8 +123,23 @@ public class SearchActivity extends AppCompatActivity {
             if (c.isChecked()) selectedTags.add(c.getText().toString());
         }
 
-        //Alle Posts laden und filtern
-        List<Post> allPosts = new ArrayList<>(PostContainer.getAllPosts()); //getAllPosts ist rot, aber es wird in activity_main.xml verwender?! - MAAAAAAAAARRRRRRTTTTTTTTIIIIIIIINNNNNNNNNNNN
+        //Für Spinner, damit es nicht schon wieder spinnt...
+        LocalDate now = LocalDate.now();
+        LocalDate threshold = null;
+        switch (recency) {
+            case "Heute":
+                threshold = now;
+                break;
+            case "Diese Woche":
+                threshold = now.minusWeeks(1);
+                break;
+            case "Diesen Monat":
+                threshold = now.minusMonths(1);
+                break;
+        }
+
+        //ALLE POSTS LADEN UND FILTERN (d.h. Filter anwenden)
+        List<Post> allPosts = new ArrayList<>(PostContainer.getAllPosts()); //getAllPosts ist rot, aber es wird in activity_main.xml verwendet?! - MAAAAAAAAARRRRRRTTTTTTTTIIIIIIIINNNNNNNNNNNN
         List<Post> filtered = allPosts.stream()
                 .filter(p -> {
                     //Textsuche in Titel oder Beschreibung
@@ -114,8 +147,10 @@ public class SearchActivity extends AppCompatActivity {
                             || p.getTitel().toLowerCase().contains(query)
                             || p.getDes().toLowerCase().contains(query);
                     if (!matchesText) return false;
+
                     //Kategorie
                     if (!category.equals("Alles") && !p.getTags().contains(category)) return false;
+
                     //Datumsbereich (Als dd.mm.yyyy -> gehe davon aus)
                     if (!dateFrom.isEmpty() || !dateTo.isEmpty()) {
                         try {
@@ -130,9 +165,9 @@ public class SearchActivity extends AppCompatActivity {
                             //ignorieren bei Parse-Fehlern
                         }
                     }
-                    //Aktualität (Spinner) -> Kommt vielleicht noch (buggy wie sau und zach)
 
-
+                    //Aktualität (Spinner) anwenden - wenn es denn mal geht...
+                    if (threshold != null && p.getDate().isBefore(threshold)) return false;
 
                     //Tags
                     if (!selectedTags.isEmpty()) {

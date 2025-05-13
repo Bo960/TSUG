@@ -35,7 +35,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         llResults = findViewById(R.id.ll_results);
 
         //Ergebnisse aus Intent auslesen
-        //Da getParcelableArrayListExtra evtl. ArrayList<Parcelable> liefert, wandeln wir es manuell um
+        //Da getParcelableArrayListExtra ev. ArrayList<Parcelable> liefert, wandeln wir es manuell um
         ArrayList<Post> results = new ArrayList<>();
         ArrayList<?> rawList = getIntent().getParcelableArrayListExtra("results");
         if (rawList != null) {
