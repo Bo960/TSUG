@@ -53,7 +53,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                 tvTitle.setLayoutParams(new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
-                tvTitle.setText(p.getTitle());
+                tvTitle.setText(p.getTitel());
                 tvTitle.setTextSize(18);
                 tvTitle.setTypeface(null, android.graphics.Typeface.BOLD);
 
