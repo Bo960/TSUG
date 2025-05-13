@@ -170,11 +170,14 @@ public class Post {
 
     //Memberfunctions:
     public int like() {
+        this.user.newLike();
         return ++likes;
     }
     public int unlike() {
-        if(likes > 0)
+        if(likes > 0) {
+            this.user.lostLike();
             return --likes;
+        }
         else
             return 0;
     }
