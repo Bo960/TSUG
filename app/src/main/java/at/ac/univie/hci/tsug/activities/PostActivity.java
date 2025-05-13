@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -148,7 +149,7 @@ public class PostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(PostActivity.this, "Bearbeiten geklickt", Toast.LENGTH_SHORT).show();
 
-                // Beispiel: Starte eine Bearbeiten-Aktivität
+                // TODO
                 // Intent intent = new Intent(PostActivity.this, EditPostActivity.class);
                 // startActivity(intent);
             }
