@@ -7,7 +7,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -26,17 +25,12 @@ public class AccountActivity extends AppCompatActivity {
     BottomNavigationView bottomNav;
     String activityName = "Konto";
     private User currentUser;
+//========
+//>>>>>>>> origin/martin's-branch:app/src/main/java/at/ac/univie/hci/tsug/activities/SeenPostsActivity.java
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_account);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -45,8 +39,8 @@ public class AccountActivity extends AppCompatActivity {
                 Intent intent;
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        //Homescreen
                         intent = new Intent(AccountActivity.this, MainActivity.class);
+                        //Homescreen
                         startActivity(intent);
                         //Von Position-Rechts nach Position-Links
                         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
