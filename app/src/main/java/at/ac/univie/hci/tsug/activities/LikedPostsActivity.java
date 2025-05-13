@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class LikedPostsActivity extends AppCompatActivity {
     private ListView likedPostsListView;
     private ArrayList<HistoryPost> likedPostsList;
     private HistoryPostAdapter postAdapter;
+    private String activityName = "Favoriten";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -73,6 +75,11 @@ public class LikedPostsActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
+
+        //TEXT
+        TextView testText = findViewById(R.id.nav_text_testing);
+        testText.setText(activityName);
+
         likedPostsListView= findViewById(R.id.liked_questions_list);
         likedPostsList= new ArrayList<>();
 

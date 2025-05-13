@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class SeenPostsActivity extends AppCompatActivity {
     private ListView seenPostsListView;
     private ArrayList<HistoryPost> seenPostsList;
     private HistoryPostAdapter postAdapter;
+    private String activityName = "Gesehene Beiträge";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -74,6 +76,10 @@ public class SeenPostsActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
+
+        //TEXT
+        TextView testText = findViewById(R.id.nav_text_testing);
+        testText.setText(activityName);
 
         seenPostsListView= findViewById(R.id.seen_questions_list);
         seenPostsList= new ArrayList<>();

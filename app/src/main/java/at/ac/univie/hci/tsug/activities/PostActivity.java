@@ -84,7 +84,7 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-        //TESTING TEXT
+        //TEXT
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
 

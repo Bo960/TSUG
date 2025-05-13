@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class CreatedPostsActivity extends AppCompatActivity {
     private ArrayList<HistoryPost> createdPostsList;
     private ListView createdPostsListView;
     private HistoryPostAdapter postAdapter;
+    private String activityName = "Erstellte Beiträge";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -73,6 +75,10 @@ public class CreatedPostsActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
+
+        //TEXT
+        TextView testText = findViewById(R.id.nav_text_testing);
+        testText.setText(activityName);
 
         createdPostsListView = findViewById(R.id.created_questions_list);
         createdPostsList= new ArrayList<>();

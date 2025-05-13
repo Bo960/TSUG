@@ -1,0 +1,294 @@
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"primaryColor\">#a2cffe</color>\r\n    <color name=\"onPrimaryColor\">#FFFFFF</color>\r\n    <color name=\"primaryContainerColor\">#EADDFF</color>\r\n    <color name=\"secondaryColor\">#464646</color>\r\n    <color name=\"onPrimaryContainerColor\">#a2cffe</color>\r\n    <color name=\"errorColor\">#B3261E</color>\r\n    <color name=\"onErrorColor\">#FFFFFF</color>\r\n    <color name=\"errorContainerColor\">#F9DEDC</color>\r\n    <color name=\"onErrorContainerColor\">#410E0B</color>\r\n    <color name=\"surfaceColor\">#FFFBFE</color>\r\n    <color name=\"onSurfaceColor\">#1C1B1F</color>\r\n    <color name=\"surfaceVariantColor\">#E7E0EC</color>\r\n\r\n    <!-- Farben erstellt von Martin\r\n     BITTE ÄNDERN WENN DIESE NICHT PASSEN! -->\r\n    <color name=\"babyBlue\"> #a2cffe </color>\r\n    <color name=\"darkBlue\"> #013469 </color>\r\n\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/colors.xml b/app/src/main/res/values/colors.xml
+--- a/app/src/main/res/values/colors.xml	(revision 9d1687bc4e529af17a64f3e33437593a9f10f652)
++++ b/app/src/main/res/values/colors.xml	(date 1746909337720)
+@@ -17,5 +17,6 @@
+      BITTE ÄNDERN WENN DIESE NICHT PASSEN! -->
+     <color name="babyBlue"> #a2cffe </color>
+     <color name="darkBlue"> #013469 </color>
++    <color name="lava"> #808588 </color>
+ 
+ </resources>
+\ No newline at end of file
+Index: .idea/deploymentTargetSelector.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"deploymentTargetSelector\">\r\n    <selectionStates>\r\n      <SelectionState runConfigName=\"app.androidTest\">\r\n        <option name=\"selectionMode\" value=\"DROPDOWN\" />\r\n      </SelectionState>\r\n      <SelectionState runConfigName=\"app\">\r\n        <option name=\"selectionMode\" value=\"DROPDOWN\" />\r\n        <DropdownSelection timestamp=\"2025-05-09T11:43:15.943170400Z\">\r\n          <Target type=\"DEFAULT_BOOT\">\r\n            <handle>\r\n              <DeviceId pluginId=\"LocalEmulator\" identifier=\"path=C:\\Users\\feldb\\.android\\avd\\Pixel_6_API_31.avd\" />\r\n            </handle>\r\n          </Target>\r\n        </DropdownSelection>\r\n        <DialogSelection />\r\n      </SelectionState>\r\n      <SelectionState runConfigName=\"app.main\">\r\n        <option name=\"selectionMode\" value=\"DROPDOWN\" />\r\n      </SelectionState>\r\n      <SelectionState runConfigName=\"app.unitTest\">\r\n        <option name=\"selectionMode\" value=\"DROPDOWN\" />\r\n        <DropdownSelection timestamp=\"2025-05-08T07:49:57.215548400Z\">\r\n          <Target type=\"DEFAULT_BOOT\">\r\n            <handle>\r\n              <DeviceId pluginId=\"LocalEmulator\" identifier=\"path=C:\\Users\\feldb\\.android\\avd\\Pixel_6_API_31.avd\" />\r\n            </handle>\r\n          </Target>\r\n        </DropdownSelection>\r\n        <DialogSelection />\r\n      </SelectionState>\r\n    </selectionStates>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetSelector.xml b/.idea/deploymentTargetSelector.xml
+--- a/.idea/deploymentTargetSelector.xml	(revision 9d1687bc4e529af17a64f3e33437593a9f10f652)
++++ b/.idea/deploymentTargetSelector.xml	(date 1746909337767)
+@@ -2,26 +2,9 @@
+ <project version="4">
+   <component name="deploymentTargetSelector">
+     <selectionStates>
+-      <SelectionState runConfigName="app.androidTest">
+-        <option name="selectionMode" value="DROPDOWN" />
+-      </SelectionState>
+       <SelectionState runConfigName="app">
+         <option name="selectionMode" value="DROPDOWN" />
+         <DropdownSelection timestamp="2025-05-09T11:43:15.943170400Z">
+-          <Target type="DEFAULT_BOOT">
+-            <handle>
+-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\feldb\.android\avd\Pixel_6_API_31.avd" />
+-            </handle>
+-          </Target>
+-        </DropdownSelection>
+-        <DialogSelection />
+-      </SelectionState>
+-      <SelectionState runConfigName="app.main">
+-        <option name="selectionMode" value="DROPDOWN" />
+-      </SelectionState>
+-      <SelectionState runConfigName="app.unitTest">
+-        <option name="selectionMode" value="DROPDOWN" />
+-        <DropdownSelection timestamp="2025-05-08T07:49:57.215548400Z">
+           <Target type="DEFAULT_BOOT">
+             <handle>
+               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\feldb\.android\avd\Pixel_6_API_31.avd" />
+Index: app/src/main/java/at/ac/univie/hci/tsug/Post.java
+===================================================================
+diff --git a/app/src/main/java/at/ac/univie/hci/tsug/Post.java b/app/src/main/java/at/ac/univie/hci/tsug/Post.java
+new file mode 100644
+--- /dev/null	(date 1746955585200)
++++ b/app/src/main/java/at/ac/univie/hci/tsug/Post.java	(date 1746955585200)
+@@ -0,0 +1,143 @@
++package at.ac.univie.hci.tsug;
++
++import android.util.Pair;
++
++import java.lang.reflect.Array;
++import java.util.ArrayList;
++
++public class Post {
++
++    //Instance Variable:
++    private final int ID;
++    private static int nex_ID = 1;
++    private String titel;
++    private int likes;
++    private ArrayList<String> tags;
++    private boolean isRegion = true;
++    private String region;
++    private boolean isRoute = false;
++    private Pair<String, String> route;
++    private String des;
++
++    //Constructor:
++    Post(String titel, int likes, ArrayList<String> tags, String region, String des) {
++        //Error Handeling:
++        if(titel.isEmpty())
++            throw new IllegalArgumentException("Titel cannot be empty!\n");
++        if(region.isEmpty())
++            throw new IllegalArgumentException("The cannot be empty!\n");
++        if(des.isEmpty())
++            throw new IllegalArgumentException("Description cannot be empty!\n");
++
++        //Assign values:
++        this.ID = nex_ID++;
++
++        this.titel = titel;
++        this.likes = likes;
++        this.tags = tags;
++
++        this.isRegion = true;
++        this.region = region;
++
++        this.isRoute = false;
++        this.route = null;
++
++        this.des = des;
++    }
++    Post(String titel, int likes, ArrayList<String> tags, Pair<String, String> route, String des) {
++        //Error Handeling:
++        if(titel.isEmpty())
++            throw new IllegalArgumentException("Titel cannot be empty!\n");
++        if(likes < 0)
++            throw new IllegalArgumentException("Likes cannot be negative!\n");
++        if(route.first.isEmpty())
++            throw new IllegalArgumentException("Start of the route cannot be empty!\n");
++        if(route.second.isEmpty())
++            throw new IllegalArgumentException("End of the route cannot be empty!\n");
++        if(des.isEmpty())
++            throw new IllegalArgumentException("Description cannot be empty!\n");
++
++        //Assign values:
++        this.ID = nex_ID++;
++
++        this.titel = titel;
++        this.likes = likes;
++        this.tags = tags;
++
++        this.isRegion = false;
++        this.region = null;
++
++        this.isRoute = true;
++        this.route = route;
++
++        this.des = des;
++    }
++
++    //Getter Methode:
++    public String getDes() {
++        return des;
++    }
++    public Pair<String, String> getRoute() {
++        if(!isRoute)
++            throw new IllegalArgumentException("There is no Route!");
++        return route;
++    }
++    public String getRegion() {
++        if(!isRegion)
++            throw new IllegalArgumentException("There is no Region!");
++        return region;
++    }
++    public ArrayList<String> getTags() {
++        return tags;
++    }
++    public int getLikes() {
++        return likes;
++    }
++    public String getTitel() {
++        return titel;
++    }
++    public int getID() {
++        return ID;
++    }
++
++    //Setter Methode:
++    public void setTitel(String titel) {
++        this.titel = titel;
++    }
++    public void setTags(ArrayList<String> tags) {
++        this.tags = tags;
++    }
++    public void setRegion(String region) {
++        if(isRoute) {
++            isRegion = true;
++
++            isRoute = false;
++            route = null;
++        }
++        this.region = region;
++    }
++    public void setRoute(Pair<String, String> route) {
++        if(isRegion) {
++            isRoute = true;
++
++            isRegion = false;
++            region = null;
++        }
++        this.route = route;
++    }
++    public void setDes(String des) {
++        this.des = des;
++    }
++
++    //Memberfunctions:
++    public int like() {
++        likes++;
++        return likes;
++    }
++    public int unlike() {
++        if(likes > 0)
++            likes--;
++
++        return likes;
++    }
++}
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.TSUG\"\r\n        tools:targetApi=\"31\">\r\n        <activity\r\n            android:name=\".AccountActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".SettingsActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".PostActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".CreateActivity\"\r\n            android:exported=\"false\"\r\n            android:label=\"@string/title_activity_erstellen\"\r\n            android:theme=\"@style/Theme.TSUG\" />\r\n        <activity\r\n            android:name=\".MainActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 9d1687bc4e529af17a64f3e33437593a9f10f652)
++++ b/app/src/main/AndroidManifest.xml	(date 1746909835622)
+@@ -19,6 +19,10 @@
+             android:name=".SettingsActivity"
+             android:exported="false" />
+         <activity
++            android:name=".SearchActivity"
++            android:exported="true">
++        </activity>
++        <activity
+             android:name=".PostActivity"
+             android:exported="false" />
+         <activity
+Index: app/src/main/java/at/ac/univie/hci/tsug/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package at.ac.univie.hci.tsug;\r\n\r\nimport android.app.ActivityOptions;\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.ImageButton;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.SearchView;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\n\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\nimport com.google.android.material.navigation.NavigationBarView;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    BottomNavigationView bottomNav;\r\n    SearchView searchView;\r\n    String simpleSearchTerm;\r\n    String activityName = \"TSUG\";\r\n\r\n\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n\r\n        EdgeToEdge.enable(this);\r\n\r\n        setContentView(R.layout.activity_main);\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {\r\n            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);\r\n            return insets;\r\n        });\r\n\r\n\r\n        //Martin's Code für Bottom Navigation START\r\n\r\n        //BOTTOM NAVIGATION:\r\n        bottomNav = findViewById(R.id.bottom_navigation);\r\n\r\n        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {\r\n            @Override\r\n            public boolean onNavigationItemSelected(@NonNull MenuItem item) {\r\n                Intent intent;\r\n                switch (item.getItemId()) {\r\n                    case R.id.nav_neuer_beitrag:\r\n                        //Beitrag erstellen Seite\r\n                        intent = new Intent(MainActivity.this, CreateActivity.class);\r\n                        startActivity(intent);\r\n                        //Von Position-Links nach Position-Rechts\r\n                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);\r\n                        return true;\r\n\r\n                    case R.id.nav_account:\r\n                        //Account settings Seite\r\n                        intent = new Intent(MainActivity.this, AccountActivity.class);\r\n                        startActivity(intent);\r\n                        //Von Position-Links nach Position-Rechts\r\n                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);\r\n                        return true;\r\n                }\r\n                return false;\r\n            }\r\n        });\r\n\r\n        //SIMPLE SEARCH BAR:\r\n        searchView = findViewById(R.id.searchView);\r\n        searchView.clearFocus();\r\n\r\n        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {\r\n            @Override\r\n            public boolean onQueryTextSubmit(String query) {\r\n                return false;\r\n            }\r\n            @Override\r\n            public boolean onQueryTextChange(String newText) {\r\n                simpleSearchTerm = newText;\r\n                return true;\r\n            }\r\n        });\r\n\r\n        Button searchButton = findViewById(R.id.searchStart);\r\n\r\n        searchButton.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                TextView textView = findViewById(R.id.label_babael);\r\n                textView.setText(simpleSearchTerm);\r\n            }\r\n        });\r\n\r\n        //TOP NAVIGATION:\r\n        ImageButton backNav = findViewById(R.id.nav_back);\r\n        backNav.setOnClickListener(v -> finish());\r\n\r\n        ImageButton setNav = findViewById(R.id.nav_einstellungen);\r\n        setNav.setOnClickListener(v -> {\r\n            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);\r\n            startActivity(intent);\r\n            overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);\r\n        });\r\n\r\n        //TESTING TEXT TODO DELETE LATER\r\n        TextView testText = findViewById(R.id.nav_text_testing);\r\n        testText.setText(activityName);\r\n\r\n        //Martin's Code für Bottom Navigation END\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/at/ac/univie/hci/tsug/MainActivity.java b/app/src/main/java/at/ac/univie/hci/tsug/MainActivity.java
+--- a/app/src/main/java/at/ac/univie/hci/tsug/MainActivity.java	(revision 9d1687bc4e529af17a64f3e33437593a9f10f652)
++++ b/app/src/main/java/at/ac/univie/hci/tsug/MainActivity.java	(date 1746909544600)
+@@ -89,6 +89,7 @@
+             }
+         });
+ 
++        //SIMPLE SEARCH:
+         Button searchButton = findViewById(R.id.searchStart);
+ 
+         searchButton.setOnClickListener(new View.OnClickListener() {
+@@ -99,6 +100,18 @@
+             }
+         });
+ 
++        //COMPLEX SEARCH:
++        Button complexButton = findViewById(R.id.searchComplex);
++
++        complexButton.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
++                startActivity(intent);
++                overridePendingTransition(0, 0);
++            }
++        });
++
+         //TOP NAVIGATION:
+         ImageButton backNav = findViewById(R.id.nav_back);
+         backNav.setOnClickListener(v -> finish());
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".MainActivity\">\r\n\r\n    <!-- Top Naviagtion -->\r\n    <include\r\n        android:id=\"@+id/top_navigation\"\r\n\r\n        layout=\"@layout/top_nav\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentTop=\"true\"/>\r\n\r\n    <!-- Damit alles Scrollbar bleibt -->\r\n    <ScrollView\r\n        android:id=\"@+id/main_scroll_view\"\r\n\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:layout_above=\"@id/bottom_navigation\"\r\n        android:layout_below=\"@id/top_navigation\"\r\n\r\n        android:fillViewport=\"true\">\r\n\r\n        <!-- Rest vom Layout bestimmt -->\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"vertical\"\r\n            android:gravity=\"center_horizontal\">\r\n\r\n            <androidx.appcompat.widget.SearchView\r\n                android:id=\"@+id/searchView\"\r\n\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"10dp\"\r\n                android:layout_marginLeft=\"20dp\"\r\n                android:layout_marginRight=\"20dp\"\r\n\r\n                app:iconifiedByDefault=\"false\"\r\n                app:queryHint=\"Search Here...\"/>\r\n\r\n            <Button\r\n                android:id=\"@+id/searchStart\"\r\n\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"10dp\"\r\n                android:layout_centerHorizontal=\"true\"\r\n\r\n                android:text=\"Suche starten\"\r\n                android:backgroundTint=\"@color/babyBlue\"\r\n                android:textColor=\"@color/darkBlue\"\r\n                android:textSize=\"20dp\"\r\n                android:gravity=\"center\"/>\r\n\r\n        </LinearLayout>\r\n    </ScrollView>\r\n\r\n    <!-- Nur fürs Testen -->\r\n    <TextView\r\n        android:id=\"@+id/label_babael\"\r\n\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_centerHorizontal=\"true\"\r\n        android:layout_centerVertical=\"true\"\r\n\r\n        android:text=\"HOMESCREEN\"\r\n        android:textSize=\"30dp\"\r\n\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <!-- Bottom Navigation  -->\r\n    <com.google.android.material.bottomnavigation.BottomNavigationView\r\n        android:id=\"@+id/bottom_navigation\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        app:menu=\"@menu/bottom_nav\"\r\n        app:itemIconSize=\"45dp\"\r\n        app:labelVisibilityMode=\"labeled\"/>\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 9d1687bc4e529af17a64f3e33437593a9f10f652)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1746909350819)
+@@ -61,6 +61,20 @@
+                 android:textSize="20dp"
+                 android:gravity="center"/>
+ 
++            <Button
++                android:id="@+id/searchComplex"
++
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginTop="10dp"
++                android:layout_centerHorizontal="true"
++
++                android:text="Filter"
++                android:backgroundTint="@color/lava"
++                android:textColor="@color/onPrimaryColor"
++                android:textSize="20dp"
++                android:gravity="center"/>
++
+         </LinearLayout>
+     </ScrollView>
+ 

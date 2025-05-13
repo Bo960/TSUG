@@ -19,6 +19,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.container.Container;
 import at.ac.univie.hci.tsug.elements.User;
 
 public class AccountActivity extends AppCompatActivity {
@@ -75,6 +76,13 @@ public class AccountActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
+        //TEXT
+        TextView testText = findViewById(R.id.nav_text_testing);
+        testText.setText(activityName);
+
+
+        currentUser = Container.getUser("KarlMayer");
+
         TextView usernameText = findViewById(R.id.username);
         usernameText.setText(currentUser.getName());
 
@@ -101,6 +109,8 @@ public class AccountActivity extends AppCompatActivity {
         //TODO braucht man ein currentUser in UserContainer !!
         //currentUser = UserContainer.getCurrentUser();
 
+
+
         TextView likes = findViewById(R.id.likes);
         likes.setOnClickListener(v ->{
             Intent i= new Intent(this, LikedPostsActivity.class);
@@ -122,6 +132,5 @@ public class AccountActivity extends AppCompatActivity {
             //Von Position-Links nach Position-Rechts
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
         });
-
     }
 }

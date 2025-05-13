@@ -6,7 +6,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CreateActivity">
+    tools:context=".activities.CreateActivity"
+    android:fitsSystemWindows="true">
 
     <!-- Top Naviagtion -->
     <include
@@ -27,7 +28,6 @@
 
         android:fillViewport="true">
 
-
     </ScrollView>
 
 
@@ -39,7 +39,7 @@
         android:layout_centerInParent="true"
         android:layout_centerVertical="false"
         android:text="display title"
-        android:textSize="24sp"
+        android:textSize="@dimen/gross"
         android:textStyle="bold"
         android:textColor="@color/primaryColor"
         android:layout_alignParentTop="true"
@@ -55,7 +55,8 @@
         android:layout_centerInParent="true"
         android:layout_centerVertical="false"
         android:layout_marginTop="80dp"
-        android:text="Publish" />
+        android:text="Publish"
+        android:textSize="@dimen/mittel"/>
 
 
 
@@ -66,7 +67,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="45dp"
+        app:itemIconSize="@dimen/sehrgross"
         app:labelVisibilityMode="labeled"/>
-
 </RelativeLayout>

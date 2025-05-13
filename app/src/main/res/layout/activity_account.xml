@@ -6,7 +6,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AccountActivity">
+    tools:context=".activities.AccountActivity"
+    android:fitsSystemWindows="true">
     <!-- Top Naviagtion -->
     <include
         android:id="@+id/top_navigation"
@@ -47,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username"
-                android:textSize="20sp"
+                android:textSize="@dimen/klein"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp" />
 
@@ -57,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" @123456 "
-                android:textSize="16sp"
+                android:textSize="@dimen/sehrklein"
                 android:layout_marginTop="8dp" />
 
             <!-- Ranking -->
@@ -89,7 +90,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Bronze"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/klein"
                             android:textStyle="bold"
                             android:textColor="@color/secondaryColor" />
 
@@ -97,7 +98,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Rang"
-                            android:textSize="14sp"
+                            android:textSize="@dimen/sehrklein"
                             android:textColor="@color/secondaryColor" />
                     </LinearLayout>
 
@@ -122,7 +123,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/klein"
                             android:textStyle="bold"
                             android:textColor="@color/secondaryColor" />
 
@@ -130,7 +131,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Fragen"
-                            android:textSize="14sp"
+                            android:textSize="@dimen/sehrklein"
                             android:textColor="@color/secondaryColor" />
                     </LinearLayout>
 
@@ -154,7 +155,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/klein"
                             android:textStyle="bold"
                             android:textColor="@color/secondaryColor" />
 
@@ -162,7 +163,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Antworten"
-                            android:textSize="14sp"
+                            android:textSize="@dimen/sehrklein"
                             android:textColor="@color/secondaryColor" />
                     </LinearLayout>
 
@@ -186,7 +187,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/klein"
                             android:textStyle="bold"
                             android:textColor="@color/secondaryColor" />
 
@@ -194,7 +195,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Likes"
-                            android:textSize="14sp"
+                            android:textSize="@dimen/sehrklein"
                             android:textColor="@color/secondaryColor" />
                     </LinearLayout>
                 </LinearLayout>
@@ -205,7 +206,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Email"
-                android:textSize="22sp"
+                android:textSize="@dimen/mittel"
                 android:textStyle="bold"
                 android:textColor="@color/secondaryColor"
                 android:layout_marginTop="24dp"
@@ -241,7 +242,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="email@gmail.com"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/klein"
                             android:textColor="@color/secondaryColor"
                             android:layout_gravity="center_vertical"/>
                     </LinearLayout>
@@ -251,7 +252,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Beiträge"
-                android:textSize="22sp"
+                android:textSize="@dimen/mittel"
                 android:textStyle="bold"
                 android:textColor="@color/secondaryColor"
                 android:layout_marginTop="24dp"
@@ -291,7 +292,7 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:text="Favoriten"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/klein"
                             android:layout_weight="10"/>
                         <ImageView
                             android:layout_width="22dp"
@@ -326,7 +327,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Letztens gesehen"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/klein"
                             android:clickable="true"
                             android:focusable="true"
                             android:layout_weight="1"/>
@@ -364,7 +365,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Meine Beiträge"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/klein"
                             android:clickable="true"
                             android:focusable="true"
                             android:layout_weight="1"/>
@@ -389,7 +390,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="45dp"
+        app:itemIconSize="@dimen/sehrgross"
         app:labelVisibilityMode="labeled"/>
-
 </RelativeLayout>

@@ -1,6 +1,10 @@
 package at.ac.univie.hci.tsug.elements;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Pair;
+
+import androidx.annotation.NonNull;
 
 import java.sql.Time;
 import java.time.LocalDate;
@@ -8,7 +12,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Post {
+public class Post implements Parcelable {
     //Instancevariable:
     private final int ID;
     private static int next_ID = 1;
@@ -89,6 +93,30 @@ public class Post {
         this.time = LocalTime.now();
     }
 
+
+    protected Post(Parcel in) {
+        ID = in.readInt();
+        title = in.readString();
+        likes = in.readInt();
+        type = in.readByte() != 0;
+        tags = in.createStringArrayList();
+        isRegion = in.readByte() != 0;
+        region = in.readString();
+        isRoute = in.readByte() != 0;
+        des = in.readString();
+    }
+
+    public static final Creator<Post> CREATOR = new Creator<Post>() {
+        @Override
+        public Post createFromParcel(Parcel in) {
+            return new Post(in);
+        }
+
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
 
     //Getter Methode:
     public int getID() {
@@ -176,5 +204,23 @@ public class Post {
         }
         else
             return 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeInt(ID);
+        parcel.writeString(title);
+        parcel.writeInt(likes);
+        parcel.writeByte((byte) (type ? 1 : 0));
+        parcel.writeStringList(tags);
+        parcel.writeByte((byte) (isRegion ? 1 : 0));
+        parcel.writeString(region);
+        parcel.writeByte((byte) (isRoute ? 1 : 0));
+        parcel.writeString(des);
     }
 }

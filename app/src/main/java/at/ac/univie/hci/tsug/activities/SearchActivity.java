@@ -3,19 +3,24 @@ package at.ac.univie.hci.tsug.activities;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,9 +32,10 @@ import java.time.format.DateTimeFormatter;
 
 import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.MainActivity;
-import at.ac.univie.hci.tsug.container.PostContainer;
+import at.ac.univie.hci.tsug.container.Container;
 import at.ac.univie.hci.tsug.elements.Post;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 public class SearchActivity extends AppCompatActivity {
     private EditText etSearchQuery, etDateFrom, etDateTo;
@@ -37,6 +43,8 @@ public class SearchActivity extends AppCompatActivity {
     private Spinner spinnerRecency;
     private ChipGroup chipGroupTags;
     private Button btnSearch;
+    public String initalQuery;
+    private String activityName = "Suchfilter";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,53 @@ public class SearchActivity extends AppCompatActivity {
                     return insets;
                 }
         );
+
+        //Bottom Naviagtion:
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        //Homescreen
+                        intent = new Intent(SearchActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+                        return true;
+
+                    case R.id.nav_neuer_beitrag:
+                        //Beitrag erstellen Seite
+                        intent = new Intent(SearchActivity.this, CreateActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+                        return true;
+
+                    case R.id.nav_account:
+                        //Account settings Seite
+                        intent = new Intent(SearchActivity.this, AccountActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        //TOP NAVIGATION:
+        ImageButton backNav = findViewById(R.id.nav_back);
+        backNav.setOnClickListener(v -> finish());
+
+        ImageButton setNav = findViewById(R.id.nav_einstellungen);
+        setNav.setOnClickListener(v -> {
+            Intent intent = new Intent(SearchActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
+        });
+
+        //TEXT
+        TextView testText = findViewById(R.id.nav_text_testing);
+        testText.setText(activityName);
 
         //activity Komponenten initialisieren
         etSearchQuery = findViewById(R.id.et_search_query);
@@ -95,6 +150,7 @@ public class SearchActivity extends AppCompatActivity {
 
         //Such-Button Listener (richtig mit Ohren)
         btnSearch.setOnClickListener(v -> applyFilters());
+        this.initalQuery= initialQuery;
     }
 
     //Filtert alle Posts anhand der Nutzerkriterien und startet die Ergebnis-Activity (-> activity_search_results.xml)
@@ -139,12 +195,13 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         //ALLE POSTS LADEN UND FILTERN (d.h. Filter anwenden)
-        List<Post> allPosts = new ArrayList<>(PostContainer.getAllPosts()); //getAllPosts ist rot, aber es wird in activity_main.xml verwendet?! - MAAAAAAAAARRRRRRTTTTTTTTIIIIIIIINNNNNNNNNNNN
+        List<Post> allPosts = new ArrayList<>(Container.getAllPosts()); //getAllPosts ist rot, aber es wird in activity_main.xml verwendet?! - MAAAAAAAAARRRRRRTTTTTTTTIIIIIIIINNNNNNNNNNNN
+        LocalDate finalThreshold = threshold;
         List<Post> filtered = allPosts.stream()
                 .filter(p -> {
                     //Textsuche in Titel oder Beschreibung
                     boolean matchesText = query.isEmpty()
-                            || p.getTitel().toLowerCase().contains(query)
+                            || p.getTitle().toLowerCase().contains(query)
                             || p.getDes().toLowerCase().contains(query);
                     if (!matchesText) return false;
 
@@ -167,7 +224,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                     //Aktualität (Spinner) anwenden - wenn es denn mal geht...
-                    if (threshold != null && p.getDate().isBefore(threshold)) return false;
+                    if (finalThreshold != null && p.getDate().isBefore(finalThreshold)) return false;
 
                     //Tags
                     if (!selectedTags.isEmpty()) {

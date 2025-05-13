@@ -32,12 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     SearchView searchView;
-    public String simpleSearchTerm;
+    public static String simpleSearchTerm;
     String activityName = "TSUG";
-
-    public static String getSimpleSearchTerm() {
-        return getSimpleSearchTerm();
-    }
 
 
     @Override
@@ -148,10 +144,8 @@ public class MainActivity extends AppCompatActivity {
         titel.setText(post.getTitle());
         post_id.setText(String.valueOf(post.getID()));
         post_des.setText(post.getDes());
-
-
     }
-    public String getSimpleSearchTerm() {
+    public static String getSimpleSearchTerm() {
         return simpleSearchTerm;
     }
 

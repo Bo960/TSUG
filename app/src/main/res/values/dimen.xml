@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="sehrgross">64sp</dimen>
+    <dimen name="gross">42sp</dimen>
+    <dimen name="mittel">32sp</dimen>
+    <dimen name="klein">24sp</dimen>
+    <dimen name="sehrklein">18sp</dimen>
+
+</resources>

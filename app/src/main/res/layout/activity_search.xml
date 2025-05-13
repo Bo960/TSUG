@@ -6,7 +6,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SearchActivity">
+    tools:context=".activities.SearchActivity"
+    android:fitsSystemWindows="true">
 
     <!-- Top Navigation -->
     <include
@@ -36,13 +37,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Suchbegriff eingeben"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="@dimen/klein"/>
 
             <!-- Kategorie-Auswahl -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Kategorie"
+                android:textSize="@dimen/mittel"
                 android:layout_marginTop="16dp" />
 
             <RadioGroup
@@ -55,20 +58,23 @@
                     android:id="@+id/rb_frage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Frage" />
+                    android:text="Frage"
+                    android:textSize="@dimen/klein"/>
 
                 <RadioButton
                     android:id="@+id/rb_tipp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tipp" />
+                    android:text="Tipp"
+                    android:textSize="@dimen/klein"/>
 
                 <RadioButton
                     android:id="@+id/rb_alles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Alles"
-                    android:checked="true" />
+                    android:checked="true"
+                    android:textSize="@dimen/klein"/>
 
             </RadioGroup>
 
@@ -77,7 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reisedatum"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="16dp"
+                android:textSize="@dimen/mittel"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,7 +100,8 @@
                     android:hint="Von"
                     android:focusable="false"
                     android:clickable="true"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    android:textSize="@dimen/klein"/>
 
                 <View
                     android:layout_width="16dp"
@@ -107,7 +115,8 @@
                     android:hint="Bis"
                     android:focusable="false"
                     android:clickable="true"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    android:textSize="@dimen/klein"/>
 
             </LinearLayout>
 
@@ -116,7 +125,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Aktualität"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="16dp"
+                android:textSize="@dimen/mittel"/>
 
             <Spinner
                 android:id="@+id/spinner_recency"
@@ -129,7 +139,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tags"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="16dp"
+                android:textSize="@dimen/mittel"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group_tags"
@@ -144,19 +155,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Suchen"
-                android:layout_marginTop="24dp" />
+                android:layout_marginTop="24dp"
+                android:textSize="@dimen/mittel"/>
 
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Balken  -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="45dp"
-        app:labelVisibilityMode="labeled" />
-
+        app:itemIconSize="@dimen/sehrgross"
+        app:labelVisibilityMode="labeled"/>
 </RelativeLayout>
