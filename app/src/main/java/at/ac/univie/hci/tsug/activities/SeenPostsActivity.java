@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,10 +12,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.ArrayList;
+
+import at.ac.univie.hci.tsug.HistoryPost;
+import at.ac.univie.hci.tsug.HistoryPostAdapter;
 import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
 
 public class SeenPostsActivity extends AppCompatActivity {
+    private ListView seenPostsListView;
+    private ArrayList<HistoryPost> seenPostsList;
+    private HistoryPostAdapter postAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -65,5 +74,21 @@ public class SeenPostsActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
+
+        seenPostsListView= findViewById(R.id.seen_questions_list);
+        seenPostsList= new ArrayList<>();
+
+        //TODO currentUser auch in usercontainer
+        /*User currentUser = Container.getCurrentUser();
+
+        for (int postId : currentUser.getSeenPosts()) {
+            Post post = Container.get(postId);
+            if (post != null) {
+                seenPostsList.add(new HistoryPost(post.getTitel(), post.getDes(), post.getUser()));
+            }
+        }*/
+
+        postAdapter= new HistoryPostAdapter( this, seenPostsList);
+        seenPostsListView.setAdapter(postAdapter);
     }
 }

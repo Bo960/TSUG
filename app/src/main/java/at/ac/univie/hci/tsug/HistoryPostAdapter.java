@@ -6,16 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import java.util.List;
+import java.util.ArrayList;
 
 public class HistoryPostAdapter extends BaseAdapter {
+    private ArrayList<HistoryPost> posts;
     private Context context;
-    private List<HistoryPostActivity> posts;
-
     //Constructor
-    public HistoryPostAdapter(Context context, List<HistoryPostActivity> posts) {
-        this.context = context;
+    public HistoryPostAdapter(Context context, ArrayList<HistoryPost> posts) {
         this.posts = posts;
+        this.context = context;
     }
 
     @Override
@@ -29,22 +28,23 @@ public class HistoryPostAdapter extends BaseAdapter {
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
+    public long getItemId(int position) { return posts.get(position).getUser().getID(); }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        HistoryPostActivity post = posts.get(position);
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.history_post, parent, false);
         }
+        HistoryPost post = posts.get(position);
 
         // Hier wird die TextView im Layout gesetzt
         TextView postTitle = convertView.findViewById(R.id.post_title);
         postTitle.setText(post.getTitle());
-
+        TextView author = convertView.findViewById(R.id.post_author);
+        author.setText(post.getUser().getName());
+        TextView context = convertView.findViewById(R.id.post_context);
+        context.setText(post.getContent());
 
         return convertView;
     }

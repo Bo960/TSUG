@@ -38,7 +38,7 @@
                 android:layout_height="?android:attr/actionBarSize"
                 android:minHeight="?android:attr/actionBarSize"
                 android:src="@drawable/account"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="8dp"
                 android:contentDescription="Profilbild" />
 
             <!-- Benutzername -->
@@ -61,138 +61,144 @@
                 android:layout_marginTop="8dp" />
 
             <!-- Ranking -->
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="16dp"
-                android:padding="12dp"
                 android:gravity="center"
-                android:background="@color/onPrimaryContainerColor"
-                android:weightSum="4">
+                app:cardBackgroundColor="@color/onPrimaryContainerColor"
+                android:weightSum="4"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="20dp"
+                app:contentPadding="12dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
                 <!-- Rang -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/ranking"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="#1"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/primaryContainerColor" />
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
 
-                    <TextView
+                        <TextView
+                            android:id="@+id/ranking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bronze"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryColor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rang"
+                            android:textSize="14sp"
+                            android:textColor="@color/secondaryColor" />
+                    </LinearLayout>
+
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="2dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <!-- Fragen gestellt -->
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rang"
-                        android:textSize="14sp"
-                        android:textColor="@color/primaryContainerColor" />
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/questions_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryColor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fragen"
+                            android:textSize="14sp"
+                            android:textColor="@color/secondaryColor" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="2dp"
+                        android:background="?android:attr/listDivider"/>
+
+                    <!-- Antworten -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/answers_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryColor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Antworten"
+                            android:textSize="14sp"
+                            android:textColor="@color/secondaryColor" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="2dp"
+                        android:background="?android:attr/listDivider"/>
+
+                    <!-- Likes -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/likes_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryColor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Likes"
+                            android:textSize="14sp"
+                            android:textColor="@color/secondaryColor" />
+                    </LinearLayout>
                 </LinearLayout>
-
-
-                <!-- Divider -->
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="4dp"
-                    android:background="@color/primaryContainerColor"/>
-
-                <!-- Fragen gestellt -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/questions_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/primaryContainerColor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Fragen"
-                        android:textSize="14sp"
-                        android:textColor="@color/primaryContainerColor" />
-                </LinearLayout>
-
-                <!-- Divider -->
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="4dp"
-                    android:background="@color/primaryContainerColor"/>
-
-                <!-- Antworten -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/answers_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/primaryContainerColor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Antworten"
-                        android:textSize="14sp"
-                        android:textColor="@color/primaryContainerColor" />
-                </LinearLayout>
-
-                <!-- Divider -->
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="4dp"
-                    android:background="@color/primaryContainerColor"/>
-
-                <!-- Likes -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/likes_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/primaryContainerColor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Likes"
-                        android:textSize="14sp"
-                        android:textColor="@color/primaryContainerColor" />
-                </LinearLayout>
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <!-- Email -->
             <TextView
@@ -203,40 +209,43 @@
                 android:textStyle="bold"
                 android:textColor="@color/secondaryColor"
                 android:layout_marginTop="24dp"
-                android:layout_marginStart="12dp"/>
+                android:layout_marginStart="12dp"
+                android:inputType="textEmailAddress"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="3dp"
-                android:background="@color/primaryContainerColor"
-                android:layout_marginTop="8dp"
-                android:elevation="4dp">
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="12dp">
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/mail_24px"
-                        android:contentDescription="mailIcon"
-                        android:layout_marginEnd="8dp"/>
-                    <TextView
-                        android:id="@+id/email"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="email@gmail.com"
-                        android:textSize="18sp"
-                        android:textColor="@color/secondaryColor"
-                        android:layout_gravity="center_vertical"/>
-                </LinearLayout>
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:padding="3dp"
+                    app:cardBackgroundColor="@color/onPrimaryColor"
+                    android:layout_marginTop="8dp"
+                    app:cardElevation="12dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_margin="12dp">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="12dp">
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/mail_24px"
+                            android:contentDescription="mailIcon"
+                            android:layout_marginEnd="8dp"/>
+                        <TextView
+                            android:id="@+id/email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="email@gmail.com"
+                            android:textSize="18sp"
+                            android:textColor="@color/secondaryColor"
+                            android:layout_gravity="center_vertical"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
             <!--Beiträge-->
             <TextView
                 android:layout_width="match_parent"
@@ -248,123 +257,127 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="12dp"/>
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="3dp"
-                android:background="@color/primaryContainerColor"
-                android:layout_marginTop="8dp"
-                android:elevation="4dp">
+                app:cardElevation="12dp"
+                app:cardCornerRadius="20dp"
+                android:layout_margin="12dp"
+                app:cardBackgroundColor="@color/onPrimaryColor">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
                     <!-- Favoriten-Posts -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="18dp">
-
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/favorite_24px"
-                        android:contentDescription="favoritenIcon"
-                        android:layout_marginEnd="8dp"/>
-
-                    <TextView
-                        android:id="@+id/likes"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:text="Favoriten"
-                        android:textSize="18sp"
-                        android:layout_weight="1"/>
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/keyboard_arrow_right_24px"
-                        android:layout_marginStart="8dp"/>
-                </LinearLayout>
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="18dp">
 
-                <!-- Divider -->
-                <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="1.5dp"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@color/secondaryColor" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="18dp">
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/favorite_24px"
+                            android:contentDescription="favoritenIcon"
+                            android:layout_marginEnd="8dp"/>
 
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/visibility_24px"
-                        android:contentDescription="visbilityIcon"
-                        android:layout_marginEnd="8dp"/>
+                        <TextView
+                            android:id="@+id/likes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:text="Favoriten"
+                            android:textSize="18sp"
+                            android:layout_weight="10"/>
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/keyboard_arrow_right_24px"
+                            android:layout_marginStart="8dp"/>
+                    </LinearLayout>
 
-                    <!-- Gesehen-Posts -->
-                    <TextView
-                        android:id="@+id/seen"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Letztens gesehen"
-                        android:textSize="18sp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_weight="1"/>
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/keyboard_arrow_right_24px"
-                        android:layout_marginStart="8dp"/>
-
-                </LinearLayout>
                     <!-- Divider -->
                     <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@color/secondaryColor" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="15dp">
-
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/history_24px"
-                        android:contentDescription="historyIcon"
-                        android:layout_marginEnd="8dp"/>
-
-                    <!-- meine Posts -->
-                    <TextView
-                        android:id="@+id/created"
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="?android:attr/listDivider" />
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Meine Beiträge"
-                        android:textSize="18sp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_weight="1"/>
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="18dp">
 
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/keyboard_arrow_right_24px"
-                        android:layout_marginStart="8dp"/>
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/visibility_24px"
+                            android:contentDescription="visbilityIcon"
+                            android:layout_marginEnd="8dp"/>
 
+                        <!-- Gesehen-Posts -->
+                        <TextView
+                            android:id="@+id/seen"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Letztens gesehen"
+                            android:textSize="18sp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_weight="1"/>
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/keyboard_arrow_right_24px"
+                            android:layout_marginStart="8dp"/>
+
+                    </LinearLayout>
+                        <!-- Divider -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="?android:attr/listDivider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="15dp">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/history_24px"
+                            android:contentDescription="historyIcon"
+                            android:layout_marginEnd="8dp"/>
+
+                        <!-- meine Posts -->
+                        <TextView
+                            android:id="@+id/created"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Meine Beiträge"
+                            android:textSize="18sp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_weight="1"/>
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/keyboard_arrow_right_24px"
+                            android:layout_marginStart="8dp"/>
+
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
     </ScrollView>

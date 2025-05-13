@@ -56,8 +56,8 @@
                 android:layout_centerHorizontal="true"
 
                 android:text="Suche starten"
-                android:backgroundTint="@color/babyBlue"
-                android:textColor="@color/darkBlue"
+                android:backgroundTint="@color/onPrimaryContainerColor"
+                android:textColor="@color/primaryColor"
                 android:textSize="25dp"
                 android:gravity="center"/>
 
