@@ -55,7 +55,7 @@ public class Post {
         this.date = LocalDate.now();
         this.time = LocalTime.now();
     }
-    public Post(String titel, int likes, ArrayList<String> tags, Pair<String, String> route, String des) {
+    public Post(String titel, int likes, User user, ArrayList<String> tags, Pair<String, String> route, String des) {
         //Error Handeling:
         if(titel.isEmpty())
             throw new IllegalArgumentException("Titel cannot be empty!\n");

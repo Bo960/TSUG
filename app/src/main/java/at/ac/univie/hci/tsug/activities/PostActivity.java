@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -191,14 +190,14 @@ public class PostActivity extends AppCompatActivity {
             endPlace.setText(end);
         }
 
-        // TODO visible tags
+        // TODO tags
 
         // Comments
         ListView commentListView = findViewById(R.id.commentListView);
         List<Comment> commentArrayList = new ArrayList<>();
         CommentAdapter commentAdapter = new CommentAdapter(this, commentArrayList);
         commentListView.setAdapter(commentAdapter);
-        // TODO kommentare speichern
+        // TODO kommentare speichern?
 
         // input: new comment
         EditText commentInput = findViewById(R.id.commentInput);
@@ -206,10 +205,9 @@ public class PostActivity extends AppCompatActivity {
         sendCommentBtn.setOnClickListener(v -> {
             String text = commentInput.getText().toString().trim();
             if (!text.isEmpty()) {
-                Comment newComment = new Comment(new User("John", "john@gmail.com"), text); // TODO hardcoded author
-                commentArrayList.add(0, newComment); // add comment
-                commentAdapter.notifyDataSetChanged(); // update dataset
-                commentInput.setText("");
+                Comment newComment = new Comment(new User("John", "john@gmail.com", "123456789"), text); // TODO hardcoded author
+                commentArrayList.add(0, newComment);
+                commentAdapter.notifyDataSetChanged();
                 // hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
