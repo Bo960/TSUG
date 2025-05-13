@@ -26,10 +26,7 @@ import at.ac.univie.hci.tsug.activities.CreateActivity;
 import at.ac.univie.hci.tsug.activities.SearchActivity;
 import at.ac.univie.hci.tsug.activities.SettingsActivity;
 import at.ac.univie.hci.tsug.container.Container;
-import at.ac.univie.hci.tsug.container.PostContainer;
-import at.ac.univie.hci.tsug.container.UserContainer;
 import at.ac.univie.hci.tsug.elements.Post;
-import at.ac.univie.hci.tsug.elements.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -145,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         username.setText(post.getUser().getName());
         user_id.setText(String.valueOf(post.getUser().getID()));
 
-        titel.setText(post.getTitel());
+        titel.setText(post.getTitle());
         post_id.setText(String.valueOf(post.getID()));
         post_des.setText(post.getDes());
 
