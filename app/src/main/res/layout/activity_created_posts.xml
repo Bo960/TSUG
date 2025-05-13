@@ -30,32 +30,34 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="16dp"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="start"
-                        android:elevation="12dp"
-                        android:background="@color/onPrimaryColor">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="10dp"
+                android:padding="12dp"
+                android:gravity="left">
+                <TextView
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Meine Beiträge"
-                            android:textSize="@dimen/mittel"
-                            android:textStyle="bold"
-                            android:textColor="@color/primaryColor"/>
-                    </LinearLayout>
-                <!-- Placeholder for questions -->
-                <ListView
-                    android:id="@+id/created_questions_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Meine Beiträge"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primaryColor" />
             </LinearLayout>
+
+            <!-- Placeholder for questions -->
+            <ListView
+                android:id="@+id/created_questions_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
     </ScrollView>
 
     <!-- Bottom Balken  -->

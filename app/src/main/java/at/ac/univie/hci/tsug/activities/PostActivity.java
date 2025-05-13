@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -22,15 +23,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.container.Container;
 import at.ac.univie.hci.tsug.elements.Comment;
 import at.ac.univie.hci.tsug.elements.CommentAdapter;
+import at.ac.univie.hci.tsug.elements.Post;
 import at.ac.univie.hci.tsug.elements.User;
 
 public class PostActivity extends AppCompatActivity {
@@ -38,7 +44,6 @@ public class PostActivity extends AppCompatActivity {
     BottomNavigationView bottomNav;
     String activityName = "Beitrag";
     public boolean postLiked = false;
-    private int likes = 55; // TODO hardcoded
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,43 +104,91 @@ public class PostActivity extends AppCompatActivity {
             overridePendingTransition(0, 0);
         });
 
+        int beitragID = getIntent().getIntExtra("beitrag_id", 0);
+        Post createdPost = Container.getPost(beitragID);
+
         // Title
         TextView titleView = findViewById(R.id.titleView);
-        String title = "TITLE"; // TODO hardcoded
+        String title = createdPost.getTitle();
         titleView.setText(title);
 
         // Likes
         TextView likesView = findViewById(R.id.likesView);
-        likesView.setText(likes + "");
         ImageView likeIcon = findViewById(R.id.likeIcon);
+        likesView.setText(createdPost.getLikes() + "");
 
         View.OnClickListener likeClickListener = v -> {
+            // TODO prohibit save your own post
             postLiked = !postLiked;
             if (postLiked) {
-                likes++;
-                likeIcon.setImageResource(R.drawable.baseline_favorite_24); // Gefülltes Herz
+                createdPost.like();
+                likeIcon.setImageResource(R.drawable.baseline_favorite_24);
             } else {
-                likes--;
-                likeIcon.setImageResource(R.drawable.baseline_favorite_border_24); // Leeres Herz
+                createdPost.unlike();
+                likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
             }
-            likesView.setText(String.valueOf(likes));
+            likesView.setText(String.valueOf(createdPost.getLikes()));
         };
         likeIcon.setOnClickListener(likeClickListener);
-        likesView.setOnClickListener(likeClickListener); // click on number
+        likesView.setOnClickListener(likeClickListener);
+
+        // show author or edit
+        TextView authorView = findViewById(R.id.authorView);
+        ImageView authorIcon = findViewById(R.id.authorIcon);
+        String author = createdPost.getUser().getName();
+        authorView.setText(author);
+
+        FloatingActionButton editPostBtn = findViewById(R.id.editPostBtn);
+        FloatingActionButton deletePostBtn = findViewById(R.id.deletePostBtn);
+
+        if (author.isEmpty()) { // TODO hardcoded
+            editPostBtn.setVisibility(View.VISIBLE);
+            deletePostBtn.setVisibility(View.VISIBLE);
+            authorView.setVisibility(View.GONE);
+            authorIcon.setVisibility(View.GONE);
+        } else {
+            editPostBtn.setVisibility(View.GONE);
+            deletePostBtn.setVisibility(View.GONE);
+            authorView.setVisibility(View.VISIBLE);
+            authorIcon.setVisibility(View.VISIBLE);
+        }
+
+        // edit post
+        editPostBtn.setOnClickListener(v -> {
+            Toast.makeText(PostActivity.this, "Bearbeiten", Toast.LENGTH_SHORT).show();
+
+            // TODO
+            // Intent intent = new Intent(PostActivity.this, EditPostActivity.class);
+            // startActivity(intent);
+        });
+
+        // delete post
+        deletePostBtn.setOnClickListener(v -> {
+            Toast.makeText(PostActivity.this, "Beitrag gelöscht", Toast.LENGTH_SHORT).show();
+            Container.removePost(beitragID);
+
+            Intent intent = new Intent(PostActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
 
         TextView startPlace = findViewById(R.id.startPlace);
         TextView endPlace = findViewById(R.id.endPlace);
         TextView region = findViewById(R.id.region);
+        TextView descriptionView = findViewById(R.id.description);
         ImageView routeIcon = findViewById(R.id.routeIcon);
         ImageView regionIcon = findViewById(R.id.regionIcon);
 
-        // TODO hardcoded
-        String start = "START";
-        String end = "END";
-        String regionTxt = "";
+
+        String regionTxt = createdPost.getRegion();
+        String description = createdPost.getDes();
+
 
         // check if exact route is given or region
         if (regionTxt == "") {
+            String start = createdPost.getRoute().first;
+            String end = createdPost.getRoute().second;
+            startPlace.setText(start);
+            endPlace.setText(end);
             // show start & icon & end
             startPlace.setVisibility(View.VISIBLE);
             routeIcon.setVisibility(View.VISIBLE);
@@ -144,6 +197,7 @@ public class PostActivity extends AppCompatActivity {
             regionIcon.setVisibility(View.GONE);
             region.setVisibility(View.GONE);
         } else {
+            region.setText(regionTxt);
             regionIcon.setVisibility(View.VISIBLE);
             region.setVisibility(View.VISIBLE);
 
@@ -152,14 +206,74 @@ public class PostActivity extends AppCompatActivity {
             endPlace.setVisibility(View.GONE);
         }
 
-        if (regionTxt != "") {
-            region.setText(regionTxt);
+        Chip frage = findViewById(R.id.frage);
+        Chip tipp = findViewById(R.id.tipp);
+        Chip guenstig = findViewById(R.id.guenstig);
+        Chip preiswert = findViewById(R.id.preiswert);
+        Chip nachtzug = findViewById(R.id.nachtzug);
+        Chip sparangebot = findViewById(R.id.sparangebot);
+        Chip flexibel = findViewById(R.id.flexibel);
+        Chip gruppe = findViewById(R.id.gruppentarif);
+        Chip direkt = findViewById(R.id.direkt);
+        Chip kurzeFahrt = findViewById(R.id.kurzeFahrt);
+        Chip langeFahrt = findViewById(R.id.langeFahrt);
+
+        if (createdPost.getFrage() == "Frage") {
+            frage.setVisibility(View.VISIBLE);
+            tipp.setVisibility(View.GONE);
         } else {
-            startPlace.setText(start);
-            endPlace.setText(end);
+            frage.setVisibility(View.GONE);
+            tipp.setVisibility(View.VISIBLE);
+        }
+        // {"Günstig", "Preiswert", "Nachtzug", "Sparangebot", "Flexibel", "Gruppentarif", "Direkt", "Kurze Fahrt", "Lange Fahrt"}
+        ArrayList<String> tags = createdPost.getTags();
+        guenstig.setVisibility(View.GONE);
+        preiswert.setVisibility(View.GONE);
+        nachtzug.setVisibility(View.GONE);
+        sparangebot.setVisibility(View.GONE);
+        flexibel.setVisibility(View.GONE);
+        gruppe.setVisibility(View.GONE);
+        direkt.setVisibility(View.GONE);
+        kurzeFahrt.setVisibility(View.GONE);
+        langeFahrt.setVisibility(View.GONE);
+        for (String tag : tags) {
+            switch (tag) {
+                case "Günstig":
+                    guenstig.setVisibility(View.VISIBLE);
+                    continue;
+                case "Preiswert":
+                    preiswert.setVisibility(View.VISIBLE);
+                    continue;
+                case "Nachtzug":
+                    nachtzug.setVisibility(View.VISIBLE);
+                    continue;
+                case "Sparangebot":
+                    sparangebot.setVisibility(View.VISIBLE);
+                    continue;
+                case "Flexibel":
+                    flexibel.setVisibility(View.VISIBLE);
+                    continue;
+                case "Gruppentarif":
+                    gruppe.setVisibility(View.VISIBLE);
+                    continue;
+                case "Direkt":
+                    direkt.setVisibility(View.VISIBLE);
+                    continue;
+                case "Kurze Fahrt":
+                    kurzeFahrt.setVisibility(View.VISIBLE);
+                    continue;
+                case "Lange Fahrt":
+                    langeFahrt.setVisibility(View.VISIBLE);
+            }
         }
 
-        // TODO tags
+        // description visibility
+        if (description.isEmpty()) {
+            // show start & icon & end
+            descriptionView.setVisibility(View.GONE);
+        } else {
+            descriptionView.setText(description);
+        }
 
         // Comments
         ListView commentListView = findViewById(R.id.commentListView);
@@ -177,7 +291,6 @@ public class PostActivity extends AppCompatActivity {
                 Comment newComment = new Comment(new User("John", "john@gmail.com", "123456789"), text); // TODO hardcoded author
                 commentArrayList.add(0, newComment);
                 commentAdapter.notifyDataSetChanged();
-                commentInput.setText("");
                 // hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {

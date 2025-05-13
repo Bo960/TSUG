@@ -24,13 +24,39 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="false"
-        android:layout_marginTop="80dp"
-        android:text="display title"
+        android:gravity="center"
+        android:layout_marginTop="90dp"
+        android:text="no title hlfWIHGLiwghuröuhöUWRGHÖIwhg"
         android:textColor="@color/primaryColor"
         android:textSize="@dimen/klein"
         android:textStyle="bold" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editPostBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/likesView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="70dp"
+        android:paddingTop="50dp"
+        android:contentDescription="Bearbeiten"
+        app:srcCompat="@drawable/outline_edit_24"
+        android:visibility="gone"
+        app:tint="@android:color/white"
+        app:backgroundTint="@color/primaryColor" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/deletePostBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/editPostBtn"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="Löschen"
+        app:srcCompat="@drawable/baseline_delete_outline_24"
+        android:visibility="gone"
+        app:tint="@android:color/white"
+        app:backgroundTint="@android:color/holo_red_dark" />
 
     <!-- Likes Icon -->
     <ImageView
@@ -40,7 +66,7 @@
         android:layout_below="@id/titleView"
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="35dp"
         android:contentDescription="like icon"
         app:srcCompat="@drawable/baseline_favorite_border_24"
         app:tint="@color/primaryColor" />
@@ -66,6 +92,7 @@
         android:layout_alignBottom="@id/likeIcon"
         android:layout_marginEnd="8dp"
         android:layout_toStartOf="@id/authorView"
+        android:visibility="visible"
         android:contentDescription="author icon"
         app:srcCompat="@drawable/baseline_person_outline_24"
         app:tint="@color/primaryColor" />
@@ -79,6 +106,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:text="AUTHOR"
+        android:visibility="visible"
         android:textColor="@color/secondaryColor"
         android:textSize="16sp" />
 
@@ -142,15 +170,114 @@
             android:textSize="@dimen/sehrklein" />
     </LinearLayout>
 
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/routeContainer"
+        android:layout_margin="8dp"
+        app:singleLine="false">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/frage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Frage"
+            android:visibility="visible"
+            app:chipBackgroundColor="@color/primaryColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tipp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipp"
+            android:visibility="visible"
+            app:chipBackgroundColor="@color/primaryColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/guenstig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Günstig"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preiswert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Preiswert"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/nachtzug"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nachtzug"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/sparangebot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sparangebot"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/flexibel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flexibel"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/gruppentarif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gruppentarif"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/direkt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Direkt"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/kurzeFahrt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kurze Fahrt"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/langeFahrt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lange Fahrt"
+            app:chipBackgroundColor="@color/onPrimaryContainerColor"
+            android:textColor="@android:color/white" />
+    </com.google.android.material.chip.ChipGroup>
+
     <!-- Description -->
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/routeContainer"
+        android:layout_below="@+id/chipGroup"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:text="Description"
+        android:text=""
+        android:visibility="visible"
         android:textColor="@color/secondaryColor"
         android:textSize="@dimen/sehrklein" />
 
@@ -182,6 +309,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/commentHeader"
+        android:layout_above="@id/commentInputSection"
         android:padding="10dp" />
 
     <!-- New Comment -->

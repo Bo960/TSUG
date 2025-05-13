@@ -12,54 +12,155 @@
     <!-- Top Naviagtion -->
     <include
         layout="@layout/top_nav"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"/>
 
-    <!-- Rest vom Layout bestimmt -->
+    <!-- Scrollbarer Bereich für Inhalte -->
     <ScrollView
-        android:id="@+id/main_scroll_view"
-
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation"
-        android:layout_below="@id/top_navigation"
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:fillViewport="true">
 
+        <LinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Title -->
+            <EditText
+                android:id="@+id/inputTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@android:drawable/edit_text"
+                android:hint="Titel"
+                android:padding="12dp"
+                android:textColor="@android:color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical"
+            android:weightSum="1">
+
+            <!-- Start -->
+            <EditText
+                android:id="@+id/inputStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/edit_text"
+                android:hint="Startort"
+                android:layout_weight="0.5"
+                android:importantForAccessibility="yes"
+                android:padding="12dp"
+                android:textColor="@android:color/black" />
+
+            <!-- End -->
+            <EditText
+                android:id="@+id/inputEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/edit_text"
+                android:hint="Zielort"
+                android:layout_weight="0.5"
+                android:importantForAccessibility="yes"
+                android:padding="12dp"
+                android:textColor="@android:color/black" />
+
+        </LinearLayout>
+
+            <!-- Region -->
+            <EditText
+                android:id="@+id/inputRegion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@android:drawable/edit_text"
+                android:hint="...oder Region"
+                android:padding="12dp"
+                android:textColor="@android:color/black" />
+
+            <!-- Description -->
+            <EditText
+                android:id="@+id/inputDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@android:drawable/edit_text"
+                android:hint="Beschreibung"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:padding="12dp"
+                android:textColor="@android:color/black" />
+
+            <!-- Tags -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Kategorisierung"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp"
+                android:paddingHorizontal="16dp"
+                android:weightSum="1">
+
+                <Spinner
+                    android:id="@+id/tagFrageOderTipp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:padding="15dp"
+                    android:importantForAccessibility="yes" />
+
+                <Button
+                    android:id="@+id/buttonSelectTags"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/surfaceVariantColor"
+                    android:textColor="@android:color/black"
+                    android:text="Kategorien"
+                    android:padding="12dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/spinnerErrorText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/errorColor"
+                android:visibility="gone"
+                android:layout_marginTop="4dp"/>
+
+            <!-- Publish Button -->
+            <Button
+                android:id="@+id/publishBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/primaryColor"
+                android:padding="12dp"
+                android:text="Eintrag speichern"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
     </ScrollView>
-
-
-
-    <TextView
-        android:id="@+id/titleView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="false"
-        android:text="display title"
-        android:textSize="@dimen/gross"
-        android:textStyle="bold"
-        android:textColor="@color/primaryColor"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleView"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="false"
-        android:layout_marginTop="80dp"
-        android:text="Publish"
-        android:textSize="@dimen/mittel"/>
-
-
-
     <!-- Bottom Balken  -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
