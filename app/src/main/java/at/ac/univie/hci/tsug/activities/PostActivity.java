@@ -137,7 +137,7 @@ public class PostActivity extends AppCompatActivity {
         FloatingActionButton editPostBtn = findViewById(R.id.editPostBtn);
         FloatingActionButton deletePostBtn = findViewById(R.id.deletePostBtn);
 
-        if (author.isEmpty()) { // TODO hardcoded
+        if (author == "") { // TODO hardcoded
             editPostBtn.setVisibility(View.VISIBLE);
             deletePostBtn.setVisibility(View.VISIBLE);
             authorView.setVisibility(View.GONE);
@@ -152,17 +152,17 @@ public class PostActivity extends AppCompatActivity {
         // edit post
         editPostBtn.setOnClickListener(v -> {
             Toast.makeText(PostActivity.this, "Bearbeiten", Toast.LENGTH_SHORT).show();
-
             // TODO
-            // Intent intent = new Intent(PostActivity.this, EditPostActivity.class);
-            // startActivity(intent);
+            Intent intent = new Intent(PostActivity.this, CreateActivity.class);
+            intent.putExtra("beitrag_id", createdPost.getID());
+            intent.putExtra("is_edit", true);
+            startActivity(intent);
         });
 
         // delete post
         deletePostBtn.setOnClickListener(v -> {
             Toast.makeText(PostActivity.this, "Beitrag gelöscht", Toast.LENGTH_SHORT).show();
             Container.removePost(beitragID);
-
             Intent intent = new Intent(PostActivity.this, MainActivity.class);
             startActivity(intent);
         });
@@ -264,7 +264,7 @@ public class PostActivity extends AppCompatActivity {
         }
 
         // description visibility
-        if (description.isEmpty()) {
+        if (description == "" || description.isEmpty()) {
             // show start & icon & end
             descriptionView.setVisibility(View.GONE);
         } else {
@@ -276,7 +276,7 @@ public class PostActivity extends AppCompatActivity {
         List<Comment> commentArrayList = new ArrayList<>();
         CommentAdapter commentAdapter = new CommentAdapter(this, commentArrayList);
         commentListView.setAdapter(commentAdapter);
-        // TODO kommentare speichern?
+        // TODO kommentare speichern
 
         // input: new comment
         EditText commentInput = findViewById(R.id.commentInput);
