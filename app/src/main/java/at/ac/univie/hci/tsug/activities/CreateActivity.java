@@ -1,7 +1,10 @@
 package at.ac.univie.hci.tsug.activities;
 
+import static at.ac.univie.hci.tsug.container.Container.getUser;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,6 +31,8 @@ import java.util.List;
 
 import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.elements.Post;
+import at.ac.univie.hci.tsug.container.Container;
 
 public class CreateActivity extends AppCompatActivity {
 
@@ -139,11 +144,18 @@ public class CreateActivity extends AppCompatActivity {
             EditText input_end = findViewById(R.id.inputEnd);
             EditText input_region = findViewById(R.id.inputRegion);
             EditText input_title = findViewById(R.id.inputTitle);
+            EditText input_description = findViewById(R.id.inputDescription);
 
             String title = input_title.getText().toString();
             String startText = input_start.getText().toString();
             String endText = input_end.getText().toString();
             String regionText = input_region.getText().toString();
+            String description = input_description.getText().toString();
+
+            Boolean isFrage = true;
+            if (selectedFrageTipp == "Tipp")
+                isFrage = false;
+
 
             boolean valid = true;
 
@@ -177,11 +189,28 @@ public class CreateActivity extends AppCompatActivity {
             }
 
             if (valid) {
-                // TODO Speichern
+                Post createdPost;
+                if (regionText.isEmpty()) {
+                    createdPost = new Post(title,
+                            0,
+                            getUser(1), // TODO user?
+                            isFrage,
+                            (ArrayList<String>) selectedTagList,
+                            new Pair<>(startText, endText),
+                            description);
+                } else {
+                    createdPost = new Post(title,
+                            0,
+                            getUser(1), // TODO user?
+                            isFrage,
+                            (ArrayList<String>) selectedTagList,
+                            regionText,
+                            description);
+                }
+                Container.addPost(createdPost);
 
                 Intent intent = new Intent(CreateActivity.this, PostActivity.class);
-                // intent.putExtra("beitrag_id", 42); // TODO id
-                // in Post: int beitragID = getIntent().getIntExtra("titel_id", -1);
+                intent.putExtra("beitrag_id", createdPost.getID());
                 startActivity(intent);
             }
         });
