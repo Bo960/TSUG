@@ -31,7 +31,6 @@ import java.util.List;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.container.Container;
 import at.ac.univie.hci.tsug.elements.Comment;
@@ -44,6 +43,7 @@ public class PostActivity extends AppCompatActivity {
     BottomNavigationView bottomNav;
     String activityName = "Beitrag";
     public boolean postLiked = false;
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -301,6 +301,7 @@ public class PostActivity extends AppCompatActivity {
                 Comment newComment = new Comment(new User("John", "john@gmail.com", "123456789"), text); // TODO hardcoded author
                 commentArrayList.add(0, newComment);
                 commentAdapter.notifyDataSetChanged();
+                commentInput.setText("");
                 // hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
