@@ -11,11 +11,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.elements.Post;
+import at.ac.univie.hci.tsug.elements.User;
 
 import java.util.ArrayList;
 
 public class SearchResultsActivity extends AppCompatActivity {
     private LinearLayout llResults;
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -55,6 +55,7 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
                         intent = new Intent(HomeActivity.this, CreateActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         //Von Position-Links nach Position-Rechts
                         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -106,6 +107,7 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+            intent.putExtra("user", currentUser);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
@@ -116,6 +118,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                intent.putExtra("user", currentUser);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
             }

@@ -17,11 +17,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.elements.User;
 
 public class SettingsActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     String activityName = "Einstellungen";
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +37,8 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
-
-
-        //Martin's Code für Bottom Navigation START
+        //Recieveing User from Home:
+        currentUser = getIntent().getParcelableExtra("user");
 
         bottomNav = findViewById(R.id.bottom_navigation);
 
@@ -49,6 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         //Homescreen
                         intent = new Intent(SettingsActivity.this, HomeActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
@@ -56,6 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
                         intent = new Intent(SettingsActivity.this, CreateActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
@@ -63,6 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
                     case R.id.nav_account:
                         //Account settings Seite
                         intent = new Intent(SettingsActivity.this, AccountActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
@@ -78,6 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
+            intent.putExtra("user", currentUser);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });

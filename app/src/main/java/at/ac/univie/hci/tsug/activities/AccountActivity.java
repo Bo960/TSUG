@@ -50,6 +50,7 @@ public class AccountActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         //Homescreen
                         intent = new Intent(AccountActivity.this, HomeActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         //Von Position-Rechts nach Position-Links
                         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
@@ -58,6 +59,7 @@ public class AccountActivity extends AppCompatActivity {
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
                         intent = new Intent(AccountActivity.this, CreateActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         //Von Position-Rechts nach Position-Links
                         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
@@ -74,6 +76,7 @@ public class AccountActivity extends AppCompatActivity {
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(AccountActivity.this, SettingsActivity.class);
+            intent.putExtra("user", currentUser);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
@@ -113,6 +116,7 @@ public class AccountActivity extends AppCompatActivity {
         TextView likes = findViewById(R.id.likes);
         likes.setOnClickListener(v ->{
             Intent i= new Intent(this, LikedPostsActivity.class);
+            i.putExtra("user", currentUser);
             startActivity(i);
             //Von Position-Links nach Position-Rechts
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -120,6 +124,7 @@ public class AccountActivity extends AppCompatActivity {
         TextView seen = findViewById(R.id.seen);
         seen.setOnClickListener(v ->{
             Intent i= new Intent(this, SeenPostsActivity.class);
+            i.putExtra("user", currentUser);
             startActivity(i);
             //Von Position-Links nach Position-Rechts
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -127,6 +132,7 @@ public class AccountActivity extends AppCompatActivity {
         TextView created=findViewById(R.id.created);
         created.setOnClickListener(v ->{
             Intent i= new Intent(this, CreatedPostsActivity.class);
+            i.putExtra("user", currentUser);
             startActivity(i);
             //Von Position-Links nach Position-Rechts
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);

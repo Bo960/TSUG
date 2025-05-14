@@ -43,6 +43,7 @@ public class PostActivity extends AppCompatActivity {
     BottomNavigationView bottomNav;
     String activityName = "Beitrag";
     public boolean postLiked = false;
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,9 @@ public class PostActivity extends AppCompatActivity {
             return insets;
         });
 
+        //Recieveing User from Home:
+        currentUser = getIntent().getParcelableExtra("user");
+
         // Bottom Navigation
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -66,6 +70,7 @@ public class PostActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         // Homescreen
                         intent = new Intent(PostActivity.this, HomeActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                         return true;
@@ -73,6 +78,7 @@ public class PostActivity extends AppCompatActivity {
                     case R.id.nav_neuer_beitrag:
                         // Beitrag erstellen Seite
                         intent = new Intent(PostActivity.this, CreateActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                         return true;
@@ -80,6 +86,7 @@ public class PostActivity extends AppCompatActivity {
                     case R.id.nav_account:
                         //Account settings Seite
                         intent = new Intent(PostActivity.this, AccountActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                         return true;
@@ -99,6 +106,7 @@ public class PostActivity extends AppCompatActivity {
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(PostActivity.this, SettingsActivity.class);
+            intent.putExtra("user", currentUser);
             startActivity(intent);
             overridePendingTransition(0, 0);
         });
@@ -158,6 +166,7 @@ public class PostActivity extends AppCompatActivity {
 
             // TODO
             // Intent intent = new Intent(PostActivity.this, EditPostActivity.class);
+            // intent.putExtra("user", currentUser);
             // startActivity(intent);
         });
 
@@ -167,6 +176,7 @@ public class PostActivity extends AppCompatActivity {
             Container.removePost(beitragID);
 
             Intent intent = new Intent(PostActivity.this, MainActivity.class);
+            intent.putExtra("user", currentUser);
             startActivity(intent);
         });
 

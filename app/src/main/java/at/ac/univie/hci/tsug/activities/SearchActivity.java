@@ -32,6 +32,8 @@ import java.time.LocalDate;
 import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.container.Container;
 import at.ac.univie.hci.tsug.elements.Post;
+import at.ac.univie.hci.tsug.elements.User;
+
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -43,6 +45,7 @@ public class SearchActivity extends AppCompatActivity {
     private Button btnSearch;
     public String initalQuery;
     private String activityName = "Suchfilter";
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,9 @@ public class SearchActivity extends AppCompatActivity {
                 }
         );
 
+        //Recieveing User from Home:
+        currentUser = getIntent().getParcelableExtra("user");
+
         //Bottom Naviagtion:
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -68,6 +74,7 @@ public class SearchActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         //Homescreen
                         intent = new Intent(SearchActivity.this, HomeActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
@@ -75,6 +82,7 @@ public class SearchActivity extends AppCompatActivity {
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
                         intent = new Intent(SearchActivity.this, CreateActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
@@ -82,6 +90,7 @@ public class SearchActivity extends AppCompatActivity {
                     case R.id.nav_account:
                         //Account settings Seite
                         intent = new Intent(SearchActivity.this, AccountActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
@@ -97,6 +106,7 @@ public class SearchActivity extends AppCompatActivity {
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(SearchActivity.this, SettingsActivity.class);
+            intent.putExtra("user", currentUser);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
@@ -235,6 +245,7 @@ public class SearchActivity extends AppCompatActivity {
         //Ergebnisse weiterreichen
         Intent intent = new Intent(this, SearchResultsActivity.class);
         intent.putParcelableArrayListExtra("results", new ArrayList<>(filtered)); //Hier manchmal rot markiert das new ArrayList...
+        intent.putExtra("user", currentUser);
         startActivity(intent);
     }
 
