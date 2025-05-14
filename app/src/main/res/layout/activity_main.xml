@@ -6,123 +6,89 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.LoginActivity"
+    android:gravity="center"
+    android:padding="@dimen/klein"
+    android:background="@drawable/login_background">
 
-    <!-- Top Naviagtion -->
-    <include
-        android:id="@+id/top_navigation"
-
-        layout="@layout/top_nav"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"/>
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/sehrklein"
+        android:paddingRight="@dimen/sehrklein">
 
-    <!-- Damit alles Scrollbar bleibt -->
-    <ScrollView
-        android:id="@+id/main_scroll_view"
+        <ImageView
+            android:layout_width="@dimen/gigantisch"
+            android:layout_height="@dimen/gigantisch"
+            android:src="@drawable/baseline_account_circle_24" />
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation"
-        android:layout_below="@id/top_navigation"
+        <EditText
+            android:id="@+id/login_username"
+            android:inputType="text"
 
-        android:fillViewport="true">
-
-        <!-- Rest vom Layout bestimmt -->
-        <LinearLayout
+            android:layout_marginTop="@dimen/sehrklein"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/searchView"
+            android:hint="Benutzername"
+            android:textSize="@dimen/mittel"
+            android:textColor="@color/lightGray"
+            android:textColorHint="@color/lightGray"
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+            android:background="@drawable/cornered_backlayer"
+            android:padding="@dimen/sehrklein"/>
 
-                app:iconifiedByDefault="false"
-                app:queryHint="Search Here..." />
+        <EditText
+            android:id="@+id/login_password"
+            android:inputType="textPassword"
 
-            <Button
-                android:id="@+id/searchStart"
+            android:layout_marginTop="@dimen/sehrklein"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
+            android:hint="Passwort"
+            android:textSize="@dimen/mittel"
+            android:textColor="@color/lightGray"
+            android:textColorHint="@color/lightGray"
 
-                android:text="Suche starten"
-                android:backgroundTint="@color/babyBlue"
-                android:textColor="@color/darkBlue"
-                android:textSize="25dp"
-                android:gravity="center"/>
+            android:background="@drawable/cornered_backlayer"
+            android:padding="@dimen/sehrklein"/>
 
-            <Button
-                android:id="@+id/searchFilter"
+        <Button
+            android:id="@+id/login_button"
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/sehrklein"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-                android:text="Filter"
-                android:backgroundTint="@color/secondaryColor"
-                android:textColor="@color/onPrimaryColor"
-                android:textSize="20dp"
-                android:gravity="center"/>
+            android:text="Anmelden"
+            android:textSize="@dimen/mittel"
+            android:textColor="@color/white" />
 
-            <!-- TESTING DUMMIES -->
-            <TextView
-                android:id="@+id/test_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Username"
-                android:textSize="30dp"
-                android:padding="10dp"/>
-            <TextView
-                android:id="@+id/test_user_ID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="User-ID"
-                android:textSize="30dp"
-                android:padding="10dp"/>
-            <TextView
-                android:id="@+id/test_titel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Titel"
-                android:textSize="30dp"
-                android:padding="10dp"/>
-            <TextView
-                android:id="@+id/test_post_ID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Post-ID"
-                android:textSize="30dp"
-                android:padding="10dp"/>
-            <TextView
-                android:id="@+id/test_des"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Description"
-                android:textSize="30dp"
-                android:padding="10dp"/>
+        <TextView
+            android:layout_marginTop="@dimen/sehrgross"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Noch kein Account?"
+            android:textSize="@dimen/klein"
+            android:textColor="@color/lightGray"/>
+
+        <Button
+            android:id="@+id/login_register"
+
+            android:layout_marginTop="@dimen/sehrklein"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Registrieren"
+            android:textSize="@dimen/klein"
+            android:textColor="@color/darkBlue"
+            android:backgroundTint="@color/lightGray"/>
+
+    </LinearLayout>
 
 
-        </LinearLayout>
-    </ScrollView>
-
-    <!-- Bottom Balken  -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_nav"
-        app:itemIconSize="45dp"
-        app:labelVisibilityMode="labeled"/>
 </RelativeLayout>

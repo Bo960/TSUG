@@ -6,7 +6,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CreatedPostsActivity">
+    tools:context=".activities.CreatedPostsActivity"
+    android:fitsSystemWindows="true">
     <!-- Top Naviagtion -->
     <include
         android:id="@+id/top_navigation"
@@ -16,43 +17,47 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"/>
 
+    <!-- Damit alles Scrollbar bleibt -->
     <ScrollView
         android:id="@+id/main_scroll_view"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation"
         android:layout_below="@id/top_navigation"
-        android:fillViewport="true">
 
+        android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="16dp"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="start"
-                        android:elevation="12dp"
-                        android:background="@color/onPrimaryColor">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="10dp"
+                android:padding="12dp"
+                android:gravity="left">
+                <TextView
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Meine Beiträge"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/primaryColor"/>
-                    </LinearLayout>
-                <!-- Placeholder for questions -->
-                <ListView
-                    android:id="@+id/created_questions_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Meine Beiträge"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primaryColor" />
             </LinearLayout>
+
+            <!-- Placeholder for questions -->
+            <ListView
+                android:id="@+id/created_questions_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
     </ScrollView>
 
     <!-- Bottom Balken  -->
@@ -62,7 +67,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="45dp"
+        app:itemIconSize="@dimen/sehrgross"
         app:labelVisibilityMode="labeled"/>
-
 </RelativeLayout>

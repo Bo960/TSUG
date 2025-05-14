@@ -1,20 +1,23 @@
 package at.ac.univie.hci.tsug.elements;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Pair;
+
+import androidx.annotation.NonNull;
 
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class Post {
+public class Post implements Parcelable {
     //Instancevariable:
     private final int ID;
     private static int next_ID = 1;
     private String title;
     private int likes;
-    private boolean  type;
+    private boolean isFrage;
     //TRUE: Wenn es eine Frage ist!
     //FALSE: Wenn es ein Tipp ist!
     private ArrayList<String> tags;
@@ -28,7 +31,7 @@ public class Post {
     private LocalTime time;
 
     //Constructor:
-    public Post(String title, int likes, User user, boolean type, ArrayList<String> tags, String region, String des) {
+    public Post(String title, int likes, User user, boolean isFrage, ArrayList<String> tags, String region, String des) {
         //Error Handeling:
         if(title.isEmpty())
             throw new IllegalArgumentException("Titel cannot be empty!\n");
@@ -36,15 +39,13 @@ public class Post {
             throw new IllegalArgumentException("Likes cannot be neagtive!\n");
         if(region.isEmpty())
             throw new IllegalArgumentException("Region cannot be empty!\n");
-        if(des.isEmpty())
-            throw new IllegalArgumentException("Description cannot be empty!\n");
 
         //Assign Values:
         this.ID = next_ID++;
 
         this.title = title;
         this.likes = likes;
-        this.type = type;
+        this.isFrage = isFrage;
         this.tags = tags;
         this.user = user;
 
@@ -59,7 +60,7 @@ public class Post {
         this.date = LocalDate.now();
         this.time = LocalTime.now();
     }
-    public Post(String title, int likes, User user, boolean type, ArrayList<String> tags, Pair<String, String> route, String des) {
+    public Post(String title, int likes, User user, boolean isFrage, ArrayList<String> tags, Pair<String, String> route, String des) {
         //Error Handeling:
         if(title.isEmpty())
             throw new IllegalArgumentException("Titel cannot be empty!\n");
@@ -69,20 +70,18 @@ public class Post {
             throw new IllegalArgumentException("Start of the Route cannot be empty!\n");
         if(route.second.isEmpty())
             throw new IllegalArgumentException("End of the Route cannot be empty!\n");
-        if(des.isEmpty())
-            throw new IllegalArgumentException("Description cannot be empty!\n");
 
         //Assign Values:
         this.ID = next_ID++;
 
         this.title = title;
         this.likes = likes;
-        this.type = type;
+        this.isFrage = isFrage;
         this.tags = tags;
         this.user = user;
 
         this.isRegion = false;
-        this.region = null;
+        this.region = "";
 
         this.isRoute = true;
         this.route = route;
@@ -93,6 +92,30 @@ public class Post {
         this.time = LocalTime.now();
     }
 
+
+    protected Post(Parcel in) {
+        ID = in.readInt();
+        title = in.readString();
+        likes = in.readInt();
+        isFrage = in.readByte() != 0;
+        tags = in.createStringArrayList();
+        isRegion = in.readByte() != 0;
+        region = in.readString();
+        isRoute = in.readByte() != 0;
+        des = in.readString();
+    }
+
+    public static final Creator<Post> CREATOR = new Creator<Post>() {
+        @Override
+        public Post createFromParcel(Parcel in) {
+            return new Post(in);
+        }
+
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
 
     //Getter Methode:
     public int getID() {
@@ -107,8 +130,8 @@ public class Post {
     public User getUser() {
         return user;
     }
-    public String getType() {
-        if(type)
+    public String getFrage() {
+        if(isFrage)
             return "Frage";
         else
             return "Tipp";
@@ -117,13 +140,9 @@ public class Post {
         return tags;
     }
     public String getRegion() {
-        if(isRoute)
-            throw new IllegalArgumentException("There is no Region!\n");
         return region;
     }
     public Pair<String, String> getRoute() {
-        if(isRegion)
-            throw new IllegalArgumentException("There is no Route!\n");
         return route;
     }
     public String getDes() {
@@ -180,5 +199,23 @@ public class Post {
         }
         else
             return 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeInt(ID);
+        parcel.writeString(title);
+        parcel.writeInt(likes);
+        parcel.writeByte((byte) (isFrage ? 1 : 0));
+        parcel.writeStringList(tags);
+        parcel.writeByte((byte) (isRegion ? 1 : 0));
+        parcel.writeString(region);
+        parcel.writeByte((byte) (isRoute ? 1 : 0));
+        parcel.writeString(des);
     }
 }

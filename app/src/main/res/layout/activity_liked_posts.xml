@@ -6,7 +6,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LikedPostsActivity">
+    tools:context=".activities.LikedPostsActivity"
+    android:fitsSystemWindows="true">
+
     <!-- Top Naviagtion -->
     <include
         android:id="@+id/top_navigation"
@@ -16,20 +18,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"/>
 
-
+    <!-- Damit alles Scrollbar bleibt -->
     <ScrollView
         android:id="@+id/main_scroll_view"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation"
         android:layout_below="@id/top_navigation"
+
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Favoriten"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/mittel"
                     android:textStyle="bold"
                     android:textColor="@color/primaryColor" />
             </LinearLayout>
@@ -56,7 +59,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
-
     </ScrollView>
 
     <!-- Bottom Balken  -->
@@ -66,7 +68,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="45dp"
+        app:itemIconSize="@dimen/sehrgross"
         app:labelVisibilityMode="labeled"/>
-
 </RelativeLayout>
