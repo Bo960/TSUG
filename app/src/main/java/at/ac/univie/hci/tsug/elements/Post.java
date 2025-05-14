@@ -6,7 +6,6 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -156,7 +155,7 @@ public class Post implements Parcelable {
     }
 
     //Setter Methode:
-    public void setTitel(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
     public void setLikes(int likes) {
