@@ -1,0 +1,257 @@
+Index: .idea/deploymentTargetSelector.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"deploymentTargetSelector\">\r\n    <selectionStates>\r\n      <SelectionState runConfigName=\"app\">\r\n        <option name=\"selectionMode\" value=\"DROPDOWN\" />\r\n      </SelectionState>\r\n    </selectionStates>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetSelector.xml b/.idea/deploymentTargetSelector.xml
+--- a/.idea/deploymentTargetSelector.xml	(revision a85b005dd41cec50766268b11fe81b58e4a4d186)
++++ b/.idea/deploymentTargetSelector.xml	(date 1746905674893)
+@@ -4,6 +4,14 @@
+     <selectionStates>
+       <SelectionState runConfigName="app">
+         <option name="selectionMode" value="DROPDOWN" />
++        <DropdownSelection timestamp="2025-05-08T09:10:28.351688900Z">
++          <Target type="DEFAULT_BOOT">
++            <handle>
++              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\feldb\.android\avd\Pixel_6_API_31.avd" />
++            </handle>
++          </Target>
++        </DropdownSelection>
++        <DialogSelection />
+       </SelectionState>
+     </selectionStates>
+   </component>
+Index: app/src/main/res/layout/activity_suche.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_suche.xml b/app/src/main/res/layout/activity_suche.xml
+new file mode 100644
+--- /dev/null	(date 1746905581624)
++++ b/app/src/main/res/layout/activity_suche.xml	(date 1746905581624)
+@@ -0,0 +1,139 @@
++<?xml version="1.0" encoding="utf-8"?>
++<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent">
++
++    <!-- et...Edit Text -->
++    <!-- btn...Button -->
++
++    <LinearLayout
++        android:orientation="vertical"
++        android:padding="16dp"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content">
++
++        <!-- Top Navigation Bar -->
++        <include
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            layout="@layout/top_nav" />
++
++        <!-- Freitext-Suche -->
++        <EditText
++            android:id="@+id/et_search_query"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:hint="Suchbegriff eingeben"
++            android:inputType="text" />
++
++        <!-- Kategorie-Auswahl -->
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Kategorie"
++            android:layout_marginTop="16dp" />
++
++        <RadioGroup
++            android:id="@+id/rg_category"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:orientation="horizontal">
++
++            <RadioButton
++                android:id="@+id/rb_frage"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Frage" />
++
++            <RadioButton
++                android:id="@+id/rb_tipp"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Tipp" />
++
++            <RadioButton
++                android:id="@+id/rb_alles"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Alles" />
++
++        </RadioGroup>
++
++        <!-- Preis-Slider -->
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Preis (€)"
++            android:layout_marginTop="16dp" />
++
++        <com.google.android.material.slider.Slider
++            android:id="@+id/slider_price"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:valueFrom="0"
++            android:valueTo="500"
++            android:stepSize="5" />
++
++        <!-- Reisedatum als Start- und Enddatum -->
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Reisedatum"
++            android:layout_marginTop="16dp" />
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:orientation="horizontal"
++            android:layout_marginTop="8dp">
++
++            <EditText
++                android:id="@+id/et_date_from"
++                android:layout_width="0dp"
++                android:layout_height="wrap_content"
++                android:layout_weight="1"
++                android:hint="Von"
++                android:focusable="false"
++                android:clickable="true"
++                android:inputType="date" />
++
++            <View
++                android:layout_width="16dp"
++                android:layout_height="wrap_content" />
++
++            <EditText
++                android:id="@+id/et_date_to"
++                android:layout_width="0dp"
++                android:layout_height="wrap_content"
++                android:layout_weight="1"
++                android:hint="Bis"
++                android:focusable="false"
++                android:clickable="true"
++                android:inputType="date" />
++
++        </LinearLayout>
++
++        <!-- Aktualität mit Spinner -->
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Aktualität"
++            android:layout_marginTop="16dp" />
++
++        <Spinner
++            android:id="@+id/spinner_recency"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:entries="@array/aktualitaet_options" />
++
++        <!-- Such-Button -->
++        <Button
++            android:id="@+id/btn_search"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:text="Suchen"
++            android:layout_marginTop="24dp" />
++
++    </LinearLayout>
++</ScrollView>
+Index: app/src/main/java/at/ac/univie/hci/tsug/SucheActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/at/ac/univie/hci/tsug/SucheActivity.java b/app/src/main/java/at/ac/univie/hci/tsug/SucheActivity.java
+new file mode 100644
+--- /dev/null	(date 1746905581623)
++++ b/app/src/main/java/at/ac/univie/hci/tsug/SucheActivity.java	(date 1746905581623)
+@@ -0,0 +1,20 @@
++package at.ac.univie.hci.tsug;
++
++import android.content.Intent;
++import android.os.Bundle;
++import android.view.MenuItem;
++import android.widget.ImageButton;
++import android.widget.TextView;
++
++import androidx.activity.EdgeToEdge;
++import androidx.annotation.NonNull;
++import androidx.appcompat.app.AppCompatActivity;
++import androidx.core.graphics.Insets;
++import androidx.core.view.ViewCompat;
++import androidx.core.view.WindowInsetsCompat;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++public class SucheActivity extends AppCompatActivity {
++
++}
+Index: app/src/main/java/at/ac/univie/hci/tsug/SettingsActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package at.ac.univie.hci.tsug;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.MenuItem;\r\nimport android.widget.ImageButton;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\n\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\nimport com.google.android.material.navigation.NavigationBarView;\r\n\r\npublic class SettingsActivity extends AppCompatActivity {\r\n\r\n    BottomNavigationView bottomNav;\r\n    String activityName = \"Einstellungen\";\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.activity_settings);\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {\r\n            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);\r\n            return insets;\r\n        });\r\n\r\n\r\n\r\n\r\n        //Martin's Code für Bottom Navigation START\r\n\r\n        bottomNav = findViewById(R.id.bottom_navigation);\r\n\r\n        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {\r\n            @Override\r\n            public boolean onNavigationItemSelected(@NonNull MenuItem item) {\r\n                Intent intent;\r\n                switch (item.getItemId()) {\r\n                    case R.id.nav_home:\r\n                        //Homescreen\r\n                        intent = new Intent(SettingsActivity.this, MainActivity.class);\r\n                        startActivity(intent);\r\n                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);\r\n                        return true;\r\n\r\n                    case R.id.nav_neuer_beitrag:\r\n                        //Beitrag erstellen Seite\r\n                        intent = new Intent(SettingsActivity.this, CreateActivity.class);\r\n                        startActivity(intent);\r\n                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);\r\n                        return true;\r\n\r\n                    case R.id.nav_account:\r\n                        //Account settings Seite\r\n                        intent = new Intent(SettingsActivity.this, AccountActivity.class);\r\n                        startActivity(intent);\r\n                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);\r\n                        return true;\r\n                }\r\n                return false;\r\n            }\r\n        });\r\n\r\n        //TOP NAVIGATION:\r\n        ImageButton backNav = findViewById(R.id.nav_back);\r\n        backNav.setOnClickListener(v -> finish());\r\n\r\n        ImageButton setNav = findViewById(R.id.nav_einstellungen);\r\n        setNav.setOnClickListener(v -> {\r\n            Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);\r\n            startActivity(intent);\r\n            overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);\r\n        });\r\n\r\n        //TESTING TEXT TODO DELETE LATER\r\n        TextView testText = findViewById(R.id.nav_text_testing);\r\n        testText.setText(activityName);\r\n\r\n        //Martin's Code für Bottom Navigation END\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/at/ac/univie/hci/tsug/SettingsActivity.java b/app/src/main/java/at/ac/univie/hci/tsug/SettingsActivity.java
+--- a/app/src/main/java/at/ac/univie/hci/tsug/SettingsActivity.java	(revision a85b005dd41cec50766268b11fe81b58e4a4d186)
++++ b/app/src/main/java/at/ac/univie/hci/tsug/SettingsActivity.java	(date 1746906098036)
+@@ -33,8 +33,6 @@
+         });
+ 
+ 
+-
+-
+         //Martin's Code für Bottom Navigation START
+ 
+         bottomNav = findViewById(R.id.bottom_navigation);
+Index: app/src/main/res/values/arrays.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/arrays.xml b/app/src/main/res/values/arrays.xml
+new file mode 100644
+--- /dev/null	(date 1746905581625)
++++ b/app/src/main/res/values/arrays.xml	(date 1746905581625)
+@@ -0,0 +1,24 @@
++<?xml version="1.0" encoding="utf-8"?>
++
++<!-- Michael Zeug -->
++<resources>
++    <string-array name="aktualitaet_options">
++        <item>Heute</item>
++        <item>Diese Woche</item>
++        <item>Diesen Monat</item>
++    </string-array>
++
++    <!-- Optionen für die Tags -->
++    <string-array name="tag_options">
++        <item>Guenstig</item>
++        <item>Preiswert</item>
++        <item>Nachtzug</item>
++        <item>Sparangebot</item>
++        <item>Flexibel</item>
++        <item>Gruppentarif</item>
++        <item>Direkt</item>
++        <item>kurze Fahrt</item>
++        <item>lange Fahrt</item>
++    </string-array>
++
++</resources>

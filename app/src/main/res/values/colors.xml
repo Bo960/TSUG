@@ -12,4 +12,8 @@
     <color name="surfaceColor">#FFFBFE</color>
     <color name="onSurfaceColor">#1C1B1F</color>
     <color name="surfaceVariantColor">#E7E0EC</color>
+    <color name="babyBlue">#77C3EC</color>
+    <color name="darkBlue">#1B1E63</color>
+    <color name="lightGray">#D4D4D4</color>
+    <color name="white">#FFFFFF</color>
 </resources>

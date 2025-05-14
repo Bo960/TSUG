@@ -17,22 +17,15 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.container.Container;
+import at.ac.univie.hci.tsug.elements.User;
 
 public class AccountActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     String activityName = "Konto";
-    // für Testen
-    String userId = "123456";
-    String userName = "Max Mustermann";
-    String email = "max@gmail.com";
-    int questionsCount = 10;
-    int answersCount = 12;
-    int likesCount = 8;
-    int points= questionsCount*2+answersCount*3+likesCount;
-    int ranking = (int) Math.floor(points/50.0)+1;
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +38,9 @@ public class AccountActivity extends AppCompatActivity {
             return insets;
         });
 
+        //Recieveing User from Home:
+        currentUser = getIntent().getParcelableExtra("user");
+
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -53,7 +49,8 @@ public class AccountActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         //Homescreen
-                        intent = new Intent(AccountActivity.this, MainActivity.class);
+                        intent = new Intent(AccountActivity.this, HomeActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         //Von Position-Rechts nach Position-Links
                         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
@@ -62,6 +59,7 @@ public class AccountActivity extends AppCompatActivity {
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
                         intent = new Intent(AccountActivity.this, CreateActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         //Von Position-Rechts nach Position-Links
                         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
@@ -78,36 +76,47 @@ public class AccountActivity extends AppCompatActivity {
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(AccountActivity.this, SettingsActivity.class);
+            intent.putExtra("user", currentUser);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
+        //TEXT
+        TextView testText = findViewById(R.id.nav_text_testing);
+        testText.setText(activityName);
+
         TextView usernameText = findViewById(R.id.username);
-        usernameText.setText(userName);
+        usernameText.setText(currentUser.getName());
 
         TextView userIdText = findViewById(R.id.user_id);
-        userIdText.setText(String.format("@%s", userId));
+        userIdText.setText(String.format("@%s", currentUser.getID()));
 
         TextView emailText = findViewById(R.id.email);
-        emailText.setText(email);
+        emailText.setText(currentUser.getEmail());
 
         TextView rankingText = findViewById(R.id.ranking);
-        rankingText.setText(String.valueOf("#"+ ranking));
+        rankingText.setText(currentUser.getRank());
 
         TextView questionsCountText = findViewById(R.id.questions_count);
-        questionsCountText.setText(String.valueOf(questionsCount));
+        questionsCountText.setText(String.valueOf(currentUser.getQuestions()));
 
         TextView answersCountText = findViewById(R.id.answers_count);
-        answersCountText.setText(String.valueOf(answersCount));
+        answersCountText.setText(String.valueOf(currentUser.getAnswers()));
 
         TextView likesCountText = findViewById(R.id.likes_count);
-        likesCountText.setText(String.valueOf(likesCount));
+        likesCountText.setText(String.valueOf(currentUser.getLikes()));
 
         ((ImageView) findViewById(R.id.profile_image)).setImageResource(R.drawable.account);
+
+        //TODO braucht man ein currentUser in UserContainer !!
+        //currentUser = UserContainer.getCurrentUser();
+
+
 
         TextView likes = findViewById(R.id.likes);
         likes.setOnClickListener(v ->{
             Intent i= new Intent(this, LikedPostsActivity.class);
+            i.putExtra("user", currentUser);
             startActivity(i);
             //Von Position-Links nach Position-Rechts
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -115,6 +124,7 @@ public class AccountActivity extends AppCompatActivity {
         TextView seen = findViewById(R.id.seen);
         seen.setOnClickListener(v ->{
             Intent i= new Intent(this, SeenPostsActivity.class);
+            i.putExtra("user", currentUser);
             startActivity(i);
             //Von Position-Links nach Position-Rechts
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -122,10 +132,10 @@ public class AccountActivity extends AppCompatActivity {
         TextView created=findViewById(R.id.created);
         created.setOnClickListener(v ->{
             Intent i= new Intent(this, CreatedPostsActivity.class);
+            i.putExtra("user", currentUser);
             startActivity(i);
             //Von Position-Links nach Position-Rechts
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
         });
-
     }
 }

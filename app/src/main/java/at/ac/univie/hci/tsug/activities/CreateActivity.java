@@ -31,10 +31,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.elements.Post;
 import at.ac.univie.hci.tsug.container.Container;
+import at.ac.univie.hci.tsug.elements.User;
 
 public class CreateActivity extends AppCompatActivity {
 
@@ -45,6 +45,7 @@ public class CreateActivity extends AppCompatActivity {
     boolean[] selectedTags = new boolean[tags.length];
     List<String> selectedTagList = new ArrayList<>();
     String selectedFrageTipp = "";
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +59,10 @@ public class CreateActivity extends AppCompatActivity {
         });
 
 
-        //Martin's Code für Bottom Navigation START
-
         bottomNav = findViewById(R.id.bottom_navigation);
 
-        //bottomNav.setOnApplyWindowInsetsListener(null);
-        //bottomNav.setSelectedItemId(R.id.nav_home);
+        //Recieveing User from Home:
+        currentUser = getIntent().getParcelableExtra("user");
 
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -72,7 +71,8 @@ public class CreateActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         //Homescreen
-                        intent = new Intent(CreateActivity.this, MainActivity.class);
+                        intent = new Intent(CreateActivity.this, HomeActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         //Von Position-Rechts nach Position-Links
                         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
@@ -81,6 +81,7 @@ public class CreateActivity extends AppCompatActivity {
                     case R.id.nav_account:
                         //Account settings Seite
                         intent = new Intent(CreateActivity.this, AccountActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         //Von Position-Links nach Position-Rechts
                         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -97,6 +98,7 @@ public class CreateActivity extends AppCompatActivity {
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(CreateActivity.this, SettingsActivity.class);
+            intent.putExtra("user", currentUser);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
@@ -253,6 +255,7 @@ public class CreateActivity extends AppCompatActivity {
                 Container.addPost(createdPost);
                 Intent intent = new Intent(CreateActivity.this, PostActivity.class);
                 intent.putExtra("beitrag_id", createdPost.getID());
+                intent.putExtra("user", currentUser);
                 startActivity(intent);
             }
         });

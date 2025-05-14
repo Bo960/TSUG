@@ -56,6 +56,9 @@ public class PostActivity extends AppCompatActivity {
             return insets;
         });
 
+        //Recieveing User from Home:
+        currentUser = getIntent().getParcelableExtra("user");
+
         // Bottom Navigation
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -66,7 +69,8 @@ public class PostActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         // Homescreen
-                        intent = new Intent(PostActivity.this, MainActivity.class);
+                        intent = new Intent(PostActivity.this, HomeActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                         return true;
@@ -74,6 +78,7 @@ public class PostActivity extends AppCompatActivity {
                     case R.id.nav_neuer_beitrag:
                         // Beitrag erstellen Seite
                         intent = new Intent(PostActivity.this, CreateActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                         return true;
@@ -81,6 +86,7 @@ public class PostActivity extends AppCompatActivity {
                     case R.id.nav_account:
                         //Account settings Seite
                         intent = new Intent(PostActivity.this, AccountActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                         return true;
@@ -89,6 +95,10 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
+        //TEXT
+        TextView testText = findViewById(R.id.nav_text_testing);
+        testText.setText(activityName);
+
         // TOP NAVIGATION:
         ImageButton backNav = findViewById(R.id.nav_back);
         backNav.setOnClickListener(v -> finish());
@@ -96,6 +106,7 @@ public class PostActivity extends AppCompatActivity {
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
             Intent intent = new Intent(PostActivity.this, SettingsActivity.class);
+            intent.putExtra("user", currentUser);
             startActivity(intent);
             overridePendingTransition(0, 0);
         });
@@ -137,7 +148,7 @@ public class PostActivity extends AppCompatActivity {
         FloatingActionButton editPostBtn = findViewById(R.id.editPostBtn);
         FloatingActionButton deletePostBtn = findViewById(R.id.deletePostBtn);
 
-        if (author == "") { // TODO hardcoded
+        if (author.isEmpty()) { // TODO hardcoded
             editPostBtn.setVisibility(View.VISIBLE);
             deletePostBtn.setVisibility(View.VISIBLE);
             authorView.setVisibility(View.GONE);
@@ -152,6 +163,7 @@ public class PostActivity extends AppCompatActivity {
         // edit post
         editPostBtn.setOnClickListener(v -> {
             Toast.makeText(PostActivity.this, "Bearbeiten", Toast.LENGTH_SHORT).show();
+
             // TODO
             Intent intent = new Intent(PostActivity.this, CreateActivity.class);
             intent.putExtra("beitrag_id", createdPost.getID());
@@ -163,7 +175,9 @@ public class PostActivity extends AppCompatActivity {
         deletePostBtn.setOnClickListener(v -> {
             Toast.makeText(PostActivity.this, "Beitrag gelöscht", Toast.LENGTH_SHORT).show();
             Container.removePost(beitragID);
+
             Intent intent = new Intent(PostActivity.this, MainActivity.class);
+            intent.putExtra("user", currentUser);
             startActivity(intent);
         });
 
@@ -264,7 +278,7 @@ public class PostActivity extends AppCompatActivity {
         }
 
         // description visibility
-        if (description == "" || description.isEmpty()) {
+        if (description.isEmpty()) {
             // show start & icon & end
             descriptionView.setVisibility(View.GONE);
         } else {
@@ -276,7 +290,7 @@ public class PostActivity extends AppCompatActivity {
         List<Comment> commentArrayList = new ArrayList<>();
         CommentAdapter commentAdapter = new CommentAdapter(this, commentArrayList);
         commentListView.setAdapter(commentAdapter);
-        // TODO kommentare speichern
+        // TODO kommentare speichern?
 
         // input: new comment
         EditText commentInput = findViewById(R.id.commentInput);

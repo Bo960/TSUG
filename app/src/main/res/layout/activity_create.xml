@@ -6,7 +6,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CreateActivity">
+    tools:context=".activities.CreateActivity"
+    android:fitsSystemWindows="true">
 
     <!-- Top Naviagtion -->
     <include
@@ -38,6 +39,7 @@
                 android:layout_marginBottom="12dp"
                 android:background="@android:drawable/edit_text"
                 android:hint="Titel"
+                android:textSize="@dimen/klein"
                 android:padding="12dp"
                 android:textColor="@android:color/black" />
 
@@ -56,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:drawable/edit_text"
                 android:hint="Startort"
+                android:textSize="@dimen/klein"
                 android:layout_weight="0.5"
                 android:importantForAccessibility="yes"
                 android:padding="12dp"
@@ -68,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:drawable/edit_text"
                 android:hint="Zielort"
+                android:textSize="@dimen/klein"
                 android:layout_weight="0.5"
                 android:importantForAccessibility="yes"
                 android:padding="12dp"
@@ -83,6 +87,7 @@
                 android:layout_marginBottom="12dp"
                 android:background="@android:drawable/edit_text"
                 android:hint="...oder Region"
+                android:textSize="@dimen/klein"
                 android:padding="12dp"
                 android:textColor="@android:color/black" />
 
@@ -94,6 +99,7 @@
                 android:layout_marginBottom="12dp"
                 android:background="@android:drawable/edit_text"
                 android:hint="Beschreibung"
+                android:textSize="@dimen/klein"
                 android:inputType="textMultiLine"
                 android:minLines="3"
                 android:padding="12dp"
@@ -105,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="Kategorisierung"
-                android:textSize="16sp"
+                android:textSize="@dimen/mittel"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -135,6 +141,7 @@
                     android:backgroundTint="@color/surfaceVariantColor"
                     android:textColor="@android:color/black"
                     android:text="Kategorien"
+                    android:textSize="@dimen/klein"
                     android:padding="12dp" />
             </LinearLayout>
 
@@ -156,6 +163,7 @@
                 android:backgroundTint="@color/primaryColor"
                 android:padding="12dp"
                 android:text="Eintrag speichern"
+                android:textSize="@dimen/mittel"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
@@ -167,7 +175,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="45dp"
+        app:itemIconSize="@dimen/sehrgross"
         app:labelVisibilityMode="labeled"/>
-
 </RelativeLayout>
