@@ -1,4 +1,4 @@
-package at.ac.univie.hci.tsug;
+package at.ac.univie.hci.tsug.activities;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import java.util.ArrayList;
+
+import at.ac.univie.hci.tsug.R;
 
 public class HistoryPostAdapter extends BaseAdapter {
     private ArrayList<HistoryPost> posts;

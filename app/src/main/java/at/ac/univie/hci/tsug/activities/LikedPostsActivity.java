@@ -15,9 +15,6 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 
-import at.ac.univie.hci.tsug.HistoryPost;
-import at.ac.univie.hci.tsug.HistoryPostAdapter;
-import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
 
 public class LikedPostsActivity extends AppCompatActivity {
@@ -39,7 +36,7 @@ public class LikedPostsActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         //Homescreen
-                        intent = new Intent(LikedPostsActivity.this, MainActivity.class);
+                        intent = new Intent(LikedPostsActivity.this, HomeActivity.class);
                         startActivity(intent);
                         //Von Position-Rechts nach Position-Links
                         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);

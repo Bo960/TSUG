@@ -1,6 +1,10 @@
 package at.ac.univie.hci.tsug.elements;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
+
+import androidx.annotation.NonNull;
 
 import java.lang.reflect.Member;
 import java.util.ArrayList;
@@ -9,7 +13,8 @@ import java.util.Set;
 import java.util.Stack;
 
 enum Rank {Bronze, Silber, Gold, Diamant} //TODO MORE RANKS
-public class User {
+
+public class User implements Parcelable {
     private final int ID;
     private static int next_ID = 1;
     private String name;
@@ -42,6 +47,28 @@ public class User {
         this.password = password;
     }
 
+    protected User(Parcel in) {
+        ID = in.readInt();
+        name = in.readString();
+        email = in.readString();
+        password = in.readString();
+        likes = in.readInt();
+        questions = in.readInt();
+        answers = in.readInt();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
     //Getter-Methode:
     public int getID() {
         return ID;
@@ -53,6 +80,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getRank() {
@@ -145,5 +176,21 @@ public class User {
     }
     public void addCreatedPost(Post newPost) {
         createdPosts.add(newPost.getID());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeInt(ID);
+        parcel.writeString(name);
+        parcel.writeString(email);
+        parcel.writeString(password);
+        parcel.writeInt(likes);
+        parcel.writeInt(questions);
+        parcel.writeInt(answers);
     }
 }

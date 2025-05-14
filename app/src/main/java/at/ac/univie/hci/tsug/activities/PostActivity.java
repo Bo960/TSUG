@@ -31,7 +31,6 @@ import java.util.List;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.container.Container;
 import at.ac.univie.hci.tsug.elements.Comment;
@@ -66,7 +65,7 @@ public class PostActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         // Homescreen
-                        intent = new Intent(PostActivity.this, MainActivity.class);
+                        intent = new Intent(PostActivity.this, HomeActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                         return true;

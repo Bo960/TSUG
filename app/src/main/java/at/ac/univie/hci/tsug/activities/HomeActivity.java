@@ -1,4 +1,4 @@
-package at.ac.univie.hci.tsug;
+package at.ac.univie.hci.tsug.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,38 +19,33 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import java.util.Set;
+import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.elements.User;
 
-import at.ac.univie.hci.tsug.activities.AccountActivity;
-import at.ac.univie.hci.tsug.activities.CreateActivity;
-import at.ac.univie.hci.tsug.activities.SearchActivity;
-import at.ac.univie.hci.tsug.activities.SettingsActivity;
-import at.ac.univie.hci.tsug.container.Container;
-import at.ac.univie.hci.tsug.elements.Post;
+public class HomeActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNav;
-    SearchView searchView;
+    private SearchView searchView;
     public static String simpleSearchTerm;
-    String activityName = "TSUG";
-
+    private String activityName = "TSUG";
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         EdgeToEdge.enable(this);
-
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
+        //Recieveing User from Login or Register:
+        currentUser = getIntent().getParcelableExtra("user");
+
         //BOTTOM NAVIGATION:
-        bottomNav = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -59,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_neuer_beitrag:
                         //Beitrag erstellen Seite
-                        intent = new Intent(MainActivity.this, CreateActivity.class);
+                        intent = new Intent(HomeActivity.this, CreateActivity.class);
                         startActivity(intent);
                         //Von Position-Links nach Position-Rechts
                         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -67,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.nav_account:
                         //Account settings Seite
-                        intent = new Intent(MainActivity.this, AccountActivity.class);
+                        intent = new Intent(HomeActivity.this, AccountActivity.class);
+                        intent.putExtra("user", currentUser);
                         startActivity(intent);
                         //Von Position-Links nach Position-Rechts
                         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -86,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 simpleSearchTerm = newText;
@@ -108,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
@@ -118,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         searchFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
             }
@@ -127,11 +124,9 @@ public class MainActivity extends AppCompatActivity {
         //TEXT
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
-
     }
     public static String getSimpleSearchTerm() {
         return simpleSearchTerm;
     }
-
 }
 

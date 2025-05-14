@@ -17,7 +17,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.container.Container;
 import at.ac.univie.hci.tsug.elements.User;
@@ -39,6 +38,9 @@ public class AccountActivity extends AppCompatActivity {
             return insets;
         });
 
+        //Recieveing User from Home:
+        currentUser = getIntent().getParcelableExtra("user");
+
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -47,7 +49,7 @@ public class AccountActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         //Homescreen
-                        intent = new Intent(AccountActivity.this, MainActivity.class);
+                        intent = new Intent(AccountActivity.this, HomeActivity.class);
                         startActivity(intent);
                         //Von Position-Rechts nach Position-Links
                         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
@@ -79,9 +81,6 @@ public class AccountActivity extends AppCompatActivity {
         //TEXT
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
-
-
-        currentUser = Container.getUser("KarlMayer");
 
         TextView usernameText = findViewById(R.id.username);
         usernameText.setText(currentUser.getName());

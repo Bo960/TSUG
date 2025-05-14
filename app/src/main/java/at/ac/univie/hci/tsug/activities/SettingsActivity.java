@@ -16,7 +16,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.R;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -49,7 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         //Homescreen
-                        intent = new Intent(SettingsActivity.this, MainActivity.class);
+                        intent = new Intent(SettingsActivity.this, HomeActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;

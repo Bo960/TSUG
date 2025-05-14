@@ -28,10 +28,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import at.ac.univie.hci.tsug.R;
-import at.ac.univie.hci.tsug.MainActivity;
 import at.ac.univie.hci.tsug.container.Container;
 import at.ac.univie.hci.tsug.elements.Post;
 import android.widget.ArrayAdapter;
@@ -69,7 +67,7 @@ public class SearchActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         //Homescreen
-                        intent = new Intent(SearchActivity.this, MainActivity.class);
+                        intent = new Intent(SearchActivity.this, HomeActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
                         return true;
@@ -130,7 +128,7 @@ public class SearchActivity extends AppCompatActivity {
         rgCategory.check(R.id.rb_alles);
 
         //Suchbegriff von MainActivity holen und vorfüllen - Ist manchmal als Fehler markiert und manchmal nicht WTF
-        String initialQuery = MainActivity.getSimpleSearchTerm();
+        String initialQuery = HomeActivity.getSimpleSearchTerm();
         if (initialQuery != null) {
             etSearchQuery.setText(initialQuery);
         }
