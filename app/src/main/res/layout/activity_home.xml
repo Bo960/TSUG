@@ -18,23 +18,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"/>
 
-    <!-- Damit alles Scrollbar bleibt -->
-    <ScrollView
-        android:id="@+id/main_scroll_view"
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation"
-        android:layout_below="@id/top_navigation"
-
-        android:fillViewport="true">
-
         <!-- Rest vom Layout bestimmt -->
         <LinearLayout
+            android:id="@+id/search_home"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:layout_below="@id/top_navigation">
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchView"
@@ -76,10 +68,22 @@
                 android:textColor="@color/secondaryColor"
                 android:textSize="@dimen/klein"
                 android:gravity="center"/>
-
-
         </LinearLayout>
-    </ScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_home"
+        android:layout_above="@id/bottom_navigation"
+        android:layout_marginTop="8dp"
+
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <!-- Bottom Balken  -->
     <com.google.android.material.bottomnavigation.BottomNavigationView

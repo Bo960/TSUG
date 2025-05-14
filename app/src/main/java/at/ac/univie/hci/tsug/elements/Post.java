@@ -126,6 +126,13 @@ public class Post implements Parcelable {
     public int getLikes() {
         return likes;
     }
+    public String getLikesStyle() {
+        if(likes > 1000) {
+            return (likes/1000 + "k");
+        }
+        else
+            return Integer.toString(likes);
+    }
     public User getUser() {
         return user;
     }
@@ -152,6 +159,15 @@ public class Post implements Parcelable {
     }
     public LocalTime getTime() {
         return time;
+    }
+    public String getType() {
+        if (isFrage)
+            return "FRAGE";
+        else
+            return "TIPP";
+    }
+    public boolean isRegion() {
+        return isRegion;
     }
 
     //Setter Methode:
