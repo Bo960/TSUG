@@ -45,8 +45,8 @@ public class HistoryPostAdapter extends BaseAdapter {
         postTitle.setText(post.getTitle());
         TextView author = convertView.findViewById(R.id.post_author);
         author.setText(post.getUser().getName());
-        TextView context = convertView.findViewById(R.id.post_context);
-        context.setText(post.getContent());
+        TextView postContext = convertView.findViewById(R.id.post_context);
+        postContext.setText(post.getContent());
 
         return convertView;
     }

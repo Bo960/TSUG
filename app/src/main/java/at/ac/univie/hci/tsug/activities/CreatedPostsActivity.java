@@ -16,7 +16,9 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.util.ArrayList;
 
 import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.elements.Post;
 import at.ac.univie.hci.tsug.elements.User;
+import at.ac.univie.hci.tsug.container.Container;
 
 public class CreatedPostsActivity extends AppCompatActivity {
     private ArrayList<HistoryPost> createdPostsList;
@@ -88,16 +90,18 @@ public class CreatedPostsActivity extends AppCompatActivity {
 
         createdPostsListView = findViewById(R.id.created_questions_list);
         createdPostsList= new ArrayList<>();
-        //TODO currentUser auch in usercontainer
-        /*User currentUser = Container.getCurrentUser();
 
-        for (int postId : currentUser.getCreatedPosts()) {
-            Post post = Container.get(postId);
-            if (post != null) {
-                createdPostsList.add(new HistoryPost(post.getTitel(), post.getDes(), post.getUser()));
+        ArrayList<Integer> created= currentUser.getCreatedPosts();
+        if(created!=null) {
+            for (int postId : created) {
+                Post post = Container.getPost(postId);
+                if (post != null) {
+                    createdPostsList.add(new HistoryPost(post.getTitle(), post.getDes(), post.getUser()));
+                }
             }
-        }*/
-        postAdapter= new HistoryPostAdapter(this, createdPostsList);
+        }
+
+        postAdapter= new HistoryPostAdapter(CreatedPostsActivity.this, createdPostsList);
         createdPostsListView.setAdapter(postAdapter);
     }
 }

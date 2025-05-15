@@ -16,6 +16,8 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.util.ArrayList;
 
 import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.container.Container;
+import at.ac.univie.hci.tsug.elements.Post;
 import at.ac.univie.hci.tsug.elements.User;
 
 public class SeenPostsActivity extends AppCompatActivity {
@@ -89,17 +91,17 @@ public class SeenPostsActivity extends AppCompatActivity {
         seenPostsListView= findViewById(R.id.seen_questions_list);
         seenPostsList= new ArrayList<>();
 
-        //TODO currentUser auch in usercontainer
-        /*User currentUser = Container.getCurrentUser();
-
-        for (int postId : currentUser.getSeenPosts()) {
-            Post post = Container.get(postId);
-            if (post != null) {
-                seenPostsList.add(new HistoryPost(post.getTitel(), post.getDes(), post.getUser()));
+        ArrayList<Integer> seen= currentUser.getSeenPosts();
+        if(seen!=null) {
+            for (int postId : seen) {
+                Post post = Container.getPost(postId);
+                if (post != null) {
+                    seenPostsList.add(new HistoryPost(post.getTitle(), post.getDes(), post.getUser()));
+                }
             }
-        }*/
+        }
 
-        postAdapter= new HistoryPostAdapter( this, seenPostsList);
+        postAdapter= new HistoryPostAdapter( SeenPostsActivity.this, seenPostsList);
         seenPostsListView.setAdapter(postAdapter);
     }
 }
