@@ -6,7 +6,6 @@
     <dimen name="mittel">32sp</dimen>
     <dimen name="klein">24sp</dimen>
     <dimen name="sehrklein">18sp</dimen>
-
     <dimen name="gigantisch">180sp</dimen>
 
 </resources>

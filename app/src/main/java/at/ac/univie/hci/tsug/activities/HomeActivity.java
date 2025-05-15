@@ -157,7 +157,7 @@ public class HomeActivity extends AppCompatActivity implements RecyclerviewInter
     public void onPostClick(int position) {
         Intent intent = new Intent(HomeActivity.this, PostActivity.class);
 
-        //TODO: transfer everthing needed
+        intent.putExtra("beitrag_id", posts.get(position).getID());
 
         intent.putExtra("user", currentUser);
         startActivity(intent);

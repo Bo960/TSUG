@@ -82,10 +82,6 @@ public class SeenPostsActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
-        //TEXT
-        TextView testText = findViewById(R.id.nav_text_testing);
-        testText.setText(activityName);
-
         seenPostsListView= findViewById(R.id.seen_questions_list);
         seenPostsList= new ArrayList<>();
 

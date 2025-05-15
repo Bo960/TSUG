@@ -8,7 +8,7 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="24dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/lightGray">
+    app:cardBackgroundColor="@color/greyBlue">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:layout_margin="8dp"
                 app:cardCornerRadius="32dp"
                 app:cardElevation="4dp"
-                android:backgroundTint="@color/secondaryColor">
+                android:backgroundTint="@color/lightGray">
 
                 <TextView
                     android:id="@+id/rv_type"
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
 
                     android:text="Type:"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/klein"
                     android:padding="10dp"/>
 
@@ -85,7 +85,7 @@
                     android:layout_margin="8dp"
                     app:cardCornerRadius="24dp"
                     app:cardElevation="4dp"
-                    android:backgroundTint="@color/secondaryColor">
+                    android:backgroundTint="@color/lightGray">
 
                     <TextView
                         android:id="@+id/rv_start"
@@ -96,7 +96,7 @@
 
                         android:text="START"
                         android:textSize="@dimen/klein"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:padding="10dp"/>
                 </androidx.cardview.widget.CardView>
 
@@ -114,7 +114,7 @@
                     android:layout_margin="8dp"
                     app:cardCornerRadius="24dp"
                     app:cardElevation="4dp"
-                    android:backgroundTint="@color/secondaryColor">
+                    android:backgroundTint="@color/lightGray">
 
                     <TextView
                         android:id="@+id/rv_end"
@@ -125,7 +125,7 @@
 
                         android:text="ENDE"
                         android:textSize="@dimen/klein"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:padding="10dp"/>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -148,7 +148,7 @@
                     android:layout_margin="8dp"
                     app:cardCornerRadius="24dp"
                     app:cardElevation="4dp"
-                    android:backgroundTint="@color/secondaryColor">
+                    android:backgroundTint="@color/lightGray">
 
                     <TextView
                         android:id="@+id/rv_region"
@@ -158,7 +158,7 @@
 
                         android:text="REGION"
                         android:textSize="@dimen/klein"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:padding="10dp"/>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>

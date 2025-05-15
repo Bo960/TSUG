@@ -57,6 +57,10 @@ public class CreateActivity extends AppCompatActivity {
         });
 
 
+        //TEXT
+        TextView testText = findViewById(R.id.nav_text_testing);
+        testText.setText(activityName);
+
         bottomNav = findViewById(R.id.bottom_navigation);
 
         //Recieveing User from Home:

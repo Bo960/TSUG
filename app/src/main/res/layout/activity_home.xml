@@ -50,8 +50,8 @@
                 android:layout_centerHorizontal="true"
 
                 android:text="Suche starten"
-                android:backgroundTint="@color/onPrimaryContainerColor"
-                android:textColor="@color/darkBlue"
+                android:backgroundTint="@color/primaryColor"
+                android:textColor="@color/white"
                 android:textSize="@dimen/mittel"
                 android:gravity="center"/>
 
@@ -65,7 +65,7 @@
 
                 android:text="Filter"
                 android:backgroundTint="@color/lightGray"
-                android:textColor="@color/secondaryColor"
+                android:textColor="@color/black"
                 android:textSize="@dimen/klein"
                 android:gravity="center"/>
         </LinearLayout>

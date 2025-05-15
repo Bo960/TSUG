@@ -82,10 +82,6 @@ public class LikedPostsActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
-        //TEXT
-        TextView testText = findViewById(R.id.nav_text_testing);
-        testText.setText(activityName);
-
         likedPostsListView= findViewById(R.id.liked_questions_list);
         likedPostsList= new ArrayList<>();
 

@@ -3,7 +3,12 @@ package at.ac.univie.hci.tsug.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -20,10 +25,10 @@ import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.elements.User;
 
 public class SettingsActivity extends AppCompatActivity {
-
-    BottomNavigationView bottomNav;
     String activityName = "Einstellungen";
     private User currentUser;
+    private Spinner presetSpinner;
+    private ArrayAdapter<CharSequence> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +45,8 @@ public class SettingsActivity extends AppCompatActivity {
         //Recieveing User from Home:
         currentUser = getIntent().getParcelableExtra("user");
 
-        bottomNav = findViewById(R.id.bottom_navigation);
 
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -87,10 +92,8 @@ public class SettingsActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
-        //TESTING TEXT TODO DELETE LATER
+        //TEXT
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
-
-        //Martin's Code für Bottom Navigation END
     }
 }
