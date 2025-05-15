@@ -27,7 +27,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.elements.Post;
@@ -105,6 +107,9 @@ public class CreateActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
+        int beitragID = getIntent().getIntExtra("beitrag_id", 0);
+        Post editPost = Container.getPost(beitragID);
+        AtomicReference<Boolean> isEdit = new AtomicReference<>(getIntent().getBooleanExtra("is_edit", false));
 
         // tag frage / tipp
         Spinner tagSpinner = findViewById(R.id.tagFrageOderTipp);
@@ -113,6 +118,29 @@ public class CreateActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tagsArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tagSpinner.setAdapter(adapter);
+
+        // if editing: selected type & other fields
+        if (isEdit.get()) {
+            int tagIndex = Arrays.asList(tagsArray).indexOf(editPost.getFrage());
+            tagSpinner.setSelection(tagIndex);
+
+            EditText input_start = findViewById(R.id.inputStart);
+            EditText input_end = findViewById(R.id.inputEnd);
+            EditText input_region = findViewById(R.id.inputRegion);
+            EditText input_title = findViewById(R.id.inputTitle);
+            EditText input_description = findViewById(R.id.inputDescription);
+
+            if (editPost.getRegion().isEmpty()) {
+                input_start.setText(editPost.getRoute().first);
+                input_end.setText(editPost.getRoute().second);
+            } else {
+                input_region.setText(editPost.getRegion());
+            }
+            input_title.setText(editPost.getTitle());
+            input_description.setText(editPost.getDes());
+
+        }
+
         tagSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -130,7 +158,17 @@ public class CreateActivity extends AppCompatActivity {
 
         // button categories
         buttonSelectTags = findViewById(R.id.buttonSelectTags);
+        // if editing: selected items
+        if (isEdit.get()) {
+            for (int i = 0; i < tags.length; i++) {
+                selectedTags[i] = selectedTagList.contains(tags[i]);
+            }
+        }
         buttonSelectTags.setOnClickListener(view -> {
+            // if editing: to remember selected items
+            for (int i = 0; i < tags.length; i++) {
+                selectedTags[i] = selectedTagList.contains(tags[i]);
+            }
             AlertDialog.Builder builder = new AlertDialog.Builder(CreateActivity.this);
             builder.setTitle("Tags auswählen");
             builder.setMultiChoiceItems(tags, selectedTags, (dialog, which, isChecked) -> selectedTags[which] = isChecked);
@@ -161,7 +199,6 @@ public class CreateActivity extends AppCompatActivity {
             Boolean isFrage = true;
             if (selectedFrageTipp == "Tipp")
                 isFrage = false;
-
 
             boolean valid = true;
 
@@ -195,6 +232,12 @@ public class CreateActivity extends AppCompatActivity {
             }
 
             if (valid) {
+                // if only editing
+                if (isEdit.get()) {
+                    Container.removePost(editPost.getID());
+                    isEdit.set(false);
+                }
+
                 Post createdPost;
                 if (regionText.isEmpty()) {
                     createdPost = new Post(title,
@@ -214,7 +257,6 @@ public class CreateActivity extends AppCompatActivity {
                             description);
                 }
                 Container.addPost(createdPost);
-
                 Intent intent = new Intent(CreateActivity.this, PostActivity.class);
                 intent.putExtra("beitrag_id", createdPost.getID());
                 intent.putExtra("user", currentUser);

@@ -165,9 +165,10 @@ public class PostActivity extends AppCompatActivity {
             Toast.makeText(PostActivity.this, "Bearbeiten", Toast.LENGTH_SHORT).show();
 
             // TODO
-            // Intent intent = new Intent(PostActivity.this, EditPostActivity.class);
-            // intent.putExtra("user", currentUser);
-            // startActivity(intent);
+            Intent intent = new Intent(PostActivity.this, CreateActivity.class);
+            intent.putExtra("beitrag_id", createdPost.getID());
+            intent.putExtra("is_edit", true);
+            startActivity(intent);
         });
 
         // delete post
