@@ -166,7 +166,6 @@ public class HomeActivity extends AppCompatActivity implements RecyclerviewInter
 
     //Generating the List for the Recyclerview:
 
-
     public void setPosts(ArrayList<Post> posts) {
         this.posts = posts;
     }
@@ -176,12 +175,8 @@ public class HomeActivity extends AppCompatActivity implements RecyclerviewInter
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
 
-        if(!posts.isEmpty()) {
-            Log.d("TASK", "Artworks NOT empty!");
-            recyclerView.setAdapter(new PostAdapter(HomeActivity.this, getApplicationContext(), posts));
-        } else {
-            Log.d("TASK", "Artworks empty!");
-        }
+        recyclerView.setAdapter(new PostAdapter(HomeActivity.this, getApplicationContext(), posts));
+
     }
 }
 
