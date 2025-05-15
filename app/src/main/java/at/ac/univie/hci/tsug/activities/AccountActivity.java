@@ -108,10 +108,6 @@ public class AccountActivity extends AppCompatActivity {
 
         ((ImageView) findViewById(R.id.profile_image)).setImageResource(R.drawable.account);
 
-        //TODO braucht man ein currentUser in UserContainer !!
-        //currentUser = UserContainer.getCurrentUser();
-
-
 
         TextView likes = findViewById(R.id.likes);
         likes.setOnClickListener(v ->{

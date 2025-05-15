@@ -16,6 +16,8 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.util.ArrayList;
 
 import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.container.Container;
+import at.ac.univie.hci.tsug.elements.Post;
 import at.ac.univie.hci.tsug.elements.User;
 
 public class LikedPostsActivity extends AppCompatActivity {
@@ -86,16 +88,17 @@ public class LikedPostsActivity extends AppCompatActivity {
         likedPostsList= new ArrayList<>();
 
 
-        //TODO currentUser auch in container
-        /*User currentUser = Container.getCurrentUser();
-
-        for (int postId : currentUser.getLikedPosts()) {
-            Post post = Container.get(postId);
-            if (post != null) {
-                likedPostsList.add(new HistoryPost(post.getTitel(), post.getDes(), post.getUser()));
+        ArrayList<Integer> liked= currentUser.getLikedPosts();
+        if(liked!=null) {
+            for (int postId : liked) {
+                Post post = Container.getPost(postId);
+                if (post != null) {
+                    likedPostsList.add(new HistoryPost(post.getTitle(), post.getDes(), post.getUser()));
+                }
             }
-        }*/
-        postAdapter= new HistoryPostAdapter(this, likedPostsList);
+        }
+
+        postAdapter= new HistoryPostAdapter(LikedPostsActivity.this, likedPostsList);
         likedPostsListView.setAdapter(postAdapter);
     }
 }
