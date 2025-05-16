@@ -57,7 +57,6 @@ public class HomeActivity extends AppCompatActivity implements RecyclerviewInter
         posts = Container.getListOfPosts();
         showPosts();
 
-
         //Recieveing User from Login or Register:
         currentUser = getIntent().getParcelableExtra("user");
 

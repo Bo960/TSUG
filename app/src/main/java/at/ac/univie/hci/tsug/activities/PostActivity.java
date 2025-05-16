@@ -133,15 +133,10 @@ public class PostActivity extends AppCompatActivity {
                 createdPost.addLike(currentUser);
                 likeIcon.setImageResource(R.drawable.baseline_favorite_24);
 
-                //Wenn geliked wird sollte der User der Post zu gen Favoriten hinzugefügt werden
-                //currentUser.addLikedPost(createdPost.getID());
-
             } else {
-                createdPost.unlike();
+                createdPost.removeLike(currentUser);
                 likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
 
-                //Wenn der Likeentfernt wird sollte er auch bei Favoriten entfernt werden.
-                //currentUser.removeLikedPost(createdPost.getID());
             }
             likesView.setText(String.valueOf(createdPost.getLikes()));
         };

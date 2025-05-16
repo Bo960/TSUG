@@ -31,7 +31,7 @@ public class SeenPostsActivity extends AppCompatActivity implements Recyclerview
     private HistoryPostAdapter postAdapter;
     private String activityName = "Gesehene Beiträge";
     private User currentUser;
-    public ArrayList<Post> posts;
+    public ArrayList<Post> posts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

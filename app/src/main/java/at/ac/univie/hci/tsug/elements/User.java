@@ -23,16 +23,16 @@ public class User implements Parcelable {
     private static int next_ID = 1;
     private String name;
     private String email;
-    private String password;
+    private final String password;
     private Rank rank = Rank.Bronze;
     private int likes = 0;
     private int questions = 0;
     private int answers = 0;
 
     //List of Post types:
-    private HashSet<Integer> likedPosts;
-    private HashSet<Integer> seenPosts;
-    private HashSet<Integer> createdPosts;
+    private HashSet<Integer> likedPosts = new HashSet<>();
+    private HashSet<Integer> seenPosts = new HashSet<>();
+    private HashSet<Integer> createdPosts = new HashSet<>();
 
     //Constructor:
     public User(String name, String email, String password) {
@@ -49,16 +49,6 @@ public class User implements Parcelable {
         this.name = name;
         this.email = email;
         this.password = password;
-    }
-
-    protected User(Parcel in) {
-        ID = in.readInt();
-        name = in.readString();
-        email = in.readString();
-        password = in.readString();
-        likes = in.readInt();
-        questions = in.readInt();
-        answers = in.readInt();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -202,6 +192,21 @@ public class User implements Parcelable {
         return 0;
     }
 
+    protected User(Parcel in) {
+        ID = in.readInt();
+        name = in.readString();
+        email = in.readString();
+        password = in.readString();
+        likes = in.readInt();
+        questions = in.readInt();
+        answers = in.readInt();
+
+        // Read HashSets from Parcel
+        likedPosts = (HashSet<Integer>) in.readSerializable();
+        seenPosts = (HashSet<Integer>) in.readSerializable();
+        createdPosts = (HashSet<Integer>) in.readSerializable();
+    }
+
     @Override
     public void writeToParcel(@NonNull Parcel parcel, int i) {
         parcel.writeInt(ID);
@@ -211,5 +216,10 @@ public class User implements Parcelable {
         parcel.writeInt(likes);
         parcel.writeInt(questions);
         parcel.writeInt(answers);
+
+        // Write HashSets to Parcel
+        parcel.writeSerializable(likedPosts);
+        parcel.writeSerializable(seenPosts);
+        parcel.writeSerializable(createdPosts);
     }
 }

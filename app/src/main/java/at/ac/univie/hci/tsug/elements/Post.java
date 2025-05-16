@@ -206,22 +206,19 @@ public class Post implements Parcelable {
     public synchronized int addLike(User liker) {
         if (liker != null && !liker.hasLiked(ID)) {
             likes++;
-            liker.addLikedPost(ID);
-            this.user.newLike();
+            liker.addLikedPost(ID);  // Add post ID to user's likedPosts
+            this.user.newLike();     // Increment user's total likes
         }
         return likes;
     }
-    public int like() {
-        this.user.newLike();
-        return ++likes;
-    }
-    public int unlike() {
-        if(likes > 0) {
+
+    public synchronized int removeLike(User liker) {
+        if (liker != null && liker.hasLiked(ID)) {
+            likes--;
+            liker.removeLikedPost(ID);
             this.user.lostLike();
-            return --likes;
         }
-        else
-            return 0;
+        return likes;
     }
 
     @Override

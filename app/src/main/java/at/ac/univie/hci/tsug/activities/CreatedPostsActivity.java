@@ -31,7 +31,7 @@ public class CreatedPostsActivity extends AppCompatActivity implements Recyclerv
     private HistoryPostAdapter postAdapter;
     private String activityName = "Erstellte Beiträge";
     private User currentUser;
-    public ArrayList<Post> posts;
+    public ArrayList<Post> posts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
