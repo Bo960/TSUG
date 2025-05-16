@@ -15,22 +15,14 @@
         android:layout_alignParentTop="true"
         layout="@layout/top_nav" />
 
-    <!-- Scrollable Content -->
-    <ScrollView
-        android:id="@+id/scroll_view"
+    <!-- Suchergebnisse mit RecyclerView - veri updatet -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_results"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/top_navigation"
-        android:layout_above="@id/bottom_navigation">
-
-        <LinearLayout
-            android:id="@+id/ll_results"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp" />
-
-    </ScrollView>
+        android:layout_above="@id/bottom_navigation"
+        app:layoutManager="LinearLayoutManager" />
 
     <!-- Bottom Navigation Bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
