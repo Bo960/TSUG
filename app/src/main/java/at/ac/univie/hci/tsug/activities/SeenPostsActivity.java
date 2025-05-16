@@ -2,11 +2,8 @@ package at.ac.univie.hci.tsug.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -100,23 +97,6 @@ public class SeenPostsActivity extends AppCompatActivity implements Recyclerview
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
-        /*
-        seenPostsListView= findViewById(R.id.seen_questions_list);
-        seenPostsList= new ArrayList<>();
-
-        ArrayList<Integer> seen= currentUser.getSeenPosts();
-        if(seen!=null) {
-            for (int postId : seen) {
-                Post post = Container.getPost(postId);
-                if (post != null) {
-                    seenPostsList.add(new HistoryPost(post.getTitle(), post.getDes(), post.getUser()));
-                }
-            }
-        }
-
-        postAdapter= new HistoryPostAdapter( SeenPostsActivity.this, seenPostsList);
-        seenPostsListView.setAdapter(postAdapter);
-        */
     }
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {

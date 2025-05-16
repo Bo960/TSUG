@@ -2,11 +2,8 @@ package at.ac.univie.hci.tsug.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +25,7 @@ import at.ac.univie.hci.tsug.elements.User;
 public class LikedPostsActivity extends AppCompatActivity implements RecyclerviewInterface {
     private String activityName = "Favoriten";
     private User currentUser;
-    public ArrayList<Post> posts;
+    public ArrayList<Post> posts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -38,16 +35,10 @@ public class LikedPostsActivity extends AppCompatActivity implements Recyclervie
         //Recieveing User from Home:
         currentUser = getIntent().getParcelableExtra("user");
 
-        posts = Container.getListOfPosts();
-        ArrayList<Post> likedPosts = new ArrayList<>();
-
-        for(Post post : posts) {
-            if (currentUser.getLikedPosts().contains(post.getID())) {
-                likedPosts.add(post);
-            }
+        posts.clear();
+        for (int ID : currentUser.getLikedPosts()) {
+            posts.add(Container.getPost(ID));
         }
-
-        setPosts(likedPosts);
         showPosts();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
@@ -98,24 +89,6 @@ public class LikedPostsActivity extends AppCompatActivity implements Recyclervie
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
-
-        /*
-        likedPostsListView= findViewById(R.id.liked_questions_list);
-        likedPostsList= new ArrayList<>();
-
-        ArrayList<Integer> liked= currentUser.getLikedPosts();
-        if(liked!=null) {
-            for (int postId : liked) {
-                Post post = Container.getPost(postId);
-                if (post != null) {
-                    likedPostsList.add(new HistoryPost(post.getTitle(), post.getDes(), post.getUser()));
-                }
-            }
-        }
-
-        postAdapter= new HistoryPostAdapter(LikedPostsActivity.this, likedPostsList);
-        likedPostsListView.setAdapter(postAdapter);
-        */
     }
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {

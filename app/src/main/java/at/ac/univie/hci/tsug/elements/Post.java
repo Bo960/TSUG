@@ -29,7 +29,6 @@ public class Post implements Parcelable {
     private LocalDate date;
     private LocalTime time;
     private ArrayList<Comment> commentList = new ArrayList<>();
-
     //Constructor:
     public Post(String title, int likes, User user, boolean isFrage, ArrayList<String> tags, String region, String des, ArrayList<Comment> commentList) {
         //Error Handeling:
@@ -131,6 +130,13 @@ public class Post implements Parcelable {
     public int getLikes() {
         return likes;
     }
+    public String getLikesStyle() {
+        if(likes > 1000) {
+            return (likes/1000 + "k");
+        }
+        else
+            return Integer.toString(likes);
+    }
     public User getUser() {
         return user;
     }
@@ -160,6 +166,15 @@ public class Post implements Parcelable {
     }
     public ArrayList<Comment> getCommentList() {
         return commentList;
+    }
+    public String getType() {
+        if (isFrage)
+            return "FRAGE";
+        else
+            return "TIPP";
+    }
+    public boolean isRegion() {
+        return isRegion;
     }
 
     //Setter Methode:
@@ -240,5 +255,4 @@ public class Post implements Parcelable {
         parcel.writeByte((byte) (isRoute ? 1 : 0));
         parcel.writeString(des);
     }
-
 }

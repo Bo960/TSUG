@@ -1,5 +1,8 @@
 package at.ac.univie.hci.tsug.elements;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
@@ -8,7 +11,7 @@ import androidx.annotation.NonNull;
 
 import java.lang.reflect.Member;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
@@ -20,16 +23,16 @@ public class User implements Parcelable {
     private static int next_ID = 1;
     private String name;
     private String email;
-    private String password;
+    private final String password;
     private Rank rank = Rank.Bronze;
     private int likes = 0;
     private int questions = 0;
     private int answers = 0;
 
     //List of Post types:
-    private ArrayList<Integer> likedPosts;
-    private ArrayList<Integer> seenPosts;
-    private ArrayList<Integer> createdPosts;
+    private HashSet<Integer> likedPosts = new HashSet<>();
+    private HashSet<Integer> seenPosts = new HashSet<>();
+    private HashSet<Integer> createdPosts = new HashSet<>();
 
     //Constructor:
     public User(String name, String email, String password) {
@@ -46,16 +49,6 @@ public class User implements Parcelable {
         this.name = name;
         this.email = email;
         this.password = password;
-    }
-
-    protected User(Parcel in) {
-        ID = in.readInt();
-        name = in.readString();
-        email = in.readString();
-        password = in.readString();
-        likes = in.readInt();
-        questions = in.readInt();
-        answers = in.readInt();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -114,16 +107,16 @@ public class User implements Parcelable {
         return answers;
     }
 
-    public ArrayList<Integer> getLikedPosts() {
+    public HashSet<Integer> getLikedPosts() {
         return likedPosts;
     }
 
-    public ArrayList<Integer> getSeenPosts() {
+    public HashSet<Integer> getSeenPosts() {
         //TODO deltet +30day year old seen posts!!
         return seenPosts;
     }
 
-    public ArrayList<Integer> getCreatedPosts() {
+    public HashSet<Integer> getCreatedPosts() {
         return createdPosts;
     }
 
@@ -169,20 +162,49 @@ public class User implements Parcelable {
 
         return likes;
     }
-    public void addLikedPost(Post newPost) {
-        likedPosts.add(newPost.getID());
+    public void addLikedPost(int ID) {
+        likedPosts.add(ID);
     }
-    public void removeLikedPost(int ID) {likedPosts.remove(ID);}
+    public void removeLikedPost(int ID) {
+        likedPosts.remove(ID);
+    }
     public void addSeenPost(int ID) {
         seenPosts.add(ID);
+        //saveUserData();
     }
     public void addCreatedPost(int ID) {
         createdPosts.add(ID);
+        //saveUserData();
+    }
+
+    public boolean hasLiked(int ID) {
+        return likedPosts.contains(ID);
+    }
+    public boolean hasSeen(int ID) {
+        return seenPosts.contains(ID);
+    }
+    public boolean hasCreated(int ID) {
+        return createdPosts.contains(ID);
     }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    protected User(Parcel in) {
+        ID = in.readInt();
+        name = in.readString();
+        email = in.readString();
+        password = in.readString();
+        likes = in.readInt();
+        questions = in.readInt();
+        answers = in.readInt();
+
+        // Read HashSets from Parcel
+        likedPosts = (HashSet<Integer>) in.readSerializable();
+        seenPosts = (HashSet<Integer>) in.readSerializable();
+        createdPosts = (HashSet<Integer>) in.readSerializable();
     }
 
     @Override
@@ -194,19 +216,10 @@ public class User implements Parcelable {
         parcel.writeInt(likes);
         parcel.writeInt(questions);
         parcel.writeInt(answers);
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        User user = (User) obj;
-        return this.ID == user.ID; // oder: this.username.equals(user.username)
+        // Write HashSets to Parcel
+        parcel.writeSerializable(likedPosts);
+        parcel.writeSerializable(seenPosts);
+        parcel.writeSerializable(createdPosts);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ID); // oder: Objects.hash(username)
-    }
-
 }
