@@ -28,7 +28,7 @@ import at.ac.univie.hci.tsug.elements.User;
 public class SeenPostsActivity extends AppCompatActivity implements RecyclerviewInterface {
     private String activityName = "Gesehene Beiträge";
     private User currentUser;
-    public ArrayList<Post> posts;
+    public ArrayList<Post> posts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

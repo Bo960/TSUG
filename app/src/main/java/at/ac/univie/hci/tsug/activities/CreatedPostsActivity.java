@@ -28,7 +28,7 @@ import at.ac.univie.hci.tsug.container.Container;
 public class CreatedPostsActivity extends AppCompatActivity implements RecyclerviewInterface {
     private String activityName = "Erstellte Beiträge";
     private User currentUser;
-    public ArrayList<Post> posts;
+    public ArrayList<Post> posts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

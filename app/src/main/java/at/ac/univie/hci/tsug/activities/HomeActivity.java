@@ -30,6 +30,7 @@ import at.ac.univie.hci.tsug.container.Container;
 import at.ac.univie.hci.tsug.elements.Post;
 import at.ac.univie.hci.tsug.elements.PostAdapter;
 import at.ac.univie.hci.tsug.elements.RecyclerviewInterface;
+import at.ac.univie.hci.tsug.elements.SearchHelper;
 import at.ac.univie.hci.tsug.elements.User;
 
 public class HomeActivity extends AppCompatActivity implements RecyclerviewInterface {
@@ -55,7 +56,6 @@ public class HomeActivity extends AppCompatActivity implements RecyclerviewInter
         //Generate RecyclerView:
         posts = Container.getListOfPosts();
         showPosts();
-
 
         //Recieveing User from Login or Register:
         currentUser = getIntent().getParcelableExtra("user");
@@ -107,12 +107,13 @@ public class HomeActivity extends AppCompatActivity implements RecyclerviewInter
             }
         });
 
+        //SIMPLE SEARCH:
         Button searchButton = findViewById(R.id.searchStart);
-
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO SHOW RESULTS
+                posts = SearchHelper.simpleSearchReturn(simpleSearchTerm);
+                showPosts();
             }
         });
 

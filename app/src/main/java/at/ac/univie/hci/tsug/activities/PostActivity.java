@@ -28,6 +28,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -55,6 +56,10 @@ public class PostActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        //Recieving the ID
+        int beitragID = getIntent().getIntExtra("beitrag_id", 0);
+        Post createdPost = Container.getPost(beitragID);
 
         //Recieveing User from Home:
         currentUser = getIntent().getParcelableExtra("user");
@@ -111,9 +116,6 @@ public class PostActivity extends AppCompatActivity {
             overridePendingTransition(0, 0);
         });
 
-        int beitragID = getIntent().getIntExtra("beitrag_id", 0);
-        Post createdPost = Container.getPost(beitragID);
-
         // Title
         TextView titleView = findViewById(R.id.titleView);
         String title = createdPost.getTitle();
@@ -128,11 +130,13 @@ public class PostActivity extends AppCompatActivity {
             // TODO prohibit save your own post
             postLiked = !postLiked;
             if (postLiked) {
-                createdPost.like();
+                createdPost.addLike(currentUser);
                 likeIcon.setImageResource(R.drawable.baseline_favorite_24);
+
             } else {
-                createdPost.unlike();
+                createdPost.removeLike(currentUser);
                 likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
+
             }
             likesView.setText(String.valueOf(createdPost.getLikes()));
         };
@@ -311,5 +315,12 @@ public class PostActivity extends AppCompatActivity {
         });
 
         commentAdapter.updateComments(commentArrayList);
+
+        //Wenn das geladen wird bedeutet es der user sieht den beitrag. daher sollte es zu geshene beiträge hinzugefügt werden
+        //currentUser.addSeenPost(postID);
+
+        //Wenn die User übereinstimmen sollte sein Beitrag hinzugefügt werden zu seinen created Posts:
+        //if(currentUser.equals(Container.getUser(postID)))
+            //currentUser.addCreatedPost(postID);
     }
 }

@@ -1,22 +1,33 @@
 package at.ac.univie.hci.tsug.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.view.ViewGroup;
+import android.view.MenuItem;
+import android.widget.ImageButton;
+
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import at.ac.univie.hci.tsug.R;
-import at.ac.univie.hci.tsug.elements.Post;
-import at.ac.univie.hci.tsug.elements.User;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 
-public class SearchResultsActivity extends AppCompatActivity {
-    private LinearLayout llResults;
+import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.elements.Post;
+import at.ac.univie.hci.tsug.elements.PostAdapter;
+import at.ac.univie.hci.tsug.elements.RecyclerviewInterface;
+import at.ac.univie.hci.tsug.elements.User;
+
+public class SearchResultsActivity extends AppCompatActivity implements RecyclerviewInterface {
+    private RecyclerView rvResults;
+    private ArrayList<Post> results;
     private User currentUser;
 
     @Override
@@ -33,50 +44,74 @@ public class SearchResultsActivity extends AppCompatActivity {
                 }
         );
 
-        //Container für Ergebnisse
-        llResults = findViewById(R.id.ll_results);
+        //User aus Intent holen
+        currentUser = getIntent().getParcelableExtra("user");
 
-        //Ergebnisse aus Intent auslesen
-        //Da getParcelableArrayListExtra ev. ArrayList<Parcelable> liefert, wandeln wir es manuell um
-        ArrayList<Post> results = new ArrayList<>();
-        ArrayList<?> rawList = getIntent().getParcelableArrayListExtra("results");
-        if (rawList != null) {
-            for (Object obj : rawList) {
-                if (obj instanceof Post) {
-                    results.add((Post) obj);
+        //Bottom Navigation
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        intent = new Intent(SearchResultsActivity.this, MainActivity.class);
+                        intent.putExtra("user", currentUser);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+                        return true;
+                    case R.id.nav_neuer_beitrag:
+                        intent = new Intent(SearchResultsActivity.this, CreateActivity.class);
+                        intent.putExtra("user", currentUser);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+                        return true;
+                    case R.id.nav_account:
+                        intent = new Intent(SearchResultsActivity.this, AccountActivity.class);
+                        intent.putExtra("user", currentUser);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+                        return true;
                 }
+                return false;
             }
+        });
+
+        // Top Navigation
+        ImageButton backNav = findViewById(R.id.nav_back);
+        backNav.setOnClickListener(v -> finish());
+
+        ImageButton setNav = findViewById(R.id.nav_einstellungen);
+        setNav.setOnClickListener(v -> {
+            Intent intent = new Intent(SearchResultsActivity.this, SettingsActivity.class);
+            intent.putExtra("user", currentUser);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
+        });
+
+        //RecyclerView einrichten
+        rvResults = findViewById(R.id.rv_results);
+        rvResults.setLayoutManager(new LinearLayoutManager(this));
+
+        //Ergebnisse aus Intent lesen
+        results = getIntent().getParcelableArrayListExtra("results");
+        if (results == null) {
+            results = new ArrayList<>();
         }
 
-        if (!results.isEmpty()){
-            for (Post p : results) {
-                //Titel
-                TextView tvTitle = new TextView(this);
-                tvTitle.setLayoutParams(new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                tvTitle.setText(p.getTitle());
-                tvTitle.setTextSize(18);
-                tvTitle.setTypeface(null, android.graphics.Typeface.BOLD);
+        //Adapter mit this als Listener übergeben
+        PostAdapter adapter = new PostAdapter(this, this, results);
+        rvResults.setAdapter(adapter);
+    }
 
-                //Beschreibung
-                TextView tvDesc = new TextView(this);
-                tvDesc.setLayoutParams(new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                tvDesc.setText(p.getDes());
-                tvDesc.setPadding(0, 0, 0, 16);
-
-                llResults.addView(tvTitle);
-                llResults.addView(tvDesc);
-            }
-        } else {
-            TextView tvNone = new TextView(this);
-            tvNone.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-            tvNone.setText("Keine Ergebnisse gefunden.");
-            llResults.addView(tvNone);
-        }
+    //Wird aufgerufen, wenn ein Post im RecyclerView angeklickt wird -> Posts anklickbar gemacht - Woooooaaaahhhh
+    @Override
+    public void onPostClick(int position) {
+        Post clicked = results.get(position);
+        Intent intent = new Intent(this, PostActivity.class);
+        intent.putExtra("beitrag_id", clicked.getID());
+        intent.putExtra("user", currentUser);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
     }
 }
