@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LoginActivity"
+    tools:context=".activities.MainActivity"
     android:gravity="center"
     android:padding="@dimen/klein"
     android:background="@drawable/login_background">
@@ -26,35 +26,35 @@
 
         <EditText
             android:id="@+id/login_username"
-            android:inputType="text"
-
-            android:layout_marginTop="@dimen/sehrklein"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sehrklein"
+            android:background="@drawable/cornered_backlayer"
 
             android:hint="Benutzername"
-            android:textSize="@dimen/mittel"
+            android:inputType="text"
+            android:padding="@dimen/sehrklein"
+
             android:textColor="@color/lightGray"
             android:textColorHint="@color/lightGray"
-
-            android:background="@drawable/cornered_backlayer"
-            android:padding="@dimen/sehrklein"/>
+            android:textSize="@dimen/mittel" />
 
         <EditText
             android:id="@+id/login_password"
-            android:inputType="textPassword"
-
-            android:layout_marginTop="@dimen/sehrklein"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sehrklein"
+            android:background="@drawable/cornered_backlayer"
 
             android:hint="Passwort"
-            android:textSize="@dimen/mittel"
+            android:inputType="textPassword"
+            android:padding="@dimen/sehrklein"
+
             android:textColor="@color/lightGray"
             android:textColorHint="@color/lightGray"
-
-            android:background="@drawable/cornered_backlayer"
-            android:padding="@dimen/sehrklein"/>
+            android:textSize="@dimen/mittel" />
 
         <Button
             android:id="@+id/login_button"
