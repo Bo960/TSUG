@@ -1,5 +1,8 @@
 package at.ac.univie.hci.tsug.elements;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
@@ -172,12 +175,26 @@ public class User implements Parcelable {
     public void addLikedPost(int ID) {
         likedPosts.add(ID);
     }
-    public void removeLikedPost(int ID) {likedPosts.remove(ID);}
+    public void removeLikedPost(int ID) {
+        likedPosts.remove(ID);
+    }
     public void addSeenPost(int ID) {
         seenPosts.add(ID);
+        //saveUserData();
     }
     public void addCreatedPost(int ID) {
         createdPosts.add(ID);
+        //saveUserData();
+    }
+
+    public boolean hasLiked(int ID) {
+        return likedPosts.contains(ID);
+    }
+    public boolean hasSeen(int ID) {
+        return seenPosts.contains(ID);
+    }
+    public boolean hasCreated(int ID) {
+        return createdPosts.contains(ID);
     }
 
     @Override

@@ -130,7 +130,7 @@ public class PostActivity extends AppCompatActivity {
             // TODO prohibit save your own post
             postLiked = !postLiked;
             if (postLiked) {
-                createdPost.like();
+                createdPost.addLike(currentUser);
                 likeIcon.setImageResource(R.drawable.baseline_favorite_24);
 
                 //Wenn geliked wird sollte der User der Post zu gen Favoriten hinzugefügt werden
