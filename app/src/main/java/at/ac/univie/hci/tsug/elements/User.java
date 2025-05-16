@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import java.lang.reflect.Member;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
@@ -26,9 +27,9 @@ public class User implements Parcelable {
     private int answers = 0;
 
     //List of Post types:
-    private ArrayList<Integer> likedPosts;
-    private ArrayList<Integer> seenPosts;
-    private ArrayList<Integer> createdPosts;
+    private HashSet<Integer> likedPosts;
+    private HashSet<Integer> seenPosts;
+    private HashSet<Integer> createdPosts;
 
     //Constructor:
     public User(String name, String email, String password) {
@@ -113,16 +114,16 @@ public class User implements Parcelable {
         return answers;
     }
 
-    public ArrayList<Integer> getLikedPosts() {
+    public HashSet<Integer> getLikedPosts() {
         return likedPosts;
     }
 
-    public ArrayList<Integer> getSeenPosts() {
+    public HashSet<Integer> getSeenPosts() {
         //TODO deltet +30day year old seen posts!!
         return seenPosts;
     }
 
-    public ArrayList<Integer> getCreatedPosts() {
+    public HashSet<Integer> getCreatedPosts() {
         return createdPosts;
     }
 
@@ -168,14 +169,15 @@ public class User implements Parcelable {
 
         return likes;
     }
-    public void addLikedPost(Post newPost) {
-        likedPosts.add(newPost.getID());
+    public void addLikedPost(int ID) {
+        likedPosts.add(ID);
     }
-    public void addSeenPost(Post newPost) {
-        seenPosts.add(newPost.getID());
+    public void removeLikedPost(int ID) {likedPosts.remove(ID);}
+    public void addSeenPost(int ID) {
+        seenPosts.add(ID);
     }
-    public void addCreatedPost(Post newPost) {
-        createdPosts.add(newPost.getID());
+    public void addCreatedPost(int ID) {
+        createdPosts.add(ID);
     }
 
     @Override
