@@ -39,8 +39,10 @@ public class CreatedPostsActivity extends AppCompatActivity implements Recyclerv
 
         //Recieveing User from Home:
         currentUser = getIntent().getParcelableExtra("user");
+        showPosts();
+        loadCreatedPosts();
 
-        posts = Container.getListOfPosts();
+        /*posts = Container.getListOfPosts();
         ArrayList<Post> createdPosts = new ArrayList<>();
 
         for (Post post : posts) {
@@ -50,7 +52,8 @@ public class CreatedPostsActivity extends AppCompatActivity implements Recyclerv
         }
 
         setPosts(createdPosts);
-        showPosts();
+        showPosts();*/
+
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -101,23 +104,6 @@ public class CreatedPostsActivity extends AppCompatActivity implements Recyclerv
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
-        /*
-        createdPostsListView = findViewById(R.id.created_questions_list);
-        createdPostsList= new ArrayList<>();
-
-        ArrayList<Integer> created= currentUser.getCreatedPosts();
-        if(created!=null) {
-            for (int postId : created) {
-                Post post = Container.getPost(postId);
-                if (post != null) {
-                    createdPostsList.add(new HistoryPost(post.getTitle(), post.getDes(), post.getUser()));
-                }
-            }
-        }
-
-        postAdapter= new HistoryPostAdapter(CreatedPostsActivity.this, createdPostsList);
-        createdPostsListView.setAdapter(postAdapter);
-        */
     }
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
@@ -134,16 +120,25 @@ public class CreatedPostsActivity extends AppCompatActivity implements Recyclerv
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
     }
     //Generating the List for the Recyclerview:
-    public void setPosts(ArrayList<Post> posts) {
+    /*public void setPosts(ArrayList<Post> posts) {
         this.posts = posts;
+    }*/
+    private void loadCreatedPosts() {
+        ArrayList<Post> createdPosts = new ArrayList<>();
+        for (Post post : Container.getListOfPosts()) {
+            if (currentUser.getCreatedPosts() != null &&
+                    currentUser.getCreatedPosts().contains(post.getID())) {
+                createdPosts.add(post);
+            }
+        }
+        RecyclerView recyclerView = findViewById(R.id.created_questions_list);
+        recyclerView.setAdapter(new PostAdapter(this, getApplicationContext(), createdPosts));
     }
 
     public void showPosts()
     {
         RecyclerView recyclerView = findViewById(R.id.created_questions_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(CreatedPostsActivity.this));
-
-        recyclerView.setAdapter(new PostAdapter(CreatedPostsActivity.this, getApplicationContext(), posts));
 
     }
 }
