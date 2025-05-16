@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import java.lang.reflect.Member;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
@@ -193,4 +194,18 @@ public class User implements Parcelable {
         parcel.writeInt(questions);
         parcel.writeInt(answers);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User user = (User) obj;
+        return this.ID == user.ID; // oder: this.username.equals(user.username)
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID); // oder: Objects.hash(username)
+    }
+
 }

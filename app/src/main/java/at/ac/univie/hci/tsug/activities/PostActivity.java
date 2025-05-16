@@ -44,6 +44,7 @@ public class PostActivity extends AppCompatActivity {
     String activityName = "Beitrag";
     public boolean postLiked = false;
     private User currentUser;
+    private ArrayList<Comment> commentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +112,15 @@ public class PostActivity extends AppCompatActivity {
             overridePendingTransition(0, 0);
         });
 
-        int beitragID = getIntent().getIntExtra("beitrag_id", 0);
+        // currentUser = getIntent().getParcelableExtra("user");
+
+        int beitragID = getIntent().getIntExtra("beitrag_id", 1);
         Post createdPost = Container.getPost(beitragID);
+
+        // date
+        TextView dateView = findViewById(R.id.date);
+        String date = createdPost.getDate().toString();
+        dateView.setText("Erstellt/bearbeitet: " + date);
 
         // Title
         TextView titleView = findViewById(R.id.titleView);
@@ -125,16 +133,17 @@ public class PostActivity extends AppCompatActivity {
         likesView.setText(createdPost.getLikes() + "");
 
         View.OnClickListener likeClickListener = v -> {
-            // TODO prohibit save your own post
-            postLiked = !postLiked;
-            if (postLiked) {
-                createdPost.like();
-                likeIcon.setImageResource(R.drawable.baseline_favorite_24);
-            } else {
-                createdPost.unlike();
-                likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
+            if (!currentUser.equals(createdPost.getUser())) {
+                postLiked = !postLiked;
+                if (postLiked) {
+                    createdPost.like();
+                    likeIcon.setImageResource(R.drawable.baseline_favorite_24);
+                } else {
+                    createdPost.unlike();
+                    likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
+                }
+                likesView.setText(String.valueOf(createdPost.getLikes()));
             }
-            likesView.setText(String.valueOf(createdPost.getLikes()));
         };
         likeIcon.setOnClickListener(likeClickListener);
         likesView.setOnClickListener(likeClickListener);
@@ -148,7 +157,7 @@ public class PostActivity extends AppCompatActivity {
         FloatingActionButton editPostBtn = findViewById(R.id.editPostBtn);
         FloatingActionButton deletePostBtn = findViewById(R.id.deletePostBtn);
 
-        if (author.isEmpty()) { // TODO hardcoded
+        if (currentUser.equals(createdPost.getUser())) {
             editPostBtn.setVisibility(View.VISIBLE);
             deletePostBtn.setVisibility(View.VISIBLE);
             authorView.setVisibility(View.GONE);
@@ -163,11 +172,10 @@ public class PostActivity extends AppCompatActivity {
         // edit post
         editPostBtn.setOnClickListener(v -> {
             Toast.makeText(PostActivity.this, "Bearbeiten", Toast.LENGTH_SHORT).show();
-
-            // TODO
             Intent intent = new Intent(PostActivity.this, CreateActivity.class);
             intent.putExtra("beitrag_id", createdPost.getID());
             intent.putExtra("is_edit", true);
+            intent.putExtra("user", currentUser);
             startActivity(intent);
         });
 
@@ -175,8 +183,7 @@ public class PostActivity extends AppCompatActivity {
         deletePostBtn.setOnClickListener(v -> {
             Toast.makeText(PostActivity.this, "Beitrag gelöscht", Toast.LENGTH_SHORT).show();
             Container.removePost(beitragID);
-
-            Intent intent = new Intent(PostActivity.this, MainActivity.class);
+            Intent intent = new Intent(PostActivity.this, HomeActivity.class);
             intent.putExtra("user", currentUser);
             startActivity(intent);
         });
@@ -188,10 +195,8 @@ public class PostActivity extends AppCompatActivity {
         ImageView routeIcon = findViewById(R.id.routeIcon);
         ImageView regionIcon = findViewById(R.id.regionIcon);
 
-
         String regionTxt = createdPost.getRegion();
         String description = createdPost.getDes();
-
 
         // check if exact route is given or region
         if (regionTxt == "") {
@@ -287,10 +292,8 @@ public class PostActivity extends AppCompatActivity {
 
         // Comments
         ListView commentListView = findViewById(R.id.commentListView);
-        List<Comment> commentArrayList = new ArrayList<>();
-        CommentAdapter commentAdapter = new CommentAdapter(this, commentArrayList);
+        CommentAdapter commentAdapter = new CommentAdapter(this, (List<Comment>) createdPost.getCommentList().clone());
         commentListView.setAdapter(commentAdapter);
-        // TODO kommentare speichern?
 
         // input: new comment
         EditText commentInput = findViewById(R.id.commentInput);
@@ -298,9 +301,8 @@ public class PostActivity extends AppCompatActivity {
         sendCommentBtn.setOnClickListener(v -> {
             String text = commentInput.getText().toString().trim();
             if (!text.isEmpty()) {
-                Comment newComment = new Comment(new User("John", "john@gmail.com", "123456789"), text); // TODO hardcoded author
-                commentArrayList.add(0, newComment);
-                commentAdapter.notifyDataSetChanged();
+                createdPost.addComment(new Comment(currentUser, text));
+                commentAdapter.updateComments((List<Comment>) createdPost.getCommentList().clone());
                 commentInput.setText("");
                 // hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -310,6 +312,6 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-        commentAdapter.updateComments(commentArrayList);
+        commentAdapter.updateComments(createdPost.getCommentList());
     }
 }

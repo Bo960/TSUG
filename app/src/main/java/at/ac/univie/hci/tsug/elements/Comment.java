@@ -1,10 +1,11 @@
 package at.ac.univie.hci.tsug.elements;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 // data structure for comments
-public class Comment {
+public class Comment implements Serializable {
     private String authorTxt;
     private String commentTxt;
     private User user;

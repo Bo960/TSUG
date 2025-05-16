@@ -4,6 +4,7 @@ import static at.ac.univie.hci.tsug.container.Container.getUser;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.elements.Comment;
 import at.ac.univie.hci.tsug.elements.Post;
 import at.ac.univie.hci.tsug.container.Container;
 import at.ac.univie.hci.tsug.elements.User;
@@ -43,9 +45,10 @@ public class CreateActivity extends AppCompatActivity {
     Button buttonSelectTags;
     String[] tags = {"Günstig", "Preiswert", "Nachtzug", "Sparangebot", "Flexibel", "Gruppentarif", "Direkt", "Kurze Fahrt", "Lange Fahrt"};
     boolean[] selectedTags = new boolean[tags.length];
-    List<String> selectedTagList = new ArrayList<>();
+    ArrayList<String> selectedTagList = new ArrayList<>();
     String selectedFrageTipp = "";
     private User currentUser;
+    private ArrayList<Comment> commentList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +106,6 @@ public class CreateActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
-        int beitragID = getIntent().getIntExtra("beitrag_id", 0);
-        Post editPost = Container.getPost(beitragID);
         AtomicReference<Boolean> isEdit = new AtomicReference<>(getIntent().getBooleanExtra("is_edit", false));
 
         // tag frage / tipp
@@ -117,8 +118,14 @@ public class CreateActivity extends AppCompatActivity {
 
         // if editing: selected type & other fields
         if (isEdit.get()) {
+            int beitragID = getIntent().getIntExtra("beitrag_id", 1);
+            Post editPost = Container.getPost(beitragID);
+            commentList = editPost.getCommentList();
+
             int tagIndex = Arrays.asList(tagsArray).indexOf(editPost.getFrage());
             tagSpinner.setSelection(tagIndex);
+
+            selectedTagList = editPost.getTags();
 
             EditText input_start = findViewById(R.id.inputStart);
             EditText input_end = findViewById(R.id.inputEnd);
@@ -147,7 +154,7 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 selectedFrageTipp = null;
-                spinnerErrorText.setText("Bitte eine Kategorie auswählen."); // TODO neccessary?
+                spinnerErrorText.setText("Bitte eine Kategorie auswählen.");
                 spinnerErrorText.setVisibility(View.VISIBLE);
             }
         });
@@ -230,33 +237,52 @@ public class CreateActivity extends AppCompatActivity {
             if (valid) {
                 // if only editing
                 if (isEdit.get()) {
-                    Container.removePost(editPost.getID());
-                    isEdit.set(false);
-                }
+                    int beitragID = getIntent().getIntExtra("beitrag_id", 1);
+                    Post editPost = Container.getPost(beitragID);
 
-                Post createdPost;
-                if (regionText.isEmpty()) {
-                    createdPost = new Post(title,
-                            0,
-                            getUser(1), // TODO user?
-                            isFrage,
-                            (ArrayList<String>) selectedTagList,
-                            new Pair<>(startText, endText),
-                            description);
+                    editPost.setTitle(title);
+                    if (regionText.isEmpty()) {
+                        editPost.setRoute(new Pair<>(startText, endText));
+                    } else {
+                        editPost.setRegion(regionText);
+                    }
+                    editPost.setDes(description);
+                    // editPost.setCommentList(commentList);
+                    editPost.setTags(selectedTagList);
+                    editPost.setFrage(isFrage);
+
+                    Container.updatePost(editPost);
+                    isEdit.set(false);
+
+                    Intent intent = new Intent(CreateActivity.this, PostActivity.class);
+                    intent.putExtra("beitrag_id", editPost.getID());
+                    intent.putExtra("user", currentUser);
+                    startActivity(intent);
                 } else {
-                    createdPost = new Post(title,
-                            0,
-                            getUser(1), // TODO user?
-                            isFrage,
-                            (ArrayList<String>) selectedTagList,
-                            regionText,
-                            description);
+                    Post createdPost;
+                    if (regionText.isEmpty()) {
+                        createdPost = new Post(title,
+                                0,
+                                currentUser,
+                                isFrage,
+                                selectedTagList,
+                                new Pair<>(startText, endText),
+                                description, commentList);
+                    } else {
+                        createdPost = new Post(title,
+                                0,
+                                currentUser,
+                                isFrage,
+                                selectedTagList,
+                                regionText,
+                                description, commentList);
+                    }
+                    Container.addPost(createdPost);
+                    Intent intent = new Intent(CreateActivity.this, PostActivity.class);
+                    intent.putExtra("beitrag_id", createdPost.getID());
+                    intent.putExtra("user", currentUser);
+                    startActivity(intent);
                 }
-                Container.addPost(createdPost);
-                Intent intent = new Intent(CreateActivity.this, PostActivity.class);
-                intent.putExtra("beitrag_id", createdPost.getID());
-                intent.putExtra("user", currentUser);
-                startActivity(intent);
             }
         });
     }

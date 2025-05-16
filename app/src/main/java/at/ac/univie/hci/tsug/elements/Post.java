@@ -28,9 +28,10 @@ public class Post implements Parcelable {
     private String des;
     private LocalDate date;
     private LocalTime time;
+    private ArrayList<Comment> commentList = new ArrayList<>();
 
     //Constructor:
-    public Post(String title, int likes, User user, boolean isFrage, ArrayList<String> tags, String region, String des) {
+    public Post(String title, int likes, User user, boolean isFrage, ArrayList<String> tags, String region, String des, ArrayList<Comment> commentList) {
         //Error Handeling:
         if(title.isEmpty())
             throw new IllegalArgumentException("Titel cannot be empty!\n");
@@ -58,8 +59,10 @@ public class Post implements Parcelable {
 
         this.date = LocalDate.now();
         this.time = LocalTime.now();
+
+        this.commentList = commentList;
     }
-    public Post(String title, int likes, User user, boolean isFrage, ArrayList<String> tags, Pair<String, String> route, String des) {
+    public Post(String title, int likes, User user, boolean isFrage, ArrayList<String> tags, Pair<String, String> route, String des, ArrayList<Comment> commentList) {
         //Error Handeling:
         if(title.isEmpty())
             throw new IllegalArgumentException("Titel cannot be empty!\n");
@@ -89,6 +92,8 @@ public class Post implements Parcelable {
 
         this.date = LocalDate.now();
         this.time = LocalTime.now();
+
+        this.commentList = commentList;
     }
 
 
@@ -153,10 +158,19 @@ public class Post implements Parcelable {
     public LocalTime getTime() {
         return time;
     }
+    public ArrayList<Comment> getCommentList() {
+        return commentList;
+    }
 
     //Setter Methode:
     public void setTitle(String title) {
         this.title = title;
+    }
+    public void setFrage(Boolean is_frage) {
+        if(is_frage)
+            isFrage = true;
+        else
+            isFrage = false;
     }
     public void setLikes(int likes) {
         this.likes = likes;
@@ -184,6 +198,15 @@ public class Post implements Parcelable {
     }
     public void setDes(String des) {
         this.des = des;
+    }
+    public void addComment(Comment comment) {
+        if (commentList == null) {
+            commentList = new ArrayList<>();
+        }
+        commentList.add(comment);
+    }
+    public void setCommentList(ArrayList<Comment> comments){
+        commentList = comments;
     }
 
     //Memberfunctions:
@@ -217,4 +240,5 @@ public class Post implements Parcelable {
         parcel.writeByte((byte) (isRoute ? 1 : 0));
         parcel.writeString(des);
     }
+
 }
