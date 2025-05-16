@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,9 +27,6 @@ import at.ac.univie.hci.tsug.elements.RecyclerviewInterface;
 import at.ac.univie.hci.tsug.elements.User;
 
 public class LikedPostsActivity extends AppCompatActivity implements RecyclerviewInterface {
-    private ListView likedPostsListView;
-    private ArrayList<HistoryPost> likedPostsList;
-    private HistoryPostAdapter postAdapter;
     private String activityName = "Favoriten";
     private User currentUser;
     public ArrayList<Post> posts;
@@ -38,16 +36,20 @@ public class LikedPostsActivity extends AppCompatActivity implements Recyclervie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liked_posts);
 
-        //Generate RecyclerView:
-        //TODO: hier muss endschieden werden was gezeigt werden muss ...
-
-        posts = Container.getListOfPosts(); //TODO: JUST FOR TESTING
-
-        //TODO: ...bevor diese funktion ausgelöst wird
-        showPosts();
-
         //Recieveing User from Home:
         currentUser = getIntent().getParcelableExtra("user");
+
+        posts = Container.getListOfPosts();
+        ArrayList<Post> likedPosts = new ArrayList<>();
+
+        for(Post post : posts) {
+            if (currentUser.getLikedPosts().contains(post.getID())) {
+                likedPosts.add(post);
+            }
+        }
+
+        setPosts(likedPosts);
+        showPosts();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

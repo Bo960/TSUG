@@ -26,9 +26,6 @@ import at.ac.univie.hci.tsug.elements.User;
 import at.ac.univie.hci.tsug.container.Container;
 
 public class CreatedPostsActivity extends AppCompatActivity implements RecyclerviewInterface {
-    private ArrayList<HistoryPost> createdPostsList;
-    private ListView createdPostsListView;
-    private HistoryPostAdapter postAdapter;
     private String activityName = "Erstellte Beiträge";
     private User currentUser;
     public ArrayList<Post> posts;
@@ -39,15 +36,21 @@ public class CreatedPostsActivity extends AppCompatActivity implements Recyclerv
         setContentView(R.layout.activity_created_posts);
 
         //Generate RecyclerView:
-        //TODO: hier muss endschieden werden was gezeigt werden muss ...
-
-        posts = Container.getListOfPosts(); //TODO: JUST FOR TESTING
-
-        //TODO: ...bevor diese funktion ausgelöst wird
-        showPosts();
 
         //Recieveing User from Home:
         currentUser = getIntent().getParcelableExtra("user");
+
+        posts = Container.getListOfPosts();
+        ArrayList<Post> createdPosts = new ArrayList<>();
+
+        for (Post post : posts) {
+            if (currentUser.getCreatedPosts().contains(post.getID())) {
+                createdPosts.add(post);
+            }
+        }
+
+        setPosts(createdPosts);
+        showPosts();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
