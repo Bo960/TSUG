@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,7 +22,7 @@ public class CommentAdapter extends BaseAdapter {
     // Constructor
     public CommentAdapter(Context context, List<Comment> comments) {
         this.context = context;
-        this.comments = comments;
+        this.comments = (comments != null) ? comments : new ArrayList<>();
     }
 
     @Override
@@ -62,7 +64,9 @@ public class CommentAdapter extends BaseAdapter {
     // update list
     public void updateComments(List<Comment> newComments) {
         comments.clear();
-        comments.addAll(newComments);
+        if (newComments != null) {
+            comments.addAll(newComments);
+        }
         notifyDataSetChanged();
     }
 }

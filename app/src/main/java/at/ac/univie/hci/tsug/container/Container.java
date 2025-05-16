@@ -4,10 +4,13 @@ import android.app.Application;
 import android.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import at.ac.univie.hci.tsug.elements.Comment;
 import at.ac.univie.hci.tsug.elements.Post;
 import at.ac.univie.hci.tsug.elements.User;
 
@@ -33,17 +36,20 @@ public class Container extends Application {
         users.add(new User("SarahJohnson", "sjohnson@yahoo.com", "SecurePass456"));
         users.add(new User("test1", "test1@gmail.com", "123456789"));
         users.add(new User("GertrudeDieGeile", "susi.live@gmail.com", "callMeMaybe;)"));
+
         users.add(new User("wow_fan_96", "leroyjenkins96@gmail.com", "wowisaws"));
 
         users.add(new User("MikeBrown", "mbrown@outlook.com", "Brownie789"));
         users.add(new User("EmilyDavis", "edavis@gmail.com", "EmPass2023"));
         users.add(new User("xxXX_Travel_man_69_420_XXxx", "kyle2001htl@gmail.com", "§$dac%HCDa&!"));
+
         users.add(new User("sebiShorty", "vanderbellen@gmail.com", "koglerDrinktRadler101"));
         users.add(new User("BrandonNelson", "bnelson@gmail.com", "BrandonN!"));
 
         users.add(new User("MeganCarter", "mcarter@protonmail.com", "Megan2023"));
         users.add(new User("JustinMitchell", "jmitchell@icloud.com", "JustinM!"));
         users.add(new User("KaylaPerez", "kperez@gmail.com", "PerezKayla"));
+
         users.add(new User("ReichlMukiBude", "reichlbreitl@gmail.com", "CreatineAndMozartkugel"));
         users.add(new User("Werner Reisswolf", "merzedesgs500@yahoo.com", "zugfahren?nein"));
 
@@ -78,7 +84,8 @@ public class Container extends Application {
                 false,
                 new ArrayList<String>(){},
                 new Pair<>("Innsbruck", "Stubai Valley"),
-                "The annual cattle drive from mountain pastures is a spectacle of bells and flowers"
+                "The annual cattle drive from mountain pastures is a spectacle of bells and flowers",
+                new ArrayList<>(List.of(new Comment(getUser(5), "Oh yes!")))
         ));
         posts.add(new Post(
                 "Hidden Courtyards of Vienna",
@@ -158,6 +165,7 @@ public class Container extends Application {
         }
         return null;
     }
+
     public static synchronized Post getPost(String title) {
         for (Post post : posts) {
             if (Objects.equals(post.getTitle(), title))
@@ -165,16 +173,20 @@ public class Container extends Application {
         }
         return null;
     }
+
     public static synchronized boolean removePost(int ID) {
         Post post = getPost(ID);
         return post != null && posts.remove(post);
     }
+
     public static synchronized boolean removePost(Post post) {
         return posts.remove(post);
     }
+
     public static synchronized Set<Post> getAllPosts() {
         return new HashSet<>(posts);
     }
+
     public static synchronized ArrayList<Post> getListOfPosts() {
         return new ArrayList<>(posts);
     }
@@ -188,6 +200,7 @@ public class Container extends Application {
             return users.add(user);
         return false;
     }
+
     public static synchronized User getUser(int ID) {
         for (User user : users) {
             if (user.getID() == ID)
@@ -195,6 +208,7 @@ public class Container extends Application {
         }
         return null;
     }
+
     public static synchronized User getUser(String name) {
         for (User user : users) {
             if (Objects.equals(user.getName(), name))
@@ -202,17 +216,34 @@ public class Container extends Application {
         }
         return null;
     }
+
     public static synchronized boolean removeUser(int ID) {
         User user = getUser(ID);
         return user != null && users.remove(user);
     }
+
     public static synchronized boolean removeUser(User user) {
         return users.remove(user);
     }
+
     public static synchronized Set<User> getAllUsers() {
         return new HashSet<>(users);
     }
+
     public static synchronized int countUsers() {
         return users.size();
     }
+
+    public static synchronized boolean updatePost(Post updatedPost) {
+        if (updatedPost == null) return false;
+
+        Post oldPost = getPost(updatedPost.getID());
+        if (oldPost == null) return false;
+
+        posts.remove(oldPost);
+        posts.add(updatedPost);
+
+        return true;
+    }
+
 }

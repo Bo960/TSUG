@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 
 import java.lang.reflect.Member;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
@@ -222,4 +223,18 @@ public class User implements Parcelable {
         parcel.writeSerializable(seenPosts);
         parcel.writeSerializable(createdPosts);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User user = (User) obj;
+        return this.ID == user.ID; // oder: this.username.equals(user.username)
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID); // oder: Objects.hash(username)
+    }
+
 }
