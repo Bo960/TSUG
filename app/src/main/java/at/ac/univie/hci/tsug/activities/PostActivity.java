@@ -117,11 +117,6 @@ public class PostActivity extends AppCompatActivity {
             overridePendingTransition(0, 0);
         });
 
-        // currentUser = getIntent().getParcelableExtra("user");
-
-        int beitragID = getIntent().getIntExtra("beitrag_id", 1);
-        Post createdPost = Container.getPost(beitragID);
-
         // date
         TextView dateView = findViewById(R.id.date);
         String date = createdPost.getDate().toString();

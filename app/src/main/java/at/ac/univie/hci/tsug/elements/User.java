@@ -24,7 +24,7 @@ public class User implements Parcelable {
     private static int next_ID = 1;
     private String name;
     private String email;
-    private final String password;
+    private String password;
     private Rank rank = Rank.Bronze;
     private int likes = 0;
     private int questions = 0;
@@ -65,19 +65,19 @@ public class User implements Parcelable {
     };
 
     //Getter-Methode:
-    public int getID() {
+    public synchronized int getID() {
         return ID;
     }
 
-    public String getName() {
+    public synchronized String getName() {
         return name;
     }
 
-    public String getEmail() {
+    public synchronized String getEmail() {
         return email;
     }
 
-    public String getPassword() {
+    public synchronized String getPassword() {
         return password;
     }
 
@@ -96,48 +96,49 @@ public class User implements Parcelable {
         }
     }
 
-    public int getQuestions() {
+    public synchronized int getQuestions() {
         return questions;
     }
 
-    public int getLikes() {
+    public synchronized int getLikes() {
         return likes;
     }
 
-    public int getAnswers() {
+    public synchronized int getAnswers() {
         return answers;
     }
 
-    public HashSet<Integer> getLikedPosts() {
+    public synchronized HashSet<Integer> getLikedPosts() {
         return likedPosts;
     }
 
-    public HashSet<Integer> getSeenPosts() {
+    public synchronized HashSet<Integer> getSeenPosts() {
         //TODO deltet +30day year old seen posts!!
         return seenPosts;
     }
 
-    public HashSet<Integer> getCreatedPosts() {
+    public synchronized HashSet<Integer> getCreatedPosts() {
         return createdPosts;
     }
 
     //Setter-Methode:
-    public void setEmail(String email) {
+    public synchronized void setEmail(String email) {
         this.email = email;
     }
 
-    public void setName(String name) {
+    public synchronized void setName(String name) {
         this.name = name;
     }
+    public synchronized void setPassword(String password) {this.password = password;}
 
     //Memberfunctions:
-    public int newQuestion() {
+    public synchronized int newQuestion() {
         return ++questions;
     }
-    public int newAnswer() {
+    public synchronized int newAnswer() {
         return ++answers;
     }
-    public int newLike() {
+    public synchronized int newLike() {
         ++likes;
         if(likes == 100)
             rank = Rank.Bronze;
@@ -150,7 +151,7 @@ public class User implements Parcelable {
 
         return likes;
     }
-    public int lostLike() {
+    public synchronized int lostLike() {
         --likes;
         if(likes == 100)
             rank = Rank.Bronze;
@@ -163,33 +164,33 @@ public class User implements Parcelable {
 
         return likes;
     }
-    public void addLikedPost(int ID) {
+    public synchronized void addLikedPost(int ID) {
         likedPosts.add(ID);
     }
-    public void removeLikedPost(int ID) {
+    public synchronized void removeLikedPost(int ID) {
         likedPosts.remove(ID);
     }
-    public void addSeenPost(int ID) {
+    public synchronized void addSeenPost(int ID) {
         seenPosts.add(ID);
         //saveUserData();
     }
-    public void addCreatedPost(int ID) {
+    public synchronized void addCreatedPost(int ID) {
         createdPosts.add(ID);
         //saveUserData();
     }
 
-    public boolean hasLiked(int ID) {
+    public synchronized boolean hasLiked(int ID) {
         return likedPosts.contains(ID);
     }
-    public boolean hasSeen(int ID) {
+    public synchronized boolean hasSeen(int ID) {
         return seenPosts.contains(ID);
     }
-    public boolean hasCreated(int ID) {
+    public synchronized boolean hasCreated(int ID) {
         return createdPosts.contains(ID);
     }
 
     @Override
-    public int describeContents() {
+    public synchronized int describeContents() {
         return 0;
     }
 

@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,6 +25,9 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.elements.User;
+import at.ac.univie.hci.tsug.settings.ChangeEmailActivity;
+import at.ac.univie.hci.tsug.settings.ChangeNameActivity;
+import at.ac.univie.hci.tsug.settings.ChangePasswordActivity;
 
 public class SettingsActivity extends AppCompatActivity {
     String activityName = "Einstellungen";
@@ -41,10 +46,8 @@ public class SettingsActivity extends AppCompatActivity {
             return insets;
         });
 
-
         //Recieveing User from Home:
         currentUser = getIntent().getParcelableExtra("user");
-
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -95,5 +98,50 @@ public class SettingsActivity extends AppCompatActivity {
         //TEXT
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
+
+        //Change Name:
+        ImageButton changeName = findViewById(R.id.changeName);
+        changeName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, ChangeNameActivity.class);
+                intent.putExtra("user", currentUser);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+            }
+        });
+        //Change Email:
+        ImageButton changeEmail = findViewById(R.id.changeEmail);
+        changeEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, ChangeEmailActivity.class);
+                intent.putExtra("user", currentUser);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+            }
+        });
+        //Change Passwort:
+        ImageButton changePassword = findViewById(R.id.changePassword);
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, ChangePasswordActivity.class);
+                intent.putExtra("user", currentUser);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+            }
+        });
+
+        //Logout:
+        Button logout = findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+            }
+        });
     }
 }

@@ -66,7 +66,8 @@ public class Container extends Application {
                 true,
                 new ArrayList<String>(){},
                 new Pair<>("Schladming", "Dachstein Glacier"),
-                "Started before dawn to catch this magical moment at 2700m altitude!"
+                "Started before dawn to catch this magical moment at 2700m altitude!",
+                new ArrayList<Comment>()
         ));
         posts.add(new Post(
                 "Tonight On Top Gear",
@@ -75,7 +76,8 @@ public class Container extends Application {
                 false,
                 new ArrayList<String>(){},
                 "England",
-                "Jeremy is fat as fuck."
+                "Jeremy is fat as fuck.",
+                new ArrayList<Comment>()
         ));
         posts.add(new Post(
                 "Almabtrieb in Tyrol",
@@ -94,7 +96,8 @@ public class Container extends Application {
                 true,
                 new ArrayList<String>(){},
                 new Pair<>("Stephansplatz", "Judenplatz"),
-                "Discovering secret passages and Renaissance courtyards in the 1st district"
+                "Discovering secret passages and Renaissance courtyards in the 1st district",
+                new ArrayList<Comment>()
         ));
         posts.add(new Post(
                 "Island Train Ride",
@@ -103,7 +106,8 @@ public class Container extends Application {
                 false,
                 new ArrayList<String>(){},
                 "island",
-                "Here is maybe one train treck and one train that one is in a mueseum LOL!"
+                "Here is maybe one train treck and one train that one is in a mueseum LOL!",
+                new ArrayList<Comment>()
         ));
         posts.add(new Post(
                 "Sachertorte Taste Test",
@@ -112,7 +116,8 @@ public class Container extends Application {
                 true,
                 new ArrayList<String>(){},
                 new Pair<>("Hotel Sacher", "Demel"),
-                "The ultimate Vienna chocolate cake showdown - which is better?"
+                "The ultimate Vienna chocolate cake showdown - which is better?",
+                new ArrayList<Comment>()
         ));
         posts.add(new Post(
                 "Via Ferrata in Gesäuse",
@@ -121,7 +126,8 @@ public class Container extends Application {
                 false,
                 new ArrayList<String>(){},
                 new Pair<>("Johnsbachtal", "Haindlkar"),
-                "Iron cables and breathtaking views in Austria's most dramatic national park"
+                "Iron cables and breathtaking views in Austria's most dramatic national park",
+                new ArrayList<Comment>()
         ));
         posts.add(new Post(
                 "Blowing up a childrens hospital",
@@ -130,7 +136,8 @@ public class Container extends Application {
                 true,
                 new ArrayList<String>(){},
                 "middleEast",
-                "Merica America Bald eagle and guns RAHHH!"
+                "Merica America Bald eagle and guns RAHHH!",
+                new ArrayList<Comment>()
         ));
         posts.add(new Post(
                 "Night Skiing in Sölden",
@@ -139,7 +146,8 @@ public class Container extends Application {
                 false,
                 new ArrayList<String>(){},
                 new Pair<>("Sölden Base", "Giggijoch"),
-                "Floodlit slopes until 10pm with the best après-ski in the Alps!"
+                "Floodlit slopes until 10pm with the best après-ski in the Alps!",
+                new ArrayList<Comment>()
         ));
         posts.add(new Post(
                 "The Tiny House Village",
@@ -148,7 +156,8 @@ public class Container extends Application {
                 true,
                 new ArrayList<String>(){},
                 new Pair<>("Graz", "Lichtblickhof"),
-                "A community living in homes smaller than 20m² - surprisingly cozy!"
+                "A community living in homes smaller than 20m² - surprisingly cozy!",
+                new ArrayList<Comment>()
         ));
     }
 
