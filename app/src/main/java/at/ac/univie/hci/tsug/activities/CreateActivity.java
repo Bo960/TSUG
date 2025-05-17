@@ -1,10 +1,7 @@
 package at.ac.univie.hci.tsug.activities;
 
-import static at.ac.univie.hci.tsug.container.Container.getUser;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +26,6 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import at.ac.univie.hci.tsug.R;
@@ -60,7 +56,6 @@ public class CreateActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
 
         bottomNav = findViewById(R.id.bottom_navigation);
 
@@ -106,6 +101,7 @@ public class CreateActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
+        // if user is editing (no new post)
         AtomicReference<Boolean> isEdit = new AtomicReference<>(getIntent().getBooleanExtra("is_edit", false));
 
         // tag frage / tipp
@@ -116,7 +112,7 @@ public class CreateActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tagSpinner.setAdapter(adapter);
 
-        // if editing: selected type & other fields
+        // if editing: view selected type & other fields
         if (isEdit.get()) {
             int beitragID = getIntent().getIntExtra("beitrag_id", 1);
             Post editPost = Container.getPost(beitragID);
@@ -144,6 +140,7 @@ public class CreateActivity extends AppCompatActivity {
 
         }
 
+        // tags
         tagSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -159,7 +156,7 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
-        // button categories
+        // categories/tags
         buttonSelectTags = findViewById(R.id.buttonSelectTags);
         // if editing: selected items
         if (isEdit.get()) {
@@ -168,7 +165,7 @@ public class CreateActivity extends AppCompatActivity {
             }
         }
         buttonSelectTags.setOnClickListener(view -> {
-            // if editing: to remember selected items
+            // for editing: remember selected items
             for (int i = 0; i < tags.length; i++) {
                 selectedTags[i] = selectedTagList.contains(tags[i]);
             }
@@ -235,7 +232,7 @@ public class CreateActivity extends AppCompatActivity {
             }
 
             if (valid) {
-                // if only editing
+                // if editing: update post with new values
                 if (isEdit.get()) {
                     int beitragID = getIntent().getIntExtra("beitrag_id", 1);
                     Post editPost = Container.getPost(beitragID);
@@ -247,17 +244,18 @@ public class CreateActivity extends AppCompatActivity {
                         editPost.setRegion(regionText);
                     }
                     editPost.setDes(description);
-                    // editPost.setCommentList(commentList);
                     editPost.setTags(selectedTagList);
                     editPost.setFrage(isFrage);
 
                     Container.updatePost(editPost);
                     isEdit.set(false);
 
+                    // switch to final post
                     Intent intent = new Intent(CreateActivity.this, PostActivity.class);
                     intent.putExtra("beitrag_id", editPost.getID());
                     intent.putExtra("user", currentUser);
                     startActivity(intent);
+                    // if new post: create new post with either start & end or region
                 } else {
                     Post createdPost;
                     if (regionText.isEmpty()) {
@@ -283,6 +281,7 @@ public class CreateActivity extends AppCompatActivity {
                     if (createdPost.getFrage() == "Frage") {
                         currentUser.newQuestion();
                     }
+                    // switch to final post
                     Intent intent = new Intent(CreateActivity.this, PostActivity.class);
                     intent.putExtra("beitrag_id", createdPost.getID());
                     intent.putExtra("user", currentUser);

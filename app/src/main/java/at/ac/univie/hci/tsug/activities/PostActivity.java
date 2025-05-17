@@ -44,7 +44,6 @@ public class PostActivity extends AppCompatActivity {
     String activityName = "Beitrag";
     public boolean postLiked = false;
     private User currentUser;
-    private ArrayList<Comment> commentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,11 +130,18 @@ public class PostActivity extends AppCompatActivity {
         ImageView likeIcon = findViewById(R.id.likeIcon);
         likesView.setText(createdPost.getLikes() + "");
 
+        // check if post is liked by current user
+        if(currentUser.hasLiked(createdPost.getID())){
+            likeIcon.setImageResource(R.drawable.baseline_favorite_24);
+        } else {
+            likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
+        }
+
         View.OnClickListener likeClickListener = v -> {
             if (currentUser.getID() != createdPost.getUser().getID()) {
                 postLiked = !postLiked;
                 User postOwner = createdPost.getUser();
-                if (postLiked) {
+                if (postLiked && !currentUser.hasLiked(createdPost.getID())) {
                     createdPost.like();
                     Container.updatePost(createdPost);
                     currentUser.addLikedPost(createdPost.getID());
@@ -143,7 +149,7 @@ public class PostActivity extends AppCompatActivity {
                     postOwner.newLike();
                     Container.updateUser(postOwner);
                     likeIcon.setImageResource(R.drawable.baseline_favorite_24);
-                } else {
+                } else if(!postLiked && currentUser.hasLiked(createdPost.getID())) {
                     createdPost.unlike();
                     Container.updatePost(createdPost);
                     currentUser.removeLikedPost(createdPost.getID());
@@ -161,7 +167,7 @@ public class PostActivity extends AppCompatActivity {
         likeIcon.setOnClickListener(likeClickListener);
         likesView.setOnClickListener(likeClickListener);
 
-        // show author or edit
+        // show author or edit/delete buttons
         TextView authorView = findViewById(R.id.authorView);
         ImageView authorIcon = findViewById(R.id.authorIcon);
         String author = createdPost.getUser().getName();
@@ -253,7 +259,8 @@ public class PostActivity extends AppCompatActivity {
             frage.setVisibility(View.GONE);
             tipp.setVisibility(View.VISIBLE);
         }
-        // {"Günstig", "Preiswert", "Nachtzug", "Sparangebot", "Flexibel", "Gruppentarif", "Direkt", "Kurze Fahrt", "Lange Fahrt"}
+
+        // visibility of tags
         ArrayList<String> tags = createdPost.getTags();
         guenstig.setVisibility(View.GONE);
         preiswert.setVisibility(View.GONE);
@@ -303,7 +310,7 @@ public class PostActivity extends AppCompatActivity {
             descriptionView.setText(description);
         }
 
-        // Comments
+        // comments
         ListView commentListView = findViewById(R.id.commentListView);
         CommentAdapter commentAdapter = new CommentAdapter(this, (List<Comment>) createdPost.getCommentList().clone());
         commentListView.setAdapter(commentAdapter);
@@ -315,8 +322,7 @@ public class PostActivity extends AppCompatActivity {
             String text = commentInput.getText().toString().trim();
             if (!text.isEmpty()) {
                 createdPost.addComment(new Comment(currentUser, text));
-                // Antwort-Zähler erhöhen
-                currentUser.newAnswer();
+                currentUser.newAnswer(); // increase response count
                 commentAdapter.updateComments((List<Comment>) createdPost.getCommentList().clone());
                 commentInput.setText("");
                 // hide keyboard
@@ -326,11 +332,10 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         });
-
         commentAdapter.updateComments(createdPost.getCommentList());
 
         // Beitrag als gesehen markieren
-        if(currentUser!=null && currentUser.getID() != createdPost.getUser().getID()) {
+        if(currentUser != null && currentUser.getID() != createdPost.getUser().getID()) {
             currentUser.addSeenPost(beitragID);
         }
 

@@ -4,7 +4,6 @@ import android.app.Application;
 import android.util.Pair;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -96,7 +95,7 @@ public class Container extends Application {
                 true,
                 new ArrayList<String>() {
                 },
-                new Pair<>("Hotel Sacher", "Demel"),
+                "Hotel Sacher",
                 "The ultimate Vienna chocolate cake showdown - which is better?",
                 new ArrayList<>(List.of())
         ));
