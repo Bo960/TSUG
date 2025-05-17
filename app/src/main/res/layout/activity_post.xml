@@ -130,7 +130,7 @@
             android:layout_marginEnd="8dp"
             android:text="START"
             android:textColor="@color/secondaryColor"
-            android:textSize="@dimen/mittel" />
+            android:textSize="@dimen/klein" />
 
         <!-- Route Icon -->
         <ImageView
@@ -149,7 +149,7 @@
             android:layout_marginStart="8dp"
             android:text="END"
             android:textColor="@color/secondaryColor"
-            android:textSize="@dimen/mittel" />
+            android:textSize="@dimen/klein" />
 
         <!-- Region Icon -->
         <ImageView
@@ -168,7 +168,7 @@
             android:layout_marginStart="8dp"
             android:text="REGION"
             android:textColor="@color/secondaryColor"
-            android:textSize="@dimen/mittel" />
+            android:textSize="@dimen/klein" />
     </LinearLayout>
 
     <com.google.android.material.chip.ChipGroup
