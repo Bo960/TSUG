@@ -11,7 +11,9 @@
 ### Implementierung
 
 Framework: Android
+
 API-Version: Android API-Level 27
+
 Geräte, auf denen getestet wurde:
   - Pixel 8 Pro
   - Pixel 5a
