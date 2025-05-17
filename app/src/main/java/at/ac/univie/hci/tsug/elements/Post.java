@@ -29,8 +29,6 @@ public class Post implements Parcelable {
     private LocalDate date;
     private LocalTime time;
     private ArrayList<Comment> commentList = new ArrayList<>();
-
-    private ArrayList<Comment> commentList = new ArrayList<>();
     //Constructor:
     public Post(String title, int likes, User user, boolean isFrage, ArrayList<String> tags, String region, String des, ArrayList<Comment> commentList) {
         //Error Handeling:
