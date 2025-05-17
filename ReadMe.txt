@@ -6,7 +6,7 @@
 	- Stefania Dorobat	12222705
 	- Martin Sternad	12326541
 	- Michael Wallner	11901843
-* Projektthema:	Marktplatz für Bahnreiseexpert*Innen
+* Projektthema:	Marktplatz für Bahnreise-Expert*innen
 
 ### Implementierung
 
@@ -14,7 +14,7 @@ Framework:	Android
 
 API-Version:	Android API-Level 27
 
-GerÃ¤t(e), auf dem(denen) getestet wurde:
+Geraete, auf denen getestet wurde:
 	- Pixel 8 Pro
 	- Pixel 5a
 	- Pixel 6
