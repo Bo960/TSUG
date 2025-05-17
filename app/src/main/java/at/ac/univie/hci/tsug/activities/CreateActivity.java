@@ -62,10 +62,6 @@ public class CreateActivity extends AppCompatActivity {
         });
 
 
-        //TEXT
-        TextView testText = findViewById(R.id.nav_text_testing);
-        testText.setText(activityName);
-
         bottomNav = findViewById(R.id.bottom_navigation);
 
         //Recieveing User from Home:
@@ -282,6 +278,11 @@ public class CreateActivity extends AppCompatActivity {
                                 description, commentList);
                     }
                     Container.addPost(createdPost);
+
+                    // Fragezähler erhöhen
+                    if (createdPost.getFrage() == "Frage") {
+                        currentUser.newQuestion();
+                    }
                     Intent intent = new Intent(CreateActivity.this, PostActivity.class);
                     intent.putExtra("beitrag_id", createdPost.getID());
                     intent.putExtra("user", currentUser);

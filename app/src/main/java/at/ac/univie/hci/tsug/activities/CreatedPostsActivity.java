@@ -2,11 +2,8 @@ package at.ac.univie.hci.tsug.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,9 +23,6 @@ import at.ac.univie.hci.tsug.elements.User;
 import at.ac.univie.hci.tsug.container.Container;
 
 public class CreatedPostsActivity extends AppCompatActivity implements RecyclerviewInterface {
-    private ArrayList<HistoryPost> createdPostsList;
-    private ListView createdPostsListView;
-    private HistoryPostAdapter postAdapter;
     private String activityName = "Erstellte Beiträge";
     private User currentUser;
     public ArrayList<Post> posts = new ArrayList<>();
@@ -38,16 +32,20 @@ public class CreatedPostsActivity extends AppCompatActivity implements Recyclerv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_created_posts);
 
-        //Generate RecyclerView:
-        //TODO: hier muss endschieden werden was gezeigt werden muss ...
-
-        posts = Container.getListOfPosts(); //TODO: JUST FOR TESTING
-
-        //TODO: ...bevor diese funktion ausgelöst wird
-        showPosts();
-
         //Recieveing User from Home:
         currentUser = getIntent().getParcelableExtra("user");
+
+        posts = Container.getListOfPosts();
+        ArrayList<Post> createdPosts = new ArrayList<>();
+
+        for (Post post : posts) {
+            if (currentUser.getCreatedPosts().contains(post.getID())) {
+                createdPosts.add(post);
+            }
+        }
+
+        setPosts(createdPosts);
+        showPosts();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -97,24 +95,6 @@ public class CreatedPostsActivity extends AppCompatActivity implements Recyclerv
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
-
-        /*
-        createdPostsListView = findViewById(R.id.created_questions_list);
-        createdPostsList= new ArrayList<>();
-
-        ArrayList<Integer> created= currentUser.getCreatedPosts();
-        if(created!=null) {
-            for (int postId : created) {
-                Post post = Container.getPost(postId);
-                if (post != null) {
-                    createdPostsList.add(new HistoryPost(post.getTitle(), post.getDes(), post.getUser()));
-                }
-            }
-        }
-
-        postAdapter= new HistoryPostAdapter(CreatedPostsActivity.this, createdPostsList);
-        createdPostsListView.setAdapter(postAdapter);
-        */
     }
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {

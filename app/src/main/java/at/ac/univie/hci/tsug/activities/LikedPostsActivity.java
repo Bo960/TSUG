@@ -2,12 +2,8 @@ package at.ac.univie.hci.tsug.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +14,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import at.ac.univie.hci.tsug.R;
 import at.ac.univie.hci.tsug.container.Container;
@@ -28,9 +23,6 @@ import at.ac.univie.hci.tsug.elements.RecyclerviewInterface;
 import at.ac.univie.hci.tsug.elements.User;
 
 public class LikedPostsActivity extends AppCompatActivity implements RecyclerviewInterface {
-    private ListView likedPostsListView;
-    private ArrayList<HistoryPost> likedPostsList;
-    private HistoryPostAdapter postAdapter;
     private String activityName = "Favoriten";
     private User currentUser;
     public ArrayList<Post> posts = new ArrayList<>();
@@ -97,24 +89,6 @@ public class LikedPostsActivity extends AppCompatActivity implements Recyclervie
             startActivity(intent);
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
-
-        /*
-        likedPostsListView= findViewById(R.id.liked_questions_list);
-        likedPostsList= new ArrayList<>();
-
-        ArrayList<Integer> liked= currentUser.getLikedPosts();
-        if(liked!=null) {
-            for (int postId : liked) {
-                Post post = Container.getPost(postId);
-                if (post != null) {
-                    likedPostsList.add(new HistoryPost(post.getTitle(), post.getDes(), post.getUser()));
-                }
-            }
-        }
-
-        postAdapter= new HistoryPostAdapter(LikedPostsActivity.this, likedPostsList);
-        likedPostsListView.setAdapter(postAdapter);
-        */
     }
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {

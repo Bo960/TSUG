@@ -30,6 +30,7 @@ public class Post implements Parcelable {
     private LocalTime time;
     private ArrayList<Comment> commentList = new ArrayList<>();
 
+    private ArrayList<Comment> commentList = new ArrayList<>();
     //Constructor:
     public Post(String title, int likes, User user, boolean isFrage, ArrayList<String> tags, String region, String des, ArrayList<Comment> commentList) {
         //Error Handeling:
@@ -165,6 +166,9 @@ public class Post implements Parcelable {
     public LocalTime getTime() {
         return time;
     }
+    public ArrayList<Comment> getCommentList() {
+        return commentList;
+    }
     public String getType() {
         if (isFrage)
             return "FRAGE";
@@ -174,9 +178,7 @@ public class Post implements Parcelable {
     public boolean isRegion() {
         return isRegion;
     }
-    public ArrayList<Comment> getCommentList() {
-        return commentList;
-    }
+
 
     //Setter Methode:
     public void setTitle(String title) {
@@ -226,22 +228,17 @@ public class Post implements Parcelable {
     }
 
     //Memberfunctions:
-    public synchronized int addLike(User liker) {
-        if (liker != null && !liker.hasLiked(ID)) {
-            likes++;
-            liker.addLikedPost(ID);  // Add post ID to user's likedPosts
-            this.user.newLike();     // Increment user's total likes
-        }
-        return likes;
+    public int like() {
+        this.user.newLike();
+        return ++likes;
     }
-
-    public synchronized int removeLike(User liker) {
-        if (liker != null && liker.hasLiked(ID)) {
-            likes--;
-            liker.removeLikedPost(ID);
+    public int unlike() {
+        if(likes > 0) {
             this.user.lostLike();
+            return --likes;
         }
-        return likes;
+        else
+            return 0;
     }
 
     @Override

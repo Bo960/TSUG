@@ -28,7 +28,6 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -133,16 +132,30 @@ public class PostActivity extends AppCompatActivity {
         likesView.setText(createdPost.getLikes() + "");
 
         View.OnClickListener likeClickListener = v -> {
-            if (!currentUser.equals(createdPost.getUser())) {
+            if (currentUser.getID() != createdPost.getUser().getID()) {
                 postLiked = !postLiked;
+                User postOwner = createdPost.getUser();
                 if (postLiked) {
-                    createdPost.addLike(currentUser);
+                    createdPost.like();
+                    Container.updatePost(createdPost);
+                    currentUser.addLikedPost(createdPost.getID());
+                    // Like-Zähler erhöhen
+                    postOwner.newLike();
+                    Container.updateUser(postOwner);
                     likeIcon.setImageResource(R.drawable.baseline_favorite_24);
                 } else {
-                    createdPost.removeLike(currentUser);
+                    createdPost.unlike();
+                    Container.updatePost(createdPost);
+                    currentUser.removeLikedPost(createdPost.getID());
+                    // Like-Zähler niedriger
+                    postOwner.lostLike();
+                    Container.updateUser(postOwner);
                     likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
                 }
                 likesView.setText(String.valueOf(createdPost.getLikes()));
+            } else {
+                // Eigener Beitrag kann nicht geliked werden
+                Toast.makeText(this, "Du kannst deinen eigenen Beitrag nicht liken!", Toast.LENGTH_SHORT).show();
             }
         };
         likeIcon.setOnClickListener(likeClickListener);
@@ -302,6 +315,8 @@ public class PostActivity extends AppCompatActivity {
             String text = commentInput.getText().toString().trim();
             if (!text.isEmpty()) {
                 createdPost.addComment(new Comment(currentUser, text));
+                // Antwort-Zähler erhöhen
+                currentUser.newAnswer();
                 commentAdapter.updateComments((List<Comment>) createdPost.getCommentList().clone());
                 commentInput.setText("");
                 // hide keyboard
@@ -313,5 +328,15 @@ public class PostActivity extends AppCompatActivity {
         });
 
         commentAdapter.updateComments(createdPost.getCommentList());
+
+        // Beitrag als gesehen markieren
+        if(currentUser!=null && currentUser.getID() != createdPost.getUser().getID()) {
+            currentUser.addSeenPost(beitragID);
+        }
+
+        // Beitrag als erstellt markieren
+        if(currentUser!=null && currentUser.getID() == createdPost.getUser().getID()) {
+            currentUser.addCreatedPost(beitragID);
+        }
     }
 }
