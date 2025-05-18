@@ -92,6 +92,8 @@ public class CreateActivity extends AppCompatActivity {
         //TOP NAVIGATION:
         ImageButton backNav = findViewById(R.id.nav_back);
         backNav.setOnClickListener(v -> finish());
+        TextView testText = findViewById(R.id.nav_text_testing);
+        testText.setText(activityName);
 
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
