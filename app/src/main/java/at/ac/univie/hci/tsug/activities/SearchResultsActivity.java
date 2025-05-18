@@ -2,32 +2,30 @@ package at.ac.univie.hci.tsug.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 
 import at.ac.univie.hci.tsug.R;
+import at.ac.univie.hci.tsug.container.Container;
 import at.ac.univie.hci.tsug.elements.Post;
-import at.ac.univie.hci.tsug.elements.PostAdapter;
-import at.ac.univie.hci.tsug.elements.RecyclerviewInterface;
 import at.ac.univie.hci.tsug.elements.User;
 
-public class SearchResultsActivity extends AppCompatActivity implements RecyclerviewInterface {
-    private RecyclerView rvResults;
-    private ArrayList<Post> results;
+//Ohne Recyclerview, weil das zu Problemen geführt hat
+public class SearchResultsActivity extends AppCompatActivity {
+    private static final String TAG = "SEARCH_RESULTS";
+    private LinearLayout llResults;
     private User currentUser;
 
     @Override
@@ -35,6 +33,7 @@ public class SearchResultsActivity extends AppCompatActivity implements Recycler
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_search_results);
+        Log.d(TAG, "--- onCreate start ---");
 
         ViewCompat.setOnApplyWindowInsetsListener(
                 findViewById(R.id.main), (v, insets) -> {
@@ -44,74 +43,81 @@ public class SearchResultsActivity extends AppCompatActivity implements Recycler
                 }
         );
 
-        //User aus Intent holen
+        //Aktuellen Nutzer laden
         currentUser = getIntent().getParcelableExtra("user");
 
-        //Bottom Navigation
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Intent intent;
-                switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        intent = new Intent(SearchResultsActivity.this, MainActivity.class);
-                        intent.putExtra("user", currentUser);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
-                        return true;
-                    case R.id.nav_neuer_beitrag:
-                        intent = new Intent(SearchResultsActivity.this, CreateActivity.class);
-                        intent.putExtra("user", currentUser);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
-                        return true;
-                    case R.id.nav_account:
-                        intent = new Intent(SearchResultsActivity.this, AccountActivity.class);
-                        intent.putExtra("user", currentUser);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
-                        return true;
-                }
-                return false;
-            }
-        });
-
-        // Top Navigation
-        ImageButton backNav = findViewById(R.id.nav_back);
-        backNav.setOnClickListener(v -> finish());
-
-        ImageButton setNav = findViewById(R.id.nav_einstellungen);
-        setNav.setOnClickListener(v -> {
-            Intent intent = new Intent(SearchResultsActivity.this, SettingsActivity.class);
+        //Top Navigation
+        ImageButton navBack = findViewById(R.id.nav_back);
+        navBack.setOnClickListener(v -> finish());
+        ImageButton navSettings = findViewById(R.id.nav_einstellungen);
+        navSettings.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SettingsActivity.class);
             intent.putExtra("user", currentUser);
             startActivity(intent);
-            overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
+            overridePendingTransition(0, 0);
         });
 
-        //RecyclerView einrichten
-        rvResults = findViewById(R.id.rv_results);
-        rvResults.setLayoutManager(new LinearLayoutManager(this));
+        llResults = findViewById(R.id.ll_results);
 
-        //Ergebnisse aus Intent lesen
-        results = getIntent().getParcelableArrayListExtra("results");
-        if (results == null) {
-            results = new ArrayList<>();
+        //Zacher Fehler war hier: Parcelling liefert möglicherweise unvollständige Posts -> hol Original aus Container
+        ArrayList<Post> parcelResults = getIntent().getParcelableArrayListExtra("results");
+        ArrayList<Post> results = new ArrayList<>();
+        if (parcelResults != null) {
+            for (Post p : parcelResults) {
+                results.add(Container.getPost(p.getID()));
+            }
         }
+        Log.d(TAG, "Received results count: " + results.size());
 
-        //Adapter mit this als Listener übergeben
-        PostAdapter adapter = new PostAdapter(this, this, results);
-        rvResults.setAdapter(adapter);
-    }
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for (Post use : results) {
+            try {
+                Log.d(TAG, "Rendering post: " + use.getTitle());
+                View item = inflater.inflate(R.layout.post_view, llResults, false);
 
-    //Wird aufgerufen, wenn ein Post im RecyclerView angeklickt wird -> Posts anklickbar gemacht - Woooooaaaahhhh
-    @Override
-    public void onPostClick(int position) {
-        Post clicked = results.get(position);
-        Intent intent = new Intent(this, PostActivity.class);
-        intent.putExtra("beitrag_id", clicked.getID());
-        intent.putExtra("user", currentUser);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+                //Typ und Titel
+                TextView tvType = item.findViewById(R.id.rv_type);
+                TextView tvTitle = item.findViewById(R.id.rv_title);
+                tvType.setText(use.getType());
+                tvTitle.setText(use.getTitle());
+
+                //Route vs. Region
+                View visRoute = item.findViewById(R.id.visRoute);
+                View visRegion = item.findViewById(R.id.visRegion);
+                if (use.isRegion()) {
+                    visRegion.setVisibility(View.VISIBLE);
+                    visRoute.setVisibility(View.GONE);
+                    TextView tvRegion = item.findViewById(R.id.rv_region);
+                    tvRegion.setText(use.getRegion());
+                } else {
+                    visRoute.setVisibility(View.VISIBLE);
+                    visRegion.setVisibility(View.GONE);
+                    TextView tvStart = item.findViewById(R.id.rv_start);
+                    TextView tvEnd = item.findViewById(R.id.rv_end);
+                    if (use.getRoute() != null) {
+                        tvStart.setText(use.getRoute().first);
+                        tvEnd.setText(use.getRoute().second);
+                    }
+                }
+
+                // ikes
+                TextView tvLikes = item.findViewById(R.id.rv_likes);
+                tvLikes.setText(use.getLikesStyle());
+
+                //Klick auf Post öffnet Detail
+                item.setOnClickListener(v -> {
+                    Intent i = new Intent(this, PostActivity.class);
+                    i.putExtra("beitrag_id", use.getID());
+                    i.putExtra("user", currentUser);
+                    startActivity(i);
+                });
+
+                llResults.addView(item);
+            } catch (Exception e) {
+                Log.e(TAG, "Error rendering post: " + use.getTitle(), e);
+            }
+        }
+        Log.d(TAG, "Populated llResults child count = " + llResults.getChildCount());
+        Log.d(TAG, "--- onCreate end ---");
     }
 }
