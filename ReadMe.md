@@ -34,3 +34,5 @@ Weitere Anmerkungen:
   - **ANMELDUNG:** Es gibt einen Test-Account  
     Username: test1  
     Passwort: 123456789
+
+Als Suchbegriff eignet sich "Vienna" gut, weil es sowohl im Titel eines Tipps und in der Beschreibung einer Frage exisitert.
