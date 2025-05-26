@@ -1,9 +1,13 @@
 package at.ac.univie.hci.tsug.activities;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,9 +44,17 @@ public class SeenPostsActivity extends AppCompatActivity implements Recyclerview
         posts = Container.getListOfPosts();
         ArrayList<Post> seenPosts = new ArrayList<>();
 
-        for (Post post : posts) {
-            if (currentUser.getSeenPosts().contains(post.getID())) {
-                seenPosts.add(post);
+        TextView textView = findViewById(R.id.note);
+
+        if (currentUser.getCreatedPosts().isEmpty()) {
+            textView.setVisibility(VISIBLE);
+        } else {
+            textView.setVisibility(GONE);
+
+            for (Post post : posts) {
+                if (currentUser.getSeenPosts().contains(post.getID())) {
+                    seenPosts.add(post);
+                }
             }
         }
 

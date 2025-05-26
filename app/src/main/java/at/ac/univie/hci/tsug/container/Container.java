@@ -33,7 +33,7 @@ public class Container extends Application {
     public void initalizeList() {
         users.add(new User("KarlMayer", "kmayer@gmail.com", "Password123"));
         users.add(new User("SarahJohnson", "sjohnson@yahoo.com", "SecurePass456"));
-        users.add(new User("test1", "test1@gmail.com", "123456789"));
+        users.add(new User("test1", "test1@gmail.com", "123456789", 350));
         users.add(new User("GertrudeDieGeile", "susi.live@gmail.com", "callMeMaybe;)"));
         users.add(new User("wow_fan_96", "leroyjenkins96@gmail.com", "wowisaws"));
 

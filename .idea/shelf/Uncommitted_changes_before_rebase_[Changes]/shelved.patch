@@ -1,9 +1,0 @@
-Index: README.md
-===================================================================
-diff --git a/README.md b/README.md
-deleted file mode 100644
---- a/README.md	(revision 6dd67b0322bd61011d85334ab7e9ba45b07f0d32)
-+++ /dev/null	(revision 6dd67b0322bd61011d85334ab7e9ba45b07f0d32)
-@@ -1,1 +0,0 @@
--# TSUG
-\ No newline at end of file

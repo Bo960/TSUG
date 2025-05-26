@@ -372,14 +372,15 @@
             android:layout_marginStart="8dp" />
     </LinearLayout>
 
-    <!-- Bottom Bar  -->
+    <!-- Bottom Balken  -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="@dimen/sehrgross"
+        app:itemIconSize="56dp"
+
         app:labelVisibilityMode="labeled"/>
 
 

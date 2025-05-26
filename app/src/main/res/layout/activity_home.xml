@@ -84,7 +84,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"/>
-
     <!-- Bottom Balken  -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -92,6 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="@dimen/sehrgross"
+        app:itemIconSize="56dp"
+
         app:labelVisibilityMode="labeled"/>
 </RelativeLayout>

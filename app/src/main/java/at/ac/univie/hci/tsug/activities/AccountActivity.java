@@ -1,10 +1,14 @@
 package at.ac.univie.hci.tsug.activities;
 
+import static android.view.View.GONE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -41,6 +45,25 @@ public class AccountActivity extends AppCompatActivity {
         //Recieveing User from Home:
         currentUser = getIntent().getParcelableExtra("user");
 
+        //Set Progress Bar:
+        TextView rankBegin = findViewById(R.id.rank_begin);
+        TextView rankEnd = findViewById(R.id.rank_end);
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+
+        if(currentUser.getLikes() <= 100)
+            setRankProgress(0, 100, currentUser.getLikes(), rankBegin, rankEnd, progressBar);
+        else if(currentUser.getLikes() <= 250)
+            setRankProgress(100, 250, currentUser.getLikes(), rankBegin, rankEnd, progressBar);
+        else if(currentUser.getLikes() <= 500)
+            setRankProgress(250, 500, currentUser.getLikes(), rankBegin, rankEnd, progressBar);
+        else if(currentUser.getLikes() <= 1000)
+            setRankProgress(500, 1000, currentUser.getLikes(), rankBegin, rankEnd, progressBar);
+        else if(currentUser.getLikes() > 1000) {
+            rankBegin.setVisibility(GONE);
+            rankEnd.setText(GONE);
+            progressBar.setProgress(100);
+        }
+
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -71,7 +94,7 @@ public class AccountActivity extends AppCompatActivity {
 
         //TOP NAVIGATION:
         ImageButton backNav = findViewById(R.id.nav_back);
-        backNav.setOnClickListener(v -> finish());
+        backNav.setVisibility(GONE);
 
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {
@@ -133,5 +156,15 @@ public class AccountActivity extends AppCompatActivity {
             //Von Position-Links nach Position-Rechts
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
         });
+    }
+
+    private void setRankProgress(int min, int max, int current, TextView begin, TextView end, ProgressBar progressBar) {
+        begin.setText(min + " Likes");
+        end.setText(max + " Likes");
+        float percentage = ((float)(current - min) / (max - min)) * 100;
+        progressBar.setProgress((int) percentage);
+
+        begin.setVisibility(View.VISIBLE);
+        end.setVisibility(View.VISIBLE);
     }
 }

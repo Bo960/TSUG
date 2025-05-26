@@ -1,5 +1,7 @@
 package at.ac.univie.hci.tsug.activities;
 
+import static android.view.View.GONE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
@@ -91,7 +93,7 @@ public class CreateActivity extends AppCompatActivity {
 
         //TOP NAVIGATION:
         ImageButton backNav = findViewById(R.id.nav_back);
-        backNav.setOnClickListener(v -> finish());
+        backNav.setVisibility(GONE);
         TextView testText = findViewById(R.id.nav_text_testing);
         testText.setText(activityName);
 

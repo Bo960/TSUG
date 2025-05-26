@@ -46,6 +46,21 @@
             </LinearLayout>
         </LinearLayout>
 
+    <TextView
+        android:id="@+id/note"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/fav"
+        android:padding="@dimen/sehrklein"
+        android:layout_marginTop="@dimen/gigantisch"
+
+        android:textSize="@dimen/klein"
+        android:textColor="#858585"
+        android:textStyle="bold"
+        android:text="Du hast noch nicht keine Favoriten"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/liked_questions_list"
 
@@ -68,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="@dimen/sehrgross"
+        app:itemIconSize="56dp"
+
         app:labelVisibilityMode="labeled"/>
 </RelativeLayout>

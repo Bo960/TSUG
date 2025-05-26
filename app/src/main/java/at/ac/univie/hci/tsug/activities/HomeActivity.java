@@ -1,5 +1,7 @@
 package at.ac.univie.hci.tsug.activities;
 
+import static android.view.View.GONE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -119,7 +121,7 @@ public class HomeActivity extends AppCompatActivity implements RecyclerviewInter
 
         //TOP NAVIGATION:
         ImageButton backNav = findViewById(R.id.nav_back);
-        backNav.setOnClickListener(v -> finish());
+        backNav.setVisibility(GONE);
 
         ImageButton setNav = findViewById(R.id.nav_einstellungen);
         setNav.setOnClickListener(v -> {

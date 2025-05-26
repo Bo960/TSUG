@@ -1,9 +1,13 @@
 package at.ac.univie.hci.tsug.activities;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,10 +39,18 @@ public class LikedPostsActivity extends AppCompatActivity implements Recyclervie
         //Recieveing User from Home:
         currentUser = getIntent().getParcelableExtra("user");
 
-        posts.clear();
-        for (int ID : currentUser.getLikedPosts()) {
-            posts.add(Container.getPost(ID));
+        TextView textView = findViewById(R.id.note);
+
+        if (currentUser.getCreatedPosts().isEmpty()) {
+            textView.setVisibility(VISIBLE);
+        } else {
+            textView.setVisibility(GONE);
+            posts.clear();
+            for (int ID : currentUser.getLikedPosts()) {
+                posts.add(Container.getPost(ID));
+            }
         }
+
         showPosts();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);

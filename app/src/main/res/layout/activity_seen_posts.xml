@@ -36,7 +36,6 @@
                 android:elevation="12dp"
                 android:background="@color/onPrimaryColor">
                 <TextView
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Letztens gesehen"
@@ -45,6 +44,21 @@
                     android:textColor="@color/primaryColor" />
             </LinearLayout>
         </LinearLayout>
+
+    <TextView
+        android:id="@+id/note"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/last"
+        android:padding="@dimen/sehrklein"
+        android:layout_marginTop="@dimen/gigantisch"
+
+        android:textSize="@dimen/klein"
+        android:textColor="#858585"
+        android:textStyle="bold"
+        android:text="Du hast noch nicht keine Posts in den letzten 30 Tagen gesehen"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/seen_questions_list"
@@ -68,7 +82,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="45dp"
+        app:itemIconSize="56dp"
+
         app:labelVisibilityMode="labeled"/>
 
 </RelativeLayout>

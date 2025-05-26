@@ -51,6 +51,23 @@ public class User implements Parcelable {
         this.email = email;
         this.password = password;
     }
+    public User(String name, String email, String password, int likes) {
+        //Error Handeling:
+        if(name.isEmpty())
+            throw new IllegalArgumentException("Name cannot be empty!\n");
+        if(email.isEmpty())
+            throw new IllegalArgumentException("Email cannot be empty!\n");
+        if(password.isEmpty())
+            throw new IllegalArgumentException("Password cannot be empty!\n");
+
+        //Assign Values:
+        this.ID = next_ID++;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.likes = likes;
+    }
+
 
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
