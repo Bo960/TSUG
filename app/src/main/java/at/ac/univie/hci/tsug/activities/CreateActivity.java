@@ -41,7 +41,8 @@ public class CreateActivity extends AppCompatActivity {
     BottomNavigationView bottomNav;
     String activityName = "Erstellen";
     Button buttonSelectTags;
-    String[] tags = {"Günstig", "Preiswert", "Nachtzug", "Sparangebot", "Flexibel", "Gruppentarif", "Direkt", "Kurze Fahrt", "Lange Fahrt"};
+    // String[] tags = {"Günstig", "Preiswert", "Nachtzug", "Sparangebot", "Flexibel", "Gruppentarif", "Direkt", "Kurze Fahrt", "Lange Fahrt"};
+    String[] tags = {"Günstig", "Flexibel", "Gruppentarif", "Direkt", "Kurze Fahrt", "Lange Fahrt"};
     boolean[] selectedTags = new boolean[tags.length];
     ArrayList<String> selectedTagList = new ArrayList<>();
     String selectedFrageTipp = "";

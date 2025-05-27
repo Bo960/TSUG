@@ -56,82 +56,85 @@ public class Container extends Application {
         users.add(new User("ToddHowdy", "chessclubbeth@icloud.com", "whoIsLaughingNow"));
 
         posts.add(new Post(
-                "Sunrise at Dachstein",
+                "Von Wien nach Salzburg",
                 128,
                 getUser(1),
                 false,
-                new ArrayList<String>() {
-                },
-                new Pair<>("Schladming", "Dachstein Glacier"),
-                "Started before dawn to catch this magical moment at 2700m altitude!",
-                new ArrayList<>(List.of(new Comment(getUser(12), "So nice!")))
+                new ArrayList<>(List.of("Günstig")),
+                new Pair<>("Wien", "Salzburg"),
+                "Am komfortabelsten und schnellsten ist die Westbahn!",
+                new ArrayList<>(List.of(new Comment(getUser(12), "Stimmt, so nice!")))
         ));
+
         posts.add(new Post(
-                "Almabtrieb in Tyrol",
-                342,
+                "Wie komme ich am besten zum Flughafen Wien?",
+                42,
                 getUser(12),
-                false,
-                new ArrayList<String>() {
-                },
-                new Pair<>("Innsbruck", "Stubai Valley"),
-                "The annual cattle drive from mountain pastures is a spectacle of bells and flowers",
-                new ArrayList<>(List.of(new Comment(getUser(5), "Oh yes!")))
+                true,
+                new ArrayList<>(List.of("Flexibel", "Direkt")),
+                new Pair<>("Stephansplatz", "Flughafen Wien"),
+                "Fährt ein Bus oder Zug direkt dort hin, oder muss man ein Stück umsteigen?",
+                new ArrayList<>(List.of(new Comment(getUser(5), "Schau mal über VOR Anachb App, da gibt es gute Verbindungen.")))
         ));
+
         posts.add(new Post(
-                "Hidden Courtyards of Vienna",
+                "Mit der Bim durch die Innenstadt",
                 87,
                 getUser(5),
                 false,
-                new ArrayList<String>() {
-                },
-                new Pair<>("Stephansplatz", "Judenplatz"),
-                "Discovering secret passages and Renaissance courtyards in the 1st district",
+                new ArrayList<>(),
+                new Pair<>("Oper Wien", "Schwedenplatz"),
+                "Gemütliche Fahrt mit Zwischenstopps an schönen Orten – perfekt bei jedem Wetter.",
                 new ArrayList<>(List.of(new Comment(getUser(2), "Yes, I did this and it is so nice.")))
         ));
+
         posts.add(new Post(
-                "Sachertorte Taste Test",
+                "Wie komme ich zum Hotel Sacher mit Öffis?",
                 0,
                 getUser(2),
                 true,
-                new ArrayList<String>() {
-                },
-                "Hotel Sacher",
-                "The ultimate Vienna chocolate cake showdown - which is better?",
-                new ArrayList<>(List.of())
+                new ArrayList<>(List.of("Kurze Fahrt")),
+                "Wien",
+                "Welche Straßenbahn- oder U-Bahn-Linie ist am schnellsten vom Hauptbahnhof?",
+                new ArrayList<>()
         ));
+
         posts.add(new Post(
-                "Via Ferrata in Gesäuse",
+                "Klettertag im Gesäuse – Anreise per Bahn",
                 176,
                 getUser(1),
                 false,
-                new ArrayList<String>() {
-                },
+                new ArrayList<>(List.of("Kurze Fahrt", "Flexibel")),
                 new Pair<>("Johnsbachtal", "Haindlkar"),
-                "Iron cables and breathtaking views in Austria's most dramatic national park",
-                new ArrayList<>(List.of(new Comment(getUser(9), "So beautiful!")))
+                "Von Wien mit dem Zug nach Admont und weiter mit dem Regionalbus – tolle Verbindung ins Abenteuer!",
+                new ArrayList<>(List.of(new Comment(getUser(9), "So gut!")))
         ));
+
         posts.add(new Post(
-                "Night Skiing in Sölden",
-                298,
+                "Abendverbindung von Mariazell nach Krems?",
+                8,
                 getUser(9),
-                false,
-                new ArrayList<String>() {
-                },
-                new Pair<>("Sölden Base", "Giggijoch"),
-                "Floodlit slopes until 10pm with the best après-ski in the Alps!",
-                new ArrayList<>(List.of(new Comment(getUser(1), "Love it!"), new Comment(getUser(5), "Yeah, thanks for the recommendation!")))
+                true,
+                new ArrayList<>(List.of("Lange Fahrt")),
+                new Pair<>("Mariazell", "Krems"),
+                "Ich kann erst ab 18:00 – komme ich noch bis zur Unterkunft?",
+                new ArrayList<>(List.of(
+                        new Comment(getUser(1), "Definitiv!"),
+                        new Comment(getUser(5), "Bestimmt, die Züge fahren bis Mitternacht.")
+                ))
         ));
+
         posts.add(new Post(
-                "The Tiny House Village",
-                153,
+                "Kleine Häuser, große Fragen: Öffi-Tipp?",
+                1,
                 getUser(3),
-                false,
-                new ArrayList<String>() {
-                },
+                true,
+                new ArrayList<>(List.of("Günstig")),
                 new Pair<>("Graz", "Lichtblickhof"),
-                "A community living in homes smaller than 20m² - surprisingly cozy!",
-                new ArrayList<>(List.of(new Comment(getUser(12), "Yes, I recommend it!")))
+                "Wie komme ich vom Hauptbahnhof Graz zum Tiny House Village – idealerweise ohne Taxi?",
+                new ArrayList<>(List.of(new Comment(getUser(12), "Das würde mich auch interessieren...")))
         ));
+
     }
 
     //POST FUNCTIONS:
