@@ -113,8 +113,8 @@ public class CreateActivity extends AppCompatActivity {
         Spinner tagSpinner = findViewById(R.id.tagFrageOderTipp);
         TextView spinnerErrorText = findViewById(R.id.spinnerErrorText);
         String[] tagsArray = {"Frage", "Tipp"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tagsArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.activity_create_spinner_item, tagsArray);
+        adapter.setDropDownViewResource(R.layout.activity_create_spinner_dropdown_item);
         tagSpinner.setAdapter(adapter);
 
         // if editing: view selected type & other fields
