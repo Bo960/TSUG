@@ -59,7 +59,7 @@
         android:textSize="@dimen/klein"
         android:textColor="#858585"
         android:textStyle="bold"
-        android:text="Du hast noch nicht keine eigenen Posts"/>
+        android:text="Du hast noch keine eigenen Beiträge"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/created_questions_list"
