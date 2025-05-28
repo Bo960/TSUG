@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="56dp"
+        app:itemIconSize="48dp"
 
         app:labelVisibilityMode="labeled"/>
 
