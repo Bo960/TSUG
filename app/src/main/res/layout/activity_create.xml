@@ -163,7 +163,7 @@
                     android:layout_marginStart="8dp"
                     android:backgroundTint="@color/surfaceVariantColor"
                     android:textColor="@android:color/black"
-                    android:text="Tags auswählen"
+                    android:text="Tags"
                     android:textSize="@dimen/klein"
                     android:padding="12dp" />
 <!--            </LinearLayout>-->

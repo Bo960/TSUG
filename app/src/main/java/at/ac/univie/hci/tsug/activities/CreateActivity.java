@@ -29,6 +29,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import at.ac.univie.hci.tsug.R;
@@ -108,9 +109,6 @@ public class CreateActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_up_out);
         });
 
-        // if user is editing (no new post)
-        AtomicReference<Boolean> isEdit = new AtomicReference<>(getIntent().getBooleanExtra("is_edit", false));
-
         // tag frage / tipp
         category = findViewById(R.id.category);
         category.check(R.id.frage); // default: frage selected
@@ -122,13 +120,18 @@ public class CreateActivity extends AppCompatActivity {
             }
         });
 
+        buttonSelectTags = findViewById(R.id.buttonSelectTags);
+
+        // if user is editing (no new post)
+        AtomicReference<Boolean> isEdit = new AtomicReference<>(getIntent().getBooleanExtra("is_edit", false));
+
         // if editing: view selected type & other fields
         if (isEdit.get()) {
             int beitragID = getIntent().getIntExtra("beitrag_id", 1);
             Post editPost = Container.getPost(beitragID);
             commentList = editPost.getCommentList();
 
-            if(editPost.getFrage() == "Frage") {
+            if(Objects.equals(editPost.getFrage(), "Frage")) {
                 category.check(R.id.frage);
                 selectedFrageTipp = "Frage";
             } else {
@@ -137,6 +140,13 @@ public class CreateActivity extends AppCompatActivity {
             }
 
             selectedTagList = editPost.getTags();
+
+            int count = selectedTagList.size();
+            if (count > 0) {
+                buttonSelectTags.setText("Tags (" + count + ")");
+            } else {
+                buttonSelectTags.setText("Tags");
+            }
 
             EditText input_start = findViewById(R.id.inputStart);
             EditText input_end = findViewById(R.id.inputEnd);
@@ -152,29 +162,26 @@ public class CreateActivity extends AppCompatActivity {
             }
             input_title.setText(editPost.getTitle());
             input_description.setText(editPost.getDes());
-
         }
 
-        // categories/tags
-        buttonSelectTags = findViewById(R.id.buttonSelectTags);
-        // if editing: selected items
-        if (isEdit.get()) {
-            for (int i = 0; i < tags.length; i++) {
-                selectedTags[i] = selectedTagList.contains(tags[i]);
-            }
-        }
         buttonSelectTags.setOnClickListener(view -> {
             // for editing: remember selected items
             for (int i = 0; i < tags.length; i++) {
                 selectedTags[i] = selectedTagList.contains(tags[i]);
             }
             AlertDialog.Builder builder = new AlertDialog.Builder(CreateActivity.this);
-            builder.setTitle("Tags auswählen");
             builder.setMultiChoiceItems(tags, selectedTags, (dialog, which, isChecked) -> selectedTags[which] = isChecked);
             builder.setPositiveButton("OK", (dialog, which) -> {
                 selectedTagList.clear();
                 for (int i = 0; i < tags.length; i++) {
                     if (selectedTags[i]) selectedTagList.add(tags[i]);
+                }
+                // display selected tags in button
+                int count = selectedTagList.size();
+                if (count > 0) {
+                    buttonSelectTags.setText("Tags (" + count + ")");
+                } else {
+                    buttonSelectTags.setText("Tags");
                 }
             });
             builder.show();
@@ -196,7 +203,7 @@ public class CreateActivity extends AppCompatActivity {
             String description = input_description.getText().toString();
 
             Boolean isFrage = true;
-            if (selectedFrageTipp == "Tipp")
+            if (Objects.equals(selectedFrageTipp, "Tipp"))
                 isFrage = false;
 
             boolean valid = true;
