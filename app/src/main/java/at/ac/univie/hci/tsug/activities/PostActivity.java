@@ -243,11 +243,8 @@ public class PostActivity extends AppCompatActivity {
         Chip frage = findViewById(R.id.frage);
         Chip tipp = findViewById(R.id.tipp);
         Chip guenstig = findViewById(R.id.guenstig);
-        Chip preiswert = findViewById(R.id.preiswert);
         Chip nachtzug = findViewById(R.id.nachtzug);
-        Chip sparangebot = findViewById(R.id.sparangebot);
         Chip flexibel = findViewById(R.id.flexibel);
-        Chip gruppe = findViewById(R.id.gruppentarif);
         Chip direkt = findViewById(R.id.direkt);
         Chip kurzeFahrt = findViewById(R.id.kurzeFahrt);
         Chip langeFahrt = findViewById(R.id.langeFahrt);
@@ -263,11 +260,8 @@ public class PostActivity extends AppCompatActivity {
         // visibility of tags
         ArrayList<String> tags = createdPost.getTags();
         guenstig.setVisibility(View.GONE);
-        preiswert.setVisibility(View.GONE);
         nachtzug.setVisibility(View.GONE);
-        sparangebot.setVisibility(View.GONE);
         flexibel.setVisibility(View.GONE);
-        gruppe.setVisibility(View.GONE);
         direkt.setVisibility(View.GONE);
         kurzeFahrt.setVisibility(View.GONE);
         langeFahrt.setVisibility(View.GONE);
@@ -276,20 +270,11 @@ public class PostActivity extends AppCompatActivity {
                 case "Günstig":
                     guenstig.setVisibility(View.VISIBLE);
                     continue;
-                case "Preiswert":
-                    preiswert.setVisibility(View.VISIBLE);
-                    continue;
                 case "Nachtzug":
                     nachtzug.setVisibility(View.VISIBLE);
                     continue;
-                case "Sparangebot":
-                    sparangebot.setVisibility(View.VISIBLE);
-                    continue;
                 case "Flexibel":
                     flexibel.setVisibility(View.VISIBLE);
-                    continue;
-                case "Gruppentarif":
-                    gruppe.setVisibility(View.VISIBLE);
                     continue;
                 case "Direkt":
                     direkt.setVisibility(View.VISIBLE);

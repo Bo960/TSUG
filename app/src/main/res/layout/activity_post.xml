@@ -209,15 +209,6 @@
             android:textColor="@android:color/white" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/preiswert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Preiswert"
-            android:textSize="@dimen/sehrklein"
-            app:chipBackgroundColor="@color/onPrimaryContainerColor"
-            android:textColor="@android:color/white" />
-
-        <com.google.android.material.chip.Chip
             android:id="@+id/nachtzug"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -227,28 +218,10 @@
             android:textColor="@android:color/white" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/sparangebot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sparangebot"
-            android:textSize="@dimen/sehrklein"
-            app:chipBackgroundColor="@color/onPrimaryContainerColor"
-            android:textColor="@android:color/white" />
-
-        <com.google.android.material.chip.Chip
             android:id="@+id/flexibel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Flexibel"
-            android:textSize="@dimen/sehrklein"
-            app:chipBackgroundColor="@color/onPrimaryContainerColor"
-            android:textColor="@android:color/white" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/gruppentarif"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gruppentarif"
             android:textSize="@dimen/sehrklein"
             app:chipBackgroundColor="@color/onPrimaryContainerColor"
             android:textColor="@android:color/white" />
