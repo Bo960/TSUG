@@ -170,6 +170,7 @@ public class CreateActivity extends AppCompatActivity {
                 selectedTags[i] = selectedTagList.contains(tags[i]);
             }
             AlertDialog.Builder builder = new AlertDialog.Builder(CreateActivity.this);
+            builder.setTitle("Tags auswählen");
             builder.setMultiChoiceItems(tags, selectedTags, (dialog, which, isChecked) -> selectedTags[which] = isChecked);
             builder.setPositiveButton("OK", (dialog, which) -> {
                 selectedTagList.clear();
