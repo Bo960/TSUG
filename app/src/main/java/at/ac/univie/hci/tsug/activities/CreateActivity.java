@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -46,6 +47,7 @@ public class CreateActivity extends AppCompatActivity {
     boolean[] selectedTags = new boolean[tags.length];
     ArrayList<String> selectedTagList = new ArrayList<>();
     String selectedFrageTipp = "";
+    private RadioGroup category;
     private User currentUser;
     private ArrayList<Comment> commentList = new ArrayList<>();
 
@@ -110,12 +112,15 @@ public class CreateActivity extends AppCompatActivity {
         AtomicReference<Boolean> isEdit = new AtomicReference<>(getIntent().getBooleanExtra("is_edit", false));
 
         // tag frage / tipp
-        Spinner tagSpinner = findViewById(R.id.tagFrageOderTipp);
-        TextView spinnerErrorText = findViewById(R.id.spinnerErrorText);
-        String[] tagsArray = {"Frage", "Tipp"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.activity_create_spinner_item, tagsArray);
-        adapter.setDropDownViewResource(R.layout.activity_create_spinner_dropdown_item);
-        tagSpinner.setAdapter(adapter);
+        category = findViewById(R.id.category);
+        category.check(R.id.frage); // default: frage selected
+        category.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.frage) {
+                selectedFrageTipp = "Frage";
+            } else if (checkedId == R.id.tipp) {
+                selectedFrageTipp = "Tipp";
+            }
+        });
 
         // if editing: view selected type & other fields
         if (isEdit.get()) {
@@ -123,8 +128,13 @@ public class CreateActivity extends AppCompatActivity {
             Post editPost = Container.getPost(beitragID);
             commentList = editPost.getCommentList();
 
-            int tagIndex = Arrays.asList(tagsArray).indexOf(editPost.getFrage());
-            tagSpinner.setSelection(tagIndex);
+            if(editPost.getFrage() == "Frage") {
+                category.check(R.id.frage);
+                selectedFrageTipp = "Frage";
+            } else {
+                category.check(R.id.tipp);
+                selectedFrageTipp = "Tipp";
+            }
 
             selectedTagList = editPost.getTags();
 
@@ -144,22 +154,6 @@ public class CreateActivity extends AppCompatActivity {
             input_description.setText(editPost.getDes());
 
         }
-
-        // tags
-        tagSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                selectedFrageTipp = parentView.getItemAtPosition(position).toString();
-                spinnerErrorText.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                selectedFrageTipp = null;
-                spinnerErrorText.setText("Bitte eine Kategorie auswählen.");
-                spinnerErrorText.setVisibility(View.VISIBLE);
-            }
-        });
 
         // categories/tags
         buttonSelectTags = findViewById(R.id.buttonSelectTags);
