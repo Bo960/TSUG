@@ -4,16 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 
@@ -34,6 +39,41 @@ public class SearchResultsActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_search_results);
         Log.d(TAG, "--- onCreate start ---");
+
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        //Homescreen
+                        intent = new Intent(SearchResultsActivity.this, HomeActivity.class);
+                        intent.putExtra("user", currentUser);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+                        return true;
+
+                    case R.id.nav_neuer_beitrag:
+                        //Beitrag erstellen Seite
+                        intent = new Intent(SearchResultsActivity.this, CreateActivity.class);
+                        intent.putExtra("user", currentUser);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+                        return true;
+
+                    case R.id.nav_account:
+                        //Account settings Seite
+                        intent = new Intent(SearchResultsActivity.this, AccountActivity.class);
+                        intent.putExtra("user", currentUser);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+                        return true;
+                }
+                return false;
+            }
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(
                 findViewById(R.id.main), (v, insets) -> {

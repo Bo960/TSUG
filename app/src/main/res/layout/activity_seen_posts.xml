@@ -58,7 +58,7 @@
         android:textSize="@dimen/klein"
         android:textColor="#858585"
         android:textStyle="bold"
-        android:text="Du hast noch nicht keine Posts in den letzten 30 Tagen gesehen"/>
+        android:text="Du hast noch keine Beiträge in den letzten 30 Tagen gesehen"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/seen_questions_list"
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="56dp"
+        app:itemIconSize="48dp"
 
         app:labelVisibilityMode="labeled"/>
 

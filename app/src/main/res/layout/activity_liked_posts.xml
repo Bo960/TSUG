@@ -59,7 +59,7 @@
         android:textSize="@dimen/klein"
         android:textColor="#858585"
         android:textStyle="bold"
-        android:text="Du hast noch nicht keine Favoriten"/>
+        android:text="Du hast noch keine Favoriten"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/liked_questions_list"
@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav"
-        app:itemIconSize="56dp"
+        app:itemIconSize="48dp"
 
         app:labelVisibilityMode="labeled"/>
 </RelativeLayout>
