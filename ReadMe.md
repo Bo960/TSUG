@@ -1,4 +1,4 @@
-## Readme - M3
+## Readme - M4
 
 - Gruppe: 4
 - Team-Nr.: 410
@@ -24,15 +24,30 @@ Externe Libraries und Frameworks:
   - Flexbox
 
 Dauer der Entwicklung:
-  - Bojana Erbring: 22
+  - Bojana Erbring: 20
   - Stefania Dorobat: 19
-  - Martin Sternad: 22
-  - Michael Wallner: 22
-  - **GESAMT:** 85
+  - Martin Sternad: 11
+  - Michael Wallner: 19
+  - **GESAMT:** 69
+
 
 Weitere Anmerkungen:
-  - **ANMELDUNG:** Es gibt einen Test-Account  
-    Username: test1  
+  - **ANMELDUNG:** Es gibt einen Test-Account
+    Username: test1
     Passwort: 123456789
 
 Als Suchbegriff eignet sich "Vienna" gut, weil es sowohl im Titel eines Tipps und in der Beschreibung einer Frage exisitert.
+
+UPDATE - M4:
+    Naviagtion:
+        - Back-Button-Anzahl reduziert.
+        - Naviagtionsbaken wurden beschriftet.
+    Account:
+        - Progressbar wurde für die Darstellung des Rangs des Users hinzugefügt.
+        - Anmerkung wenn ein User keine Beiträge angesehn, gelikt oder erstellt hat.
+    Beitrag erstellen:
+        - Tags reduziert.
+        - Tag Count eingefügt.
+        - Anzeige von Frage / Tipp Auswahl mit besserer Sichtbarkeit
+        - Kommentar löschen oder bearbeiten durch Swipen
+
