@@ -305,8 +305,8 @@ public class PostActivity extends AppCompatActivity {
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         commentRecyclerView.setAdapter(commentAdapter);
 
-        // Swipe-to-delete
-        ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        // Swipe to delete / edit
+        ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView,
                                   @NonNull RecyclerView.ViewHolder viewHolder,
@@ -320,26 +320,53 @@ public class PostActivity extends AppCompatActivity {
                 Comment comment = commentAdapter.getCommentAt(position);
 
                 if (!comment.getUser().equals(currentUser)) {
-                    // only delete own comments
                     Toast.makeText(commentRecyclerView.getContext(),
-                            "Nur eigene Kommentare können gelöscht werden", Toast.LENGTH_SHORT).show();
-                    commentAdapter.notifyItemChanged(position); // rollback to original state
+                            "Nur eigene Kommentare können bearbeitet oder gelöscht werden", Toast.LENGTH_SHORT).show();
+                    commentAdapter.notifyItemChanged(position);
                     return;
                 }
 
-                new AlertDialog.Builder(commentRecyclerView.getContext())
-                        .setTitle("Kommentar löschen")
-                        .setMessage("Willst du diesen Kommentar wirklich löschen?")
-                        .setPositiveButton("Ja", (dialog, which) -> {
-                            createdPost.getCommentList().remove(position);
-                            commentAdapter.updateComments(new ArrayList<>(createdPost.getCommentList()));
-                        })
-                        .setNegativeButton("Abbrechen", (dialog, which) -> {
-                            commentAdapter.notifyItemChanged(position); // rollback to original state
-                            dialog.dismiss();
-                        })
-                        .setCancelable(false)
-                        .show();
+                if (direction == ItemTouchHelper.LEFT) {
+                    // delete comment
+                    new AlertDialog.Builder(commentRecyclerView.getContext())
+                            .setTitle("Kommentar löschen")
+                            .setMessage("Willst du diesen Kommentar wirklich löschen?")
+                            .setPositiveButton("Ja", (dialog, which) -> {
+                                createdPost.getCommentList().remove(position);
+                                commentAdapter.updateComments(new ArrayList<>(createdPost.getCommentList()));
+                            })
+                            .setNegativeButton("Abbrechen", (dialog, which) -> {
+                                commentAdapter.notifyItemChanged(position);
+                                dialog.dismiss();
+                            })
+                            .setCancelable(false)
+                            .show();
+                } else if (direction == ItemTouchHelper.RIGHT) {
+                    // edit comment
+                    EditText editText = new EditText(commentRecyclerView.getContext());
+                    editText.setText(comment.getCommentText());
+                    editText.setSelection(editText.getText().length());
+
+                    new AlertDialog.Builder(commentRecyclerView.getContext())
+                            .setTitle("Kommentar bearbeiten")
+                            .setView(editText)
+                            .setPositiveButton("Speichern", (dialog, which) -> {
+                                String newText = editText.getText().toString().trim();
+                                if (!newText.equals("")) {
+                                    comment.setCommentText(newText);
+                                    commentAdapter.updateComments(new ArrayList<>(createdPost.getCommentList()));
+                                } else {
+                                    Toast.makeText(commentRecyclerView.getContext(), "Kommentar darf nicht leer sein", Toast.LENGTH_SHORT).show();
+                                    commentAdapter.notifyItemChanged(position);
+                                }
+                            })
+                            .setNegativeButton("Abbrechen", (dialog, which) -> {
+                                commentAdapter.notifyItemChanged(position);
+                                dialog.dismiss();
+                            })
+                            .setCancelable(false)
+                            .show();
+                }
             }
         };
 

@@ -39,4 +39,8 @@ public class Comment implements Serializable {
     public String getCommentText() {
         return commentTxt;
     }
+
+    public void setCommentText(String newText) {
+        this.commentTxt = newText;
+    }
 }
