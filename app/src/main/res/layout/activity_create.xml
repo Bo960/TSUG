@@ -11,6 +11,7 @@
 
     <!-- Top Naviagtion -->
     <include
+        android:id="@+id/top_navigation"
         layout="@layout/top_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,11 +21,10 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_height="match_parent"
         android:fillViewport="true"
+        android:layout_below="@id/top_navigation"
         android:layout_above="@id/bottom_navigation">
-
 
         <LinearLayout
             android:id="@+id/contentLayout"

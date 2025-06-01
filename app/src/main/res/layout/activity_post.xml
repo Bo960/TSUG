@@ -5,358 +5,365 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.PostActivity"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".activities.PostActivity">
 
-    <!-- Top Naviagtion -->
+    <!-- Top Navigation -->
     <include
+        android:id="@+id/top_navigation"
         layout="@layout/top_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" />
 
-    <!-- Rest vom Layout bestimmt -->
-
-    <!-- Title -->
-    <TextView
-        android:id="@+id/titleView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:layout_marginTop="90dp"
-        android:text="no title"
-        android:textColor="@color/primaryColor"
-        android:textSize="@dimen/mittel"
-        android:textStyle="bold" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/editPostBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/likesView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="70dp"
-        android:paddingTop="50dp"
-        android:contentDescription="Bearbeiten"
-        app:srcCompat="@drawable/outline_edit_24"
-        android:visibility="gone"
-        app:tint="@android:color/white"
-        app:backgroundTint="@color/primaryColor" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/deletePostBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/editPostBtn"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"
-        android:contentDescription="Löschen"
-        app:srcCompat="@drawable/baseline_delete_outline_24"
-        android:visibility="gone"
-        app:tint="@android:color/white"
-        app:backgroundTint="@android:color/holo_red_dark" />
-
-    <!-- Likes Icon -->
-    <ImageView
-        android:id="@+id/likeIcon"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_below="@id/titleView"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="35dp"
-        android:contentDescription="like icon"
-        app:srcCompat="@drawable/baseline_favorite_border_24"
-        app:tint="@color/primaryColor" />
-
-    <!-- Likes Number -->
-    <TextView
-        android:id="@+id/likesView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/likeIcon"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_toEndOf="@id/likeIcon"
-        android:text="0"
-        android:textColor="@color/secondaryColor"
-        android:textSize="@dimen/sehrklein" />
-
-    <!-- Author Icon -->
-    <ImageView
-        android:id="@+id/authorIcon"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_alignBottom="@id/likeIcon"
-        android:layout_marginEnd="8dp"
-        android:layout_toStartOf="@id/authorView"
-        android:visibility="visible"
-        android:contentDescription="author icon"
-        app:srcCompat="@drawable/baseline_person_outline_24"
-        app:tint="@color/primaryColor" />
-
-    <!-- Author Name -->
-    <TextView
-        android:id="@+id/authorView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/likeIcon"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:text="AUTHOR"
-        android:visibility="visible"
-        android:textColor="@color/secondaryColor"
-        android:textSize="@dimen/sehrklein" />
-
-    <!-- Horizontal Container for Start, Route Icon, End -->
-    <LinearLayout
-        android:id="@+id/routeContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/likeIcon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:layout_margin="8dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <!-- Start -->
-        <TextView
-            android:id="@+id/startPlace"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="START"
-            android:textColor="@color/secondaryColor"
-            android:textSize="@dimen/klein" />
-
-        <!-- Route Icon -->
-        <ImageView
-            android:id="@+id/routeIcon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:contentDescription="route_icon"
-            app:srcCompat="@drawable/baseline_arrow_right_alt_24"
-            app:tint="@color/secondaryColor" />
-
-        <!-- End -->
-        <TextView
-            android:id="@+id/endPlace"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="END"
-            android:textColor="@color/secondaryColor"
-            android:textSize="@dimen/klein" />
-
-        <!-- Region Icon -->
-        <ImageView
-            android:id="@+id/regionIcon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:contentDescription="region_icon"
-            app:srcCompat="@drawable/baseline_near_me_24"
-            app:tint="@color/secondaryColor" />
-
-        <!-- Region -->
-        <TextView
-            android:id="@+id/region"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="REGION"
-            android:textColor="@color/secondaryColor"
-            android:textSize="@dimen/klein" />
-    </LinearLayout>
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup"
+    <!-- Scrollbarer Bereich -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/routeContainer"
-        android:layout_margin="8dp"
-        app:singleLine="false">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/frage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Frage"
-            android:textSize="@dimen/sehrklein"
-            android:visibility="visible"
-            app:chipBackgroundColor="@color/primaryColor"
-            android:textColor="@android:color/white" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/tipp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tipp"
-            android:textSize="@dimen/sehrklein"
-            android:visibility="visible"
-            app:chipBackgroundColor="@color/primaryColor"
-            android:textColor="@android:color/white" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/guenstig"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Günstig"
-            android:textSize="@dimen/sehrklein"
-            app:chipBackgroundColor="@color/onPrimaryContainerColor"
-            android:textColor="@android:color/white" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/nachtzug"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nachtzug"
-            android:textSize="@dimen/sehrklein"
-            app:chipBackgroundColor="@color/onPrimaryContainerColor"
-            android:textColor="@android:color/white" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/flexibel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Flexibel"
-            android:textSize="@dimen/sehrklein"
-            app:chipBackgroundColor="@color/onPrimaryContainerColor"
-            android:textColor="@android:color/white" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/direkt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Direkt"
-            android:textSize="@dimen/sehrklein"
-            app:chipBackgroundColor="@color/onPrimaryContainerColor"
-            android:textColor="@android:color/white" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/kurzeFahrt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kurze Fahrt"
-            android:textSize="@dimen/sehrklein"
-            app:chipBackgroundColor="@color/onPrimaryContainerColor"
-            android:textColor="@android:color/white" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/langeFahrt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lange Fahrt"
-            android:textSize="@dimen/sehrklein"
-            app:chipBackgroundColor="@color/onPrimaryContainerColor"
-            android:textColor="@android:color/white" />
-    </com.google.android.material.chip.ChipGroup>
-
-    <!-- Description -->
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/chipGroup"
-        android:layout_marginStart="15dp"
-        android:text=""
-        android:visibility="visible"
-        android:textColor="@color/secondaryColor"
-        android:textSize="@dimen/klein" />
-
-    <!-- Date -->
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/description"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:textSize="@dimen/sehrklein"
-        android:textColor="@color/primaryColor"
-        android:text="" />
-
-    <!-- Divider -->
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/date"
-        android:layout_marginTop="15dp"
-        android:background="?android:attr/listDivider" />
-
-    <!-- Comments Header -->
-    <TextView
-        android:id="@+id/commentHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/divider"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:text="Kommentare:"
-        android:textColor="@color/secondaryColor"
-        android:textSize="@dimen/mittel"
-        android:textStyle="bold" />
-
-    <!-- Comments List -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/commentRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/commentHeader"
+        android:layout_height="match_parent"
         android:layout_above="@id/commentInputSection"
-        android:padding="8dp"
-        android:clipToPadding="false"
-        android:scrollbars="vertical" />
+        android:layout_below="@id/top_navigation"
+        android:fillViewport="true">
 
-    <!-- New Comment -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/titleView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="no title"
+                android:textColor="@color/primaryColor"
+                android:textSize="@dimen/mittel"
+                android:textStyle="bold" />
+
+            <!-- Likes Icon -->
+            <ImageView
+                android:id="@+id/likeIcon"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_below="@id/titleView"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="35dp"
+                android:contentDescription="like icon"
+                app:srcCompat="@drawable/baseline_favorite_border_24"
+                app:tint="@color/primaryColor" />
+
+            <!-- Likes Number -->
+            <TextView
+                android:id="@+id/likesView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/likeIcon"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/likeIcon"
+                android:text="0"
+                android:textColor="@color/secondaryColor"
+                android:textSize="@dimen/sehrklein" />
+
+            <!-- Author Icon -->
+            <ImageView
+                android:id="@+id/authorIcon"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignBottom="@id/likeIcon"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@id/authorView"
+                android:contentDescription="author icon"
+                app:srcCompat="@drawable/baseline_person_outline_24"
+                app:tint="@color/primaryColor" />
+
+            <!-- Author Name -->
+            <TextView
+                android:id="@+id/authorView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/likeIcon"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:text="AUTHOR"
+                android:textColor="@color/secondaryColor"
+                android:textSize="@dimen/sehrklein" />
+
+            <!-- Floating Action Buttons -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/editPostBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/likesView"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="70dp"
+                android:contentDescription="Bearbeiten"
+                android:visibility="gone"
+                app:backgroundTint="@color/primaryColor"
+                app:srcCompat="@drawable/outline_edit_24"
+                app:tint="@android:color/white" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/deletePostBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/editPostBtn"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="Löschen"
+                android:visibility="gone"
+                app:backgroundTint="@android:color/holo_red_dark"
+                app:srcCompat="@drawable/baseline_delete_outline_24"
+                app:tint="@android:color/white" />
+
+            <!-- Route Container -->
+            <LinearLayout
+                android:id="@+id/routeContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/likeIcon"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/startPlace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="START"
+                    android:textColor="@color/secondaryColor"
+                    android:textSize="@dimen/klein" />
+
+                <ImageView
+                    android:id="@+id/routeIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="route_icon"
+                    app:srcCompat="@drawable/baseline_arrow_right_alt_24"
+                    app:tint="@color/secondaryColor" />
+
+                <TextView
+                    android:id="@+id/endPlace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="END"
+                    android:textColor="@color/secondaryColor"
+                    android:textSize="@dimen/klein" />
+
+                <ImageView
+                    android:id="@+id/regionIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="region_icon"
+                    app:srcCompat="@drawable/baseline_near_me_24"
+                    app:tint="@color/secondaryColor" />
+
+                <TextView
+                    android:id="@+id/region"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="REGION"
+                    android:textColor="@color/secondaryColor"
+                    android:textSize="@dimen/klein" />
+            </LinearLayout>
+
+            <!-- ChipGroup -->
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/routeContainer"
+                android:layout_margin="8dp"
+                android:layout_marginTop="-35dp"
+                android:layout_marginBottom="8dp"
+                app:singleLine="false">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/frage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frage"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sehrklein"
+                    android:visibility="visible"
+                    app:chipBackgroundColor="@color/primaryColor" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/tipp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipp"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sehrklein"
+                    android:visibility="visible"
+                    app:chipBackgroundColor="@color/primaryColor" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/guenstig"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Günstig"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sehrklein"
+                    app:chipBackgroundColor="@color/onPrimaryContainerColor" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/nachtzug"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nachtzug"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sehrklein"
+                    app:chipBackgroundColor="@color/onPrimaryContainerColor" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/flexibel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Flexibel"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sehrklein"
+                    app:chipBackgroundColor="@color/onPrimaryContainerColor" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/direkt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Direkt"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sehrklein"
+                    app:chipBackgroundColor="@color/onPrimaryContainerColor" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/kurzeFahrt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kurze Fahrt"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sehrklein"
+                    app:chipBackgroundColor="@color/onPrimaryContainerColor" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/langeFahrt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lange Fahrt"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sehrklein"
+                    app:chipBackgroundColor="@color/onPrimaryContainerColor" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chipGroup"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="8dp"
+                android:text=""
+                android:textColor="@color/secondaryColor"
+                android:textSize="@dimen/sehrklein"
+                android:visibility="visible" />
+
+            <!-- Date -->
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/description"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text=""
+                android:textColor="@color/primaryColor"
+                android:textSize="@dimen/sehrklein" />
+
+            <!-- Divider -->
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/date"
+                android:layout_marginTop="15dp"
+                android:background="?android:attr/listDivider" />
+
+            <!-- Comments Header -->
+            <TextView
+                android:id="@+id/commentHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/divider"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Kommentare:"
+                android:textColor="@color/secondaryColor"
+                android:textSize="@dimen/mittel"
+                android:textStyle="bold" />
+
+            <!-- Comments List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/commentRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/commentHeader"
+                android:clipToPadding="false"
+                android:padding="8dp"
+                android:scrollbars="vertical" />
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- New Comment Input -->
     <LinearLayout
         android:id="@+id/commentInputSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_navigation"
         android:layout_margin="10dp"
+        android:background="@android:color/white"
         android:orientation="horizontal"
-        android:padding="8dp"
-        android:background="@android:color/white">
+        android:padding="8dp">
 
         <EditText
             android:id="@+id/commentInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Kommentar schreiben..."
             android:background="@android:drawable/edit_text"
+            android:hint="Kommentar schreiben..."
+            android:inputType="textMultiLine"
+            android:maxLines="3"
             android:padding="10dp"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sehrklein"
-            android:maxLines="3"
-            android:inputType="textMultiLine" />
+            android:textSize="@dimen/sehrklein" />
 
         <Button
             android:id="@+id/sendCommentBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Senden"
-            android:textSize="@dimen/sehrklein"
-            android:textColor="@android:color/white"
+            android:layout_marginStart="8dp"
             android:backgroundTint="@color/primaryColor"
-            android:layout_marginStart="8dp" />
+            android:text="Senden"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sehrklein" />
     </LinearLayout>
-
-    <!-- Bottom Balken  -->
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_nav"
         app:itemIconSize="48dp"
-
-        app:labelVisibilityMode="labeled"/>
-
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav" />
 
 </RelativeLayout>
