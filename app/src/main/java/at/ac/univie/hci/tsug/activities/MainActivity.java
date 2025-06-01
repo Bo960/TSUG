@@ -1,5 +1,7 @@
 package at.ac.univie.hci.tsug.activities;
 
+import static android.icu.text.DisplayOptions.DisplayLength.LENGTH_SHORT;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -47,22 +49,27 @@ public class MainActivity extends AppCompatActivity {
                 username = String.valueOf(loginUsername.getText());
                 password = String.valueOf(loginPassword.getText());
 
-                User user = Container.getUser(username);
-                if(user != null) {
-                    if(Objects.equals(user.getPassword(), password)) {
-                        logedIn = user;
+                if (username.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Username oder Passwort kann nicht leer gelassen werden!", Toast.LENGTH_SHORT).show();
+                } else {
+                    User user = Container.getUser(username);
+                    if(user != null) {
+                        if(Objects.equals(user.getPassword(), password)) {
+                            logedIn = user;
 
-                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                        intent.putExtra("user", logedIn);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
-                        finish();
+                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            intent.putExtra("user", logedIn);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+                            finish();
+                        }
+                        else
+                            Toast.makeText(MainActivity.this, "Password wrong!", Toast.LENGTH_SHORT).show();
                     }
                     else
-                        Toast.makeText(MainActivity.this, "Password wrong!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "There is no User like that!", Toast.LENGTH_SHORT).show();
+
                 }
-                else
-                    Toast.makeText(MainActivity.this, "There is no User like that!", Toast.LENGTH_SHORT).show();
             }
         });
 
