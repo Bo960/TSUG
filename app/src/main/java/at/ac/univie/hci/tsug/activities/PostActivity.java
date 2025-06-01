@@ -17,10 +17,14 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.chip.Chip;
@@ -131,7 +135,7 @@ public class PostActivity extends AppCompatActivity {
         likesView.setText(createdPost.getLikes() + "");
 
         // check if post is liked by current user
-        if(currentUser.hasLiked(createdPost.getID())){
+        if (currentUser.hasLiked(createdPost.getID())) {
             likeIcon.setImageResource(R.drawable.baseline_favorite_24);
         } else {
             likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
@@ -149,7 +153,7 @@ public class PostActivity extends AppCompatActivity {
                     postOwner.newLike();
                     Container.updateUser(postOwner);
                     likeIcon.setImageResource(R.drawable.baseline_favorite_24);
-                } else if(!postLiked && currentUser.hasLiked(createdPost.getID())) {
+                } else if (!postLiked && currentUser.hasLiked(createdPost.getID())) {
                     createdPost.unlike();
                     Container.updatePost(createdPost);
                     currentUser.removeLikedPost(createdPost.getID());
@@ -243,11 +247,8 @@ public class PostActivity extends AppCompatActivity {
         Chip frage = findViewById(R.id.frage);
         Chip tipp = findViewById(R.id.tipp);
         Chip guenstig = findViewById(R.id.guenstig);
-        Chip preiswert = findViewById(R.id.preiswert);
         Chip nachtzug = findViewById(R.id.nachtzug);
-        Chip sparangebot = findViewById(R.id.sparangebot);
         Chip flexibel = findViewById(R.id.flexibel);
-        Chip gruppe = findViewById(R.id.gruppentarif);
         Chip direkt = findViewById(R.id.direkt);
         Chip kurzeFahrt = findViewById(R.id.kurzeFahrt);
         Chip langeFahrt = findViewById(R.id.langeFahrt);
@@ -263,11 +264,8 @@ public class PostActivity extends AppCompatActivity {
         // visibility of tags
         ArrayList<String> tags = createdPost.getTags();
         guenstig.setVisibility(View.GONE);
-        preiswert.setVisibility(View.GONE);
         nachtzug.setVisibility(View.GONE);
-        sparangebot.setVisibility(View.GONE);
         flexibel.setVisibility(View.GONE);
-        gruppe.setVisibility(View.GONE);
         direkt.setVisibility(View.GONE);
         kurzeFahrt.setVisibility(View.GONE);
         langeFahrt.setVisibility(View.GONE);
@@ -276,20 +274,11 @@ public class PostActivity extends AppCompatActivity {
                 case "Günstig":
                     guenstig.setVisibility(View.VISIBLE);
                     continue;
-                case "Preiswert":
-                    preiswert.setVisibility(View.VISIBLE);
-                    continue;
                 case "Nachtzug":
                     nachtzug.setVisibility(View.VISIBLE);
                     continue;
-                case "Sparangebot":
-                    sparangebot.setVisibility(View.VISIBLE);
-                    continue;
                 case "Flexibel":
                     flexibel.setVisibility(View.VISIBLE);
-                    continue;
-                case "Gruppentarif":
-                    gruppe.setVisibility(View.VISIBLE);
                     continue;
                 case "Direkt":
                     direkt.setVisibility(View.VISIBLE);
@@ -311,9 +300,78 @@ public class PostActivity extends AppCompatActivity {
         }
 
         // comments
-        ListView commentListView = findViewById(R.id.commentListView);
-        CommentAdapter commentAdapter = new CommentAdapter(this, (List<Comment>) createdPost.getCommentList().clone());
-        commentListView.setAdapter(commentAdapter);
+        RecyclerView commentRecyclerView = findViewById(R.id.commentRecyclerView);
+        CommentAdapter commentAdapter = new CommentAdapter(this, new ArrayList<>(createdPost.getCommentList()));
+        commentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        commentRecyclerView.setAdapter(commentAdapter);
+
+        // Swipe to delete / edit
+        ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                Comment comment = commentAdapter.getCommentAt(position);
+
+                if (!comment.getUser().equals(currentUser)) {
+                    Toast.makeText(commentRecyclerView.getContext(),
+                            "Nur eigene Kommentare können bearbeitet oder gelöscht werden", Toast.LENGTH_SHORT).show();
+                    commentAdapter.notifyItemChanged(position);
+                    return;
+                }
+
+                if (direction == ItemTouchHelper.LEFT) {
+                    // delete comment
+                    new AlertDialog.Builder(commentRecyclerView.getContext())
+                            .setTitle("Kommentar löschen")
+                            .setMessage("Willst du diesen Kommentar wirklich löschen?")
+                            .setPositiveButton("Ja", (dialog, which) -> {
+                                createdPost.getCommentList().remove(position);
+                                commentAdapter.updateComments(new ArrayList<>(createdPost.getCommentList()));
+                            })
+                            .setNegativeButton("Abbrechen", (dialog, which) -> {
+                                commentAdapter.notifyItemChanged(position);
+                                dialog.dismiss();
+                            })
+                            .setCancelable(false)
+                            .show();
+                } else if (direction == ItemTouchHelper.RIGHT) {
+                    // edit comment
+                    EditText editText = new EditText(commentRecyclerView.getContext());
+                    editText.setText(comment.getCommentText());
+                    editText.setSelection(editText.getText().length());
+
+                    new AlertDialog.Builder(commentRecyclerView.getContext())
+                            .setTitle("Kommentar bearbeiten")
+                            .setView(editText)
+                            .setPositiveButton("Speichern", (dialog, which) -> {
+                                String newText = editText.getText().toString().trim();
+                                if (!newText.equals("")) {
+                                    comment.setCommentText(newText);
+                                    commentAdapter.updateComments(new ArrayList<>(createdPost.getCommentList()));
+                                } else {
+                                    Toast.makeText(commentRecyclerView.getContext(), "Kommentar darf nicht leer sein", Toast.LENGTH_SHORT).show();
+                                    commentAdapter.notifyItemChanged(position);
+                                }
+                            })
+                            .setNegativeButton("Abbrechen", (dialog, which) -> {
+                                commentAdapter.notifyItemChanged(position);
+                                dialog.dismiss();
+                            })
+                            .setCancelable(false)
+                            .show();
+                }
+            }
+        };
+
+        new ItemTouchHelper(swipeCallback).attachToRecyclerView(commentRecyclerView);
+
 
         // input: new comment
         EditText commentInput = findViewById(R.id.commentInput);
@@ -335,12 +393,12 @@ public class PostActivity extends AppCompatActivity {
         commentAdapter.updateComments(createdPost.getCommentList());
 
         // Beitrag als gesehen markieren
-        if(currentUser != null && currentUser.getID() != createdPost.getUser().getID()) {
+        if (currentUser != null && currentUser.getID() != createdPost.getUser().getID()) {
             currentUser.addSeenPost(beitragID);
         }
 
         // Beitrag als erstellt markieren
-        if(currentUser!=null && currentUser.getID() == createdPost.getUser().getID()) {
+        if (currentUser != null && currentUser.getID() == createdPost.getUser().getID()) {
             currentUser.addCreatedPost(beitragID);
         }
     }

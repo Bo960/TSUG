@@ -31,6 +31,29 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Frage / Tipp -->
+            <RadioGroup
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+                <RadioButton
+                    android:id="@+id/frage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frage"
+                    android:textSize="@dimen/klein"/>
+
+                <RadioButton
+                    android:id="@+id/tipp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipp"
+                    android:textSize="@dimen/klein"/>
+            </RadioGroup>
+
             <!-- Title -->
             <EditText
                 android:id="@+id/inputTitle"
@@ -106,45 +129,44 @@
                 android:textColor="@android:color/black" />
 
             <!-- Tags -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Kategorisierung"
-                android:textSize="@dimen/mittel"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:text="Kategorisierung"-->
+<!--                android:textSize="@dimen/mittel"-->
+<!--                android:textStyle="bold" />-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp"
-                android:gravity="center_vertical"
-                android:layout_marginTop="8dp"
-                android:paddingHorizontal="16dp"
-                android:weightSum="1">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_marginBottom="16dp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:paddingHorizontal="16dp"-->
+<!--                android:weightSum="1">-->
 
-                <Spinner
-                    android:id="@+id/tagFrageOderTipp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:padding="15dp"
-                    android:background="@drawable/activity_create_spinner_style"
-                    android:importantForAccessibility="yes" />
+<!--                <Spinner-->
+<!--                    android:id="@+id/tagFrageOderTipp"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="0.5"-->
+<!--                    android:padding="15dp"-->
+<!--                    android:background="@drawable/activity_create_spinner_style"-->
+<!--                    android:importantForAccessibility="yes" />-->
 
                 <Button
                     android:id="@+id/buttonSelectTags"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
                     android:layout_marginStart="8dp"
                     android:backgroundTint="@color/surfaceVariantColor"
                     android:textColor="@android:color/black"
                     android:text="Tags"
                     android:textSize="@dimen/klein"
                     android:padding="12dp" />
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
             <TextView
                 android:id="@+id/spinnerErrorText"
