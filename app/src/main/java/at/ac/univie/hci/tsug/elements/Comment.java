@@ -15,7 +15,7 @@ public class Comment implements Serializable {
 
     public Comment(User user, String commentText) {
         //Error Handeling:
-        if(commentText.isEmpty())
+        if (commentText.isEmpty())
             throw new IllegalArgumentException("Text cannot be empty!\n");
 
         //Assign Values:
@@ -32,7 +32,15 @@ public class Comment implements Serializable {
         return authorTxt;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public String getCommentText() {
         return commentTxt;
+    }
+
+    public void setCommentText(String newText) {
+        this.commentTxt = newText;
     }
 }

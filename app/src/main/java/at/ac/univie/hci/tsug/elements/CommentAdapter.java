@@ -1,5 +1,5 @@
 package at.ac.univie.hci.tsug.elements;
-import at.ac.univie.hci.tsug.R;
+
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
@@ -8,65 +8,64 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import at.ac.univie.hci.tsug.R;
 
-public class CommentAdapter extends BaseAdapter {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
     private Context context;
     private List<Comment> comments;
 
-    // Constructor
     public CommentAdapter(Context context, List<Comment> comments) {
         this.context = context;
-        this.comments = (comments != null) ? comments : new ArrayList<>();
+        this.comments = comments;
     }
 
-    @Override
-    public int getCount() {
-        return comments.size();
+    public void updateComments(List<Comment> newComments) {
+        this.comments = newComments;
+        notifyDataSetChanged();
     }
 
-    @Override
-    public Object getItem(int position) {
+    public Comment getCommentAt(int position) {
         return comments.get(position);
     }
 
+    @NonNull
     @Override
-    public long getItemId(int position) {
-        return position;
+    public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.comment_list_item, parent, false);
+        return new CommentViewHolder(view);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.comment_list_item, parent, false);
-        }
-        TextView commentText = convertView.findViewById(R.id.commentText);
+    public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         Comment comment = comments.get(position);
 
-        // format author in bold text
         SpannableStringBuilder sb = new SpannableStringBuilder();
         String author = comment.getAuthor();
-        String commentTxt = comment.getCommentText();
+        String text = comment.getCommentText();
         int start = sb.length();
         sb.append(author);
         sb.setSpan(new StyleSpan(Typeface.BOLD), start, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        sb.append(": ").append(commentTxt);
-        commentText.setText(sb);
-
-        return convertView;
+        sb.append(": ").append(text);
+        holder.commentText.setText(sb);
     }
 
-    // update list
-    public void updateComments(List<Comment> newComments) {
-        comments.clear();
-        if (newComments != null) {
-            comments.addAll(newComments);
+    @Override
+    public int getItemCount() {
+        return comments.size();
+    }
+
+    public static class CommentViewHolder extends RecyclerView.ViewHolder {
+        TextView commentText;
+
+        CommentViewHolder(@NonNull View itemView) {
+            super(itemView);
+            commentText = itemView.findViewById(R.id.commentText);
         }
-        notifyDataSetChanged();
     }
 }

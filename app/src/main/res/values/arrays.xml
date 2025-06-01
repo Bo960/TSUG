@@ -11,11 +11,8 @@
     <!-- Optionen für die Tags -->
     <string-array name="tag_options">
         <item>Guenstig</item>
-        <item>Preiswert</item>
         <item>Nachtzug</item>
-        <item>Sparangebot</item>
         <item>Flexibel</item>
-        <item>Gruppentarif</item>
         <item>Direkt</item>
         <item>kurze Fahrt</item>
         <item>lange Fahrt</item>
