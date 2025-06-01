@@ -24,11 +24,11 @@ Externe Libraries und Frameworks:
   - Flexbox
 
 Dauer der Entwicklung:
-  - Bojana Erbring: 22
-  - Stefania Dorobat: 19
-  - Martin Sternad: 22
-  - Michael Wallner: 22
-  - **GESAMT:** 85
+  - Bojana Erbring: 16
+  - Stefania Dorobat: 15
+  - Martin Sternad: 9
+  - Michael Wallner: 15
+  - **GESAMT:** 55
 
 Weitere Anmerkungen:
   - **ANMELDUNG:** Es gibt einen Test-Account
