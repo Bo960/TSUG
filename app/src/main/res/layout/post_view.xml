@@ -8,7 +8,7 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="24dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/greyBlue">
+    app:cardBackgroundColor="@color/onPrimaryContainerColor">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:layout_margin="8dp"
                 app:cardCornerRadius="32dp"
                 app:cardElevation="4dp"
-                android:backgroundTint="@color/lightGray">
+                android:backgroundTint="@color/primaryColor">
 
                 <TextView
                     android:id="@+id/rv_type"
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
 
                     android:text="Type:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/klein"
                     android:padding="10dp"/>
 
