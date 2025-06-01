@@ -1,0 +1,145 @@
+Index: app/src/main/java/at/ac/univie/hci/tsug/activities/RegisterActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package at.ac.univie.hci.tsug.activities;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\n\r\nimport at.ac.univie.hci.tsug.R;\r\nimport at.ac.univie.hci.tsug.container.Container;\r\nimport at.ac.univie.hci.tsug.elements.User;\r\n\r\npublic class RegisterActivity extends AppCompatActivity {\r\n\r\n\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.activity_register);\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {\r\n            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);\r\n            return insets;\r\n        });\r\n\r\n        //Get new Info:\r\n        EditText registerUsername = findViewById(R.id.register_username);\r\n        EditText registerEmail = findViewById(R.id.register_email);\r\n        EditText registerPassword = findViewById(R.id.register_password);\r\n\r\n        Button registerButton = findViewById(R.id.register_button);\r\n        registerButton.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                User newUser = new User(registerUsername.getText().toString(), registerEmail.getText().toString(), registerPassword.getText().toString());\r\n\r\n                if(Container.addUser(newUser)) {\r\n                    Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);\r\n                    intent.putExtra(\"user\", newUser);\r\n                    startActivity(intent);\r\n                    overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);\r\n                    finish();\r\n                }\r\n            }\r\n        });\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/at/ac/univie/hci/tsug/activities/RegisterActivity.java b/app/src/main/java/at/ac/univie/hci/tsug/activities/RegisterActivity.java
+--- a/app/src/main/java/at/ac/univie/hci/tsug/activities/RegisterActivity.java	(revision f356b9c86a3a73e2dee4785bc2deddb57ccf206e)
++++ b/app/src/main/java/at/ac/univie/hci/tsug/activities/RegisterActivity.java	(date 1748790356092)
+@@ -5,6 +5,7 @@
+ import android.view.View;
+ import android.widget.Button;
+ import android.widget.EditText;
++import android.widget.Toast;
+ 
+ import androidx.activity.EdgeToEdge;
+ import androidx.appcompat.app.AppCompatActivity;
+@@ -40,14 +41,22 @@
+         registerButton.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+-                User newUser = new User(registerUsername.getText().toString(), registerEmail.getText().toString(), registerPassword.getText().toString());
++                String username = registerUsername.getText().toString();
++                String email = registerEmail.getText().toString();
++                String password = registerPassword.getText().toString();
++
++                if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
++                    Toast.makeText(RegisterActivity.this, "Passwort, Email oder Username kann nicht leer gelassen werden!", Toast.LENGTH_SHORT).show();
++                } else {
++                    User newUser = new User(username, email, password);
+ 
+-                if(Container.addUser(newUser)) {
+-                    Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+-                    intent.putExtra("user", newUser);
+-                    startActivity(intent);
+-                    overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+-                    finish();
++                    if(Container.addUser(newUser)) {
++                        Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
++                        intent.putExtra("user", newUser);
++                        startActivity(intent);
++                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
++                        finish();
++                    }
+                 }
+             }
+         });
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    alias(libs.plugins.android.application)\r\n}\r\n\r\nandroid {\r\n    namespace 'at.ac.univie.hci.tsug'\r\n    compileSdk 35\r\n\r\n    defaultConfig {\r\n        applicationId \"at.ac.univie.hci.tsug\"\r\n        minSdk 27\r\n        targetSdk 35\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_11\r\n        targetCompatibility JavaVersion.VERSION_11\r\n    }\r\n    buildFeatures {\r\n        viewBinding true\r\n        compose true\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation libs.appcompat\r\n    implementation libs.material\r\n    implementation libs.activity\r\n    implementation libs.constraintlayout\r\n    implementation libs.lifecycle.runtime.ktx\r\n    implementation libs.activity.compose\r\n    implementation platform(libs.compose.bom)\r\n    implementation libs.ui\r\n    implementation libs.ui.graphics\r\n    implementation libs.ui.tooling.preview\r\n    implementation libs.material3\r\n    testImplementation libs.junit\r\n    androidTestImplementation libs.ext.junit\r\n    androidTestImplementation libs.espresso.core\r\n\r\n    //Von Martin hinzugefügt:\r\n    implementation 'com.google.android.material:material:1.9.0'\r\n\r\n    androidTestImplementation platform(libs.compose.bom)\r\n    androidTestImplementation libs.ui.test.junit4\r\n    debugImplementation libs.ui.tooling\r\n    debugImplementation libs.ui.test.manifest\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	(revision f356b9c86a3a73e2dee4785bc2deddb57ccf206e)
++++ b/app/build.gradle	(date 1748790356088)
+@@ -47,10 +47,7 @@
+     testImplementation libs.junit
+     androidTestImplementation libs.ext.junit
+     androidTestImplementation libs.espresso.core
+-
+-    //Von Martin hinzugefügt:
+     implementation 'com.google.android.material:material:1.9.0'
+-
+     androidTestImplementation platform(libs.compose.bom)
+     androidTestImplementation libs.ui.test.junit4
+     debugImplementation libs.ui.tooling
+Index: app/src/main/java/at/ac/univie/hci/tsug/activities/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package at.ac.univie.hci.tsug.activities;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\n\r\nimport java.util.Objects;\r\n\r\nimport at.ac.univie.hci.tsug.R;\r\nimport at.ac.univie.hci.tsug.container.Container;\r\nimport at.ac.univie.hci.tsug.elements.User;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    private String username;\r\n    private String password;\r\n    public User logedIn;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.activity_main);\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {\r\n            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);\r\n            return insets;\r\n        });\r\n\r\n        //Get Login data:\r\n        EditText loginUsername = findViewById(R.id.login_username);\r\n        EditText loginPassword = findViewById(R.id.login_password);\r\n\r\n        Button loginButton = findViewById(R.id.login_button);\r\n        loginButton.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                username = String.valueOf(loginUsername.getText());\r\n                password = String.valueOf(loginPassword.getText());\r\n\r\n                User user = Container.getUser(username);\r\n                if(user != null) {\r\n                    if(Objects.equals(user.getPassword(), password)) {\r\n                        logedIn = user;\r\n\r\n                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);\r\n                        intent.putExtra(\"user\", logedIn);\r\n                        startActivity(intent);\r\n                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);\r\n                        finish();\r\n                    }\r\n                    else\r\n                        Toast.makeText(MainActivity.this, \"Password wrong!\", Toast.LENGTH_SHORT).show();\r\n                }\r\n                else\r\n                    Toast.makeText(MainActivity.this, \"There is no User like that!\", Toast.LENGTH_SHORT).show();\r\n            }\r\n        });\r\n\r\n        //Wants to Regiter:\r\n        Button registerButton = findViewById(R.id.login_register);\r\n        registerButton.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);\r\n                startActivity(intent);\r\n                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);\r\n                finish();\r\n            }\r\n        });\r\n    }\r\n    public User getLogedIn() {\r\n        return logedIn;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/at/ac/univie/hci/tsug/activities/MainActivity.java b/app/src/main/java/at/ac/univie/hci/tsug/activities/MainActivity.java
+--- a/app/src/main/java/at/ac/univie/hci/tsug/activities/MainActivity.java	(revision f356b9c86a3a73e2dee4785bc2deddb57ccf206e)
++++ b/app/src/main/java/at/ac/univie/hci/tsug/activities/MainActivity.java	(date 1748790356090)
+@@ -1,5 +1,7 @@
+ package at.ac.univie.hci.tsug.activities;
+ 
++import static android.icu.text.DisplayOptions.DisplayLength.LENGTH_SHORT;
++
+ import android.content.Intent;
+ import android.os.Bundle;
+ import android.view.View;
+@@ -47,22 +49,27 @@
+                 username = String.valueOf(loginUsername.getText());
+                 password = String.valueOf(loginPassword.getText());
+ 
+-                User user = Container.getUser(username);
+-                if(user != null) {
+-                    if(Objects.equals(user.getPassword(), password)) {
+-                        logedIn = user;
++                if (username.isEmpty() || password.isEmpty()) {
++                    Toast.makeText(MainActivity.this, "Username oder Passwort kann nicht leer gelassen werden!", Toast.LENGTH_SHORT).show();
++                } else {
++                    User user = Container.getUser(username);
++                    if(user != null) {
++                        if(Objects.equals(user.getPassword(), password)) {
++                            logedIn = user;
+ 
+-                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+-                        intent.putExtra("user", logedIn);
+-                        startActivity(intent);
+-                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+-                        finish();
+-                    }
+-                    else
+-                        Toast.makeText(MainActivity.this, "Password wrong!", Toast.LENGTH_SHORT).show();
+-                }
+-                else
+-                    Toast.makeText(MainActivity.this, "There is no User like that!", Toast.LENGTH_SHORT).show();
++                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
++                            intent.putExtra("user", logedIn);
++                            startActivity(intent);
++                            overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
++                            finish();
++                        }
++                        else
++                            Toast.makeText(MainActivity.this, "Password wrong!", Toast.LENGTH_SHORT).show();
++                    }
++                    else
++                        Toast.makeText(MainActivity.this, "There is no User like that!", Toast.LENGTH_SHORT).show();
++
++                }
+             }
+         });
+ 
+Index: app/src/main/res/values/values.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/values.xml b/app/src/main/res/values/values.xml
+new file mode 100644
+--- /dev/null	(date 1748790356093)
++++ b/app/src/main/res/values/values.xml	(date 1748790356093)
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    
++</resources>
+\ No newline at end of file
