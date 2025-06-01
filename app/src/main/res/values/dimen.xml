@@ -8,6 +8,6 @@
     <dimen name="sehrklein">18sp</dimen>
     <dimen name="gigantisch">180sp</dimen>
 
-    <dimen name="bot_nav_height">wrap_content</dimen>
+    <dimen name="bot_nav_height">56dp</dimen>
 
 </resources>

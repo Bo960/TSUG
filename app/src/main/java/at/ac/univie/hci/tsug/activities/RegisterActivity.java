@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,14 +41,22 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User newUser = new User(registerUsername.getText().toString(), registerEmail.getText().toString(), registerPassword.getText().toString());
+                String username = registerUsername.getText().toString();
+                String email = registerEmail.getText().toString();
+                String password = registerPassword.getText().toString();
 
-                if(Container.addUser(newUser)) {
-                    Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-                    intent.putExtra("user", newUser);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
-                    finish();
+                if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "Passwort, Email oder Username kann nicht leer gelassen werden!", Toast.LENGTH_SHORT).show();
+                } else {
+                    User newUser = new User(username, email, password);
+
+                    if(Container.addUser(newUser)) {
+                        Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                        intent.putExtra("user", newUser);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_down_out);
+                        finish();
+                    }
                 }
             }
         });
