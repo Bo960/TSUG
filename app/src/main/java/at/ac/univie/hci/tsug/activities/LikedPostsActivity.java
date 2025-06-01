@@ -41,7 +41,7 @@ public class LikedPostsActivity extends AppCompatActivity implements Recyclervie
 
         TextView textView = findViewById(R.id.note);
 
-        if (currentUser.getCreatedPosts().isEmpty()) {
+        if (currentUser.getLikedPosts().isEmpty()) {
             textView.setVisibility(VISIBLE);
         } else {
             textView.setVisibility(GONE);

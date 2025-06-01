@@ -264,7 +264,7 @@
         android:text=""
         android:visibility="visible"
         android:textColor="@color/secondaryColor"
-        android:textSize="@dimen/sehrklein" />
+        android:textSize="@dimen/klein" />
 
     <!-- Date -->
     <TextView

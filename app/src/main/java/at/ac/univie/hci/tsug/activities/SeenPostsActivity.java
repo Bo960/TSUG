@@ -46,7 +46,7 @@ public class SeenPostsActivity extends AppCompatActivity implements Recyclerview
 
         TextView textView = findViewById(R.id.note);
 
-        if (currentUser.getCreatedPosts().isEmpty()) {
+        if (currentUser.getSeenPosts().isEmpty()) {
             textView.setVisibility(VISIBLE);
         } else {
             textView.setVisibility(GONE);
